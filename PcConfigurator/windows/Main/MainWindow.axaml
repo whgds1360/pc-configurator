@@ -11,11 +11,35 @@
         Height="784"
         CanResize="False">
 
-        <Canvas Background="#1a1f25">
-            <StackPanel Orientation="Horizontal" Spacing="100">
-                <Button FontSize="50">[ Новая конфигурация ]</Button>
-                <Button FontSize="50">[ Удалить ]</Button>
-            </StackPanel>
+        <Grid RowDefinitions="120, *, 150" RowSpacing="30" Background="#1a1f25">
+            <Border BorderBrush="#333232"
+                    BorderThickness="4" 
+                    CornerRadius="5" 
+                    Padding="20"
+                    Grid.Row="0"> 
 
-        </Canvas>
+                <DockPanel>
+                    <Button FontSize="50" DockPanel.Dock="Left">[ Новая конфигурация ]</Button>
+                    <Button FontSize="50" DockPanel.Dock="Right" HorizontalAlignment="Right">[ Удалить ]</Button>
+                </DockPanel>
+            </Border>
+            
+            <StackPanel Grid.Row="1">
+
+                <Label FontSize="40">Сохраненные сборки:</Label>
+                <Border BorderBrush="#333232"
+                    BorderThickness="4" 
+                    CornerRadius="5" 
+                    Padding="20">
+                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                    <StackPanel Spacing="20">
+                        <Button FontSize="50" HorizontalAlignment="Stretch">Мега пк</Button>
+                        <Button FontSize="50" HorizontalAlignment="Stretch">Мега пк</Button>
+                        <Button FontSize="50" HorizontalAlignment="Stretch">Мега пк</Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+            </StackPanel>
+        </Grid>
+
 </Window>
