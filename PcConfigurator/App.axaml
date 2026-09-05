@@ -1,0 +1,16 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="PcConfigurator.App"
+             RequestedThemeVariant="Dark">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.Styles>
+        <FluentTheme />
+
+        <Style Selector="Button">
+            <Setter Property="FontFamily" Value="Impact"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="Background" Value="#3F4347"></Setter>
+        </Style>
+    </Application.Styles>
+</Application>
