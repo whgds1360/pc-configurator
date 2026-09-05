@@ -6,12 +6,12 @@
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
         x:Class="PcConfigurator.MainWindow"
-        Title="Pc Configurator"
+        Title="PС Configurator"
         Width="1168"
         Height="784"
         CanResize="False">
 
-        <Grid RowDefinitions="120, *, 150" RowSpacing="30" Background="#1a1f25">
+        <Grid RowDefinitions="120, *, 200" RowSpacing="30" Background="#1a1f25">
             <Border BorderBrush="#333232"
                     BorderThickness="4" 
                     CornerRadius="5" 
@@ -26,19 +26,44 @@
             
             <StackPanel Grid.Row="1">
 
-                <Label FontSize="40">Сохраненные сборки:</Label>
+                <Label FontSize="30">Сохраненные сборки:</Label>
+                <Border BorderBrush="#333232"
+                    BorderThickness="4" 
+                    CornerRadius="5" 
+                    Padding="20"
+                    MaxHeight="330">
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Spacing="20">
+                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
+                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
+                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
+
+                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
+                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
+                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2">
+                <Label FontSize="30"> Информация о сборке:</Label>
                 <Border BorderBrush="#333232"
                     BorderThickness="4" 
                     CornerRadius="5" 
                     Padding="20">
-                <ScrollViewer VerticalScrollBarVisibility="Hidden">
-                    <StackPanel Spacing="20">
-                        <Button FontSize="50" HorizontalAlignment="Stretch">Мега пк</Button>
-                        <Button FontSize="50" HorizontalAlignment="Stretch">Мега пк</Button>
-                        <Button FontSize="50" HorizontalAlignment="Stretch">Мега пк</Button>
-                    </StackPanel>
-                </ScrollViewer>
+
+            
+                <WrapPanel>
+                    <Label FontSize="30" HorizontalAlignment="Stretch">Cpu:</Label>
+                    <Label FontSize="30" HorizontalAlignment="Stretch">Gpu:</Label>
+                    <Label FontSize="30" HorizontalAlignment="Stretch">Ram:</Label>
+                    <Label FontSize="30" HorizontalAlignment="Stretch">Storage:</Label>
+                </WrapPanel>
             </Border>
+
             </StackPanel>
         </Grid>
 
