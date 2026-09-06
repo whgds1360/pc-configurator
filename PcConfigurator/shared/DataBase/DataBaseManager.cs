@@ -4,13 +4,13 @@ namespace PcConfigurator.shared.DataBase;
 
 internal class DataBaseManager
 {
-    private string? _connectionString;
+    private static string? _connectionString;
 
     /// <summary>
     /// Инициализирует и проверяет подключение к БД.
     /// </summary>
     /// <returns>true, если подключение успешно; false, если произошла ошибка</returns>
-    public bool TryInitConnection(string url)
+    public static bool TryInitConnection(string url)
     {
         if (string.IsNullOrWhiteSpace(url)) return false;
 
@@ -30,5 +30,5 @@ internal class DataBaseManager
         }
     }
 
-    public string? GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? null : _connectionString;
+    public static string? GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? null : _connectionString;
 }
