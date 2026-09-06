@@ -5,7 +5,7 @@
         xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
-        x:Class="PcConfigurator.PreMain">
+        x:Class="PcConfigurator.windows.PreMain.PreMain">
 
         <Grid>
           <Border BorderBrush="#333232"

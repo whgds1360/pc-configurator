@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace PcConfigurator;
+namespace PcConfigurator.windows.Main;
 
 public partial class MainWindow : Window
 {
