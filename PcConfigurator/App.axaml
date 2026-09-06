@@ -7,10 +7,24 @@
     <Application.Styles>
         <FluentTheme />
 
-        <Style Selector="Button">
+        <Style Selector="Button.Manage">
             <Setter Property="FontFamily" Value="Impact"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="FontSize" Value="50"></Setter>
             <Setter Property="Background" Value="#3F4347"></Setter>
         </Style>
+
+        <Style Selector="Button.Configuration">
+            <Setter Property="FontFamily" Value="Impact"></Setter>
+            <Setter Property="FontSize" Value="40"></Setter>
+            <Setter Property="Background" Value="#3F4347"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+        </Style>
+
+        <Style Selector="Label.InfoConfiguration">
+            <Setter Property="FontFamily" Value="Impact"></Setter>
+            <Setter Property="FontSize" Value="30"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+        </Style>
+        
     </Application.Styles>
 </Application>

@@ -19,8 +19,8 @@
                     Grid.Row="0"> 
 
                 <DockPanel>
-                    <Button FontSize="50" DockPanel.Dock="Left">[ Новая конфигурация ]</Button>
-                    <Button FontSize="50" DockPanel.Dock="Right" HorizontalAlignment="Right">[ Удалить ]</Button>
+                    <Button DockPanel.Dock="Left" Classes="Manage">[ Новая конфигурация ]</Button>
+                    <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Classes="Manage">[ Удалить ]</Button>
                 </DockPanel>
             </Border>
             
@@ -35,13 +35,13 @@
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel Spacing="20">
-                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
-                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
-                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
+                        <Button Classes="Configuration">Мега пк</Button>
+                        <Button Classes="Configuration">Мега пк</Button>
+                        <Button Classes="Configuration">Мега пк</Button>
 
-                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
-                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
-                        <Button FontSize="40" HorizontalAlignment="Stretch">Мега пк</Button>
+                        <Button Classes="Configuration">Мега пк</Button>
+                        <Button Classes="Configuration">Мега пк</Button>
+                        <Button Classes="Configuration">Мега пк</Button>
                     </StackPanel>
                 </ScrollViewer>
             </Border>
@@ -57,10 +57,12 @@
 
             
                 <WrapPanel>
-                    <Label FontSize="30" HorizontalAlignment="Stretch">Cpu:</Label>
-                    <Label FontSize="30" HorizontalAlignment="Stretch">Gpu:</Label>
-                    <Label FontSize="30" HorizontalAlignment="Stretch">Ram:</Label>
-                    <Label FontSize="30" HorizontalAlignment="Stretch">Storage:</Label>
+                    <Label Classes="InfoConfiguration" Name="CPU">Cpu:</Label>
+                    <Label Classes="InfoConfiguration" Name="GPU">Gpu:</Label>
+                    <Label Classes="InfoConfiguration" Name="RAM">Ram:</Label>
+                    <Label Classes="InfoConfiguration" Name="Storage">Storage:</Label>
+                    <Label Classes="InfoConfiguration" Name="PowerUnit">PowerUnit:</Label>
+                    <Label Classes="InfoConfiguration" Name="MotherBoard">MotherBoard:</Label>
                 </WrapPanel>
             </Border>
 
