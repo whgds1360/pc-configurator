@@ -16,7 +16,8 @@
             <StackPanel Spacing="20">
               <Label HorizontalAlignment="Center">Введите URL для подключения к БД</Label>
               <TextBox Name="DbURL"></TextBox>
-              <Button HorizontalAlignment="Center">ПОДКЛЮЧИТЬСЯ</Button>
+              <Button HorizontalAlignment="Center" Name="Connect">ПОДКЛЮЧИТЬСЯ</Button>
+              <Label Name="Status" Background="#E66565" HorizontalAlignment="Center">Не подключено</Label>
             </StackPanel>
 
           </Border>
