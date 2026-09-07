@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using PcConfigurator.shared.DataBase;
+using PcConfigurator.services.WindowsManager;
 using PcConfigurator.windows.Main;
 using Avalonia.Media;
 using System;
@@ -29,8 +30,7 @@ public partial class PreMain : Window
                 DataBaseManager.ChangeStatus(newStatus:OrderStatus.Connect);
 
                 var nextWindow = new MainWindow();
-                nextWindow.Show();
-                this.Close();
+                MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindow);
             }
             else
             {
