@@ -1,9 +1,9 @@
 using Avalonia.Controls;
-using Avalonia.Media;
 using Avalonia.Interactivity;
 using PcConfigurator.shared.DataBase;
 using PcConfigurator.windows.Main;
-using System.Net.Security;
+using Avalonia.Media;
+using System;
 
 namespace PcConfigurator.windows.PreMain;
 
@@ -16,21 +16,28 @@ public partial class PreMain : Window
 
     private void ConnectHandler(object sender, RoutedEventArgs e)
     {   
-        var connectUrl = DataBaseManager.CreateUrlConnection(server:Server.Text, port:Port.Text, db:DbName.Text, user:Username.Text, password:Password.Text);
-
-        if (DataBaseManager.TryInitConnection(url: connectUrl))
+        if (DataBaseManager.currentStatus != OrderStatus.Connect)
         {
-            Status.Content = "Подключено";
-            Status.Background = new SolidColorBrush(Color.Parse("#50996f"));
+            var connectUrl = DataBaseManager.CreateUrlConnection(server:Server.Text ?? String.Empty, 
+                                                                    port:Port.Text ?? String.Empty, 
+                                                                    db:DbName.Text ?? String.Empty, 
+                                                                    user:Username.Text ?? String.Empty, 
+                                                                    password:Password.Text ?? String.Empty);
 
-            var nextWindow = new MainWindow();
-            nextWindow.Show();
-            this.Close();
-        }
-        else
-        {
-            Status.Content = "Неверная ссылка";
-            Status.Background = new SolidColorBrush(Color.Parse("#b8ab71"));
+            if (DataBaseManager.TryInitConnection(url: connectUrl))
+            {   
+                DataBaseManager.ChangeStatus(newStatus:OrderStatus.Connect);
+
+                var nextWindow = new MainWindow();
+                nextWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                DataBaseManager.ChangeStatus(newStatus:OrderStatus.NoConnect);
+                Status.Content = "Неверная ссылка";
+                Status.Background = new SolidColorBrush(Color.Parse("#b8ab71"));
+            }
         }
     }
 }

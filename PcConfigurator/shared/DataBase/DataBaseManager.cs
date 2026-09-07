@@ -1,9 +1,19 @@
 using MySql.Data.MySqlClient;
+using PcConfigurator.windows.Main;
 
 namespace PcConfigurator.shared.DataBase;
 
+public enum OrderStatus
+{
+    NoConnect,
+    Connect,
+    ErrorConnect
+}
+
 internal class DataBaseManager
 {
+    public static OrderStatus currentStatus = OrderStatus.NoConnect; 
+
     private static string? _connectionString;
 
     /// <summary>
@@ -38,6 +48,16 @@ internal class DataBaseManager
     {
         return $"Server={server};Port={port};Database={db};Uid={user};Pwd={password}";
     }
+
+    public static void ChangeStatus(OrderStatus newStatus)
+    {
+        currentStatus = newStatus;
+    }
+
+    public static OrderStatus GetStatus()
+    {
+        return currentStatus;
+    } 
 
     public static string? GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? null : _connectionString;
 }
