@@ -1,5 +1,5 @@
+using System.IO;
 using MySql.Data.MySqlClient;
-using PcConfigurator.windows.Main;
 
 namespace PcConfigurator.shared.DataBase;
 
@@ -39,7 +39,6 @@ internal class DataBaseManager
             return false;
         }
     }
-
     public static string CreateUrlConnection(string server, 
                                                 string port, 
                                                 string db, 
@@ -54,10 +53,9 @@ internal class DataBaseManager
         currentStatus = newStatus;
     }
 
-    public static OrderStatus GetStatus()
-    {
-        return currentStatus;
-    } 
+    public MySqlConnection GetConnection() => !string.IsNullOrEmpty(_connectionString) ? new MySqlConnection() : throw new InvalidDataException("Ошибка БД");
+
+    public static OrderStatus GetStatus() => currentStatus;
 
     public static string? GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? null : _connectionString;
 }

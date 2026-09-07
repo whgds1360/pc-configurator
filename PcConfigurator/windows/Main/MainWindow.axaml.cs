@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Mysqlx.Connection;
 
 namespace PcConfigurator.windows.Main;
 
