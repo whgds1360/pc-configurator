@@ -30,5 +30,14 @@ internal class DataBaseManager
         }
     }
 
+    public static string CreateUrlConnection(string server, 
+                                                string port, 
+                                                string db, 
+                                                string user, 
+                                                string password)
+    {
+        return $"Server={server};Port={port};Database={db};Uid={user};Pwd={password}";
+    }
+
     public static string? GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? null : _connectionString;
 }

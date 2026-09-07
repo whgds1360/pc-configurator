@@ -3,6 +3,7 @@ using Avalonia.Media;
 using Avalonia.Interactivity;
 using PcConfigurator.shared.DataBase;
 using PcConfigurator.windows.Main;
+using System.Net.Security;
 
 namespace PcConfigurator.windows.PreMain;
 
@@ -14,8 +15,10 @@ public partial class PreMain : Window
     }
 
     private void ConnectHandler(object sender, RoutedEventArgs e)
-    {
-        if (DataBaseManager.TryInitConnection(url: DbURL.Text?? string.Empty))
+    {   
+        var connectUrl = DataBaseManager.CreateUrlConnection(server:Server.Text, port:Port.Text, db:DbName.Text, user:Username.Text, password:Password.Text);
+
+        if (DataBaseManager.TryInitConnection(url: connectUrl))
         {
             Status.Content = "Подключено";
             Status.Background = new SolidColorBrush(Color.Parse("#50996f"));

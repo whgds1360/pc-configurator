@@ -14,8 +14,19 @@
                   Padding="20">
 
             <StackPanel Spacing="20">
-              <Label HorizontalAlignment="Center">Введите URL для подключения к БД</Label>
-              <TextBox Name="DbURL"></TextBox>
+              <Label HorizontalAlignment="Center">Введите данные для подключения к БД</Label>
+              
+              <Label HorizontalAlignment="Left">Ip сервера</Label>
+              <TextBox Name="Server"></TextBox>
+                <Label HorizontalAlignment="Left">Порт</Label>
+              <TextBox Name="Port"></TextBox>
+                <Label HorizontalAlignment="Left">Имя БД</Label>
+              <TextBox Name="DbName"></TextBox>
+                <Label HorizontalAlignment="Left">Имя пользовотеля</Label>
+              <TextBox Name="Username"></TextBox>
+                <Label HorizontalAlignment="Left">Пароль</Label>
+              <TextBox Name="Password"></TextBox>
+
               <Button HorizontalAlignment="Center" Name="Connect" Click="ConnectHandler">ПОДКЛЮЧИТЬСЯ</Button>
               <Label Name="Status" Background="#E66565" HorizontalAlignment="Center">Не подключено</Label>
             </StackPanel>
