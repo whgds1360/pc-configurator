@@ -8,9 +8,9 @@ using System;
 
 namespace PcConfigurator.windows.PreMain;
 
-public partial class PreMain : Window
+public partial class PreMainWindow : Window
 {
-    public PreMain()
+    public PreMainWindow()
     {
         InitializeComponent();
     }
