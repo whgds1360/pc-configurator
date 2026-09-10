@@ -19,7 +19,7 @@
                     Grid.Row="0"> 
 
                 <DockPanel>
-                    <Button DockPanel.Dock="Left" Classes="Manage">[ Новая конфигурация ]</Button>
+                    <Button DockPanel.Dock="Left" Classes="Manage" Click="CreateHandler">[ Новая конфигурация ]</Button>
                     <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Classes="Manage">[ Удалить ]</Button>
                 </DockPanel>
             </Border>
