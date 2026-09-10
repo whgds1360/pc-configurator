@@ -4,6 +4,7 @@ using PcConfigurator.shared.DataBase;
 using PcConfigurator.services.WindowsManager;
 using PcConfigurator.windows.Main;
 using Avalonia.Media;
+using PcConfigurator.helpers.TableStructures;
 using System;
 
 namespace PcConfigurator.windows.PreMain;
@@ -28,6 +29,8 @@ public partial class PreMainWindow : Window
             if (DataBaseManager.TryInitConnection(url: connectUrl))
             {   
                 DataBaseManager.ChangeStatus(newStatus:OrderStatus.Connect);
+
+                using var db = new ApplicationContext();
 
                 var nextWindow = new MainWindow();
                 MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindow);
