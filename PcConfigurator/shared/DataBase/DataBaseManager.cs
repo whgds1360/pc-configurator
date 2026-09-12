@@ -28,9 +28,6 @@ internal class DataBaseManager
         try
         {
             using var connection = new MySqlConnection(url);
-            
-            await connection.OpenAsync();
-
             _connectionString = url;
 
             return true;
@@ -55,7 +52,7 @@ internal class DataBaseManager
         currentStatus = newStatus;
     }
 
-    public MySqlConnection GetConnection() => !string.IsNullOrEmpty(_connectionString) ? new MySqlConnection() : throw new InvalidDataException("Ошибка БД");
+    public static MySqlConnection GetConnection() => !string.IsNullOrEmpty(_connectionString) ? new MySqlConnection(_connectionString) : throw new InvalidDataException("Ошибка БД");
 
     public static OrderStatus GetStatus() => currentStatus;
 

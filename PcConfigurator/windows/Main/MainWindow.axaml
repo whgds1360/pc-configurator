@@ -16,11 +16,11 @@
                     BorderThickness="4" 
                     CornerRadius="5" 
                     Padding="20"
-                    Grid.Row="0"> 
+                    Grid.Row="0">
 
                 <DockPanel>
                     <Button DockPanel.Dock="Left" Classes="Manage" Click="CreateHandler">[ Новая конфигурация ]</Button>
-                    <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Classes="Manage">[ Удалить ]</Button>
+                    <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Classes="Manage" Click="DeleteHandler">[ Удалить ]</Button>
                 </DockPanel>
             </Border>
             
@@ -34,14 +34,7 @@
                     MaxHeight="330">
 
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Spacing="20">
-                        <Button Classes="Configuration">Мега пк</Button>
-                        <Button Classes="Configuration">Мега пк</Button>
-                        <Button Classes="Configuration">Мега пк</Button>
-
-                        <Button Classes="Configuration">Мега пк</Button>
-                        <Button Classes="Configuration">Мега пк</Button>
-                        <Button Classes="Configuration">Мега пк</Button>
+                    <StackPanel Spacing="20" Name="Configuration">
                     </StackPanel>
                 </ScrollViewer>
             </Border>
