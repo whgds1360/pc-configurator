@@ -12,8 +12,6 @@ public class ApplicationContext : DbContext
     public DbSet<Motherboard> Motherboards { get; set; }
     public DbSet<PowerUnit> PowerUnits { get; set; }
 
-    public ApplicationContext(){}
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (DataBaseManager.GetStatus() == OrderStatus.Connect)
