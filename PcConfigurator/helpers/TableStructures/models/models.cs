@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
 
 namespace PcConfigurator.helpers.TableStructures;
 
@@ -25,7 +24,7 @@ public class Config
 
     public string? PowerUnitName { get; set; }
 
-    [ForeignKey(nameof(MotherboardName))]
+    [ForeignKey(nameof(PowerUnitName))]
     public PowerUnit? PowerUnit { get; set; }
 
     public string? RamName { get; set; }
@@ -39,12 +38,10 @@ public class Cpu
     [Key]
     public string? Name { get; set; }
     public string? Soket { get; set; }
-    public string? Theards { get; set; }
+    public string? Cores { get; set; }
     public int TDP { get; set; }
     public string? Freq { get; set; }
     public string? L3Chache { get; set; }
-
-    public List<Config> Configs { get; set; } = new();
 }
 
 public class Gpu
@@ -56,8 +53,6 @@ public class Gpu
     public string? MemoryBus { get; set; }
     public int TDP { get; set; }
     public string? PCIe { get; set; }
-
-    public List<Config> Configs { get; set; } = new();
 }
 
 public class Ram
@@ -68,8 +63,6 @@ public class Ram
     public string? Volume { get; set; }
     public string? Freq { get; set; }
     public int Timings { get; set; }
-    public string? Voltage { get; set; }
-    public List<Config> Configs { get; set; } = new();
 }
 
 public class Motherboard
@@ -81,8 +74,6 @@ public class Motherboard
     public string? RamSlots { get; set; }
     public int M2slots { get; set; }
     public string? PCIe { get; set; }
-
-    public List<Config> Configs { get; set; } = new();
 }
 
 public class PowerUnit
@@ -91,7 +82,4 @@ public class PowerUnit
     public string? Name { get; set; }
     public string? Power { get; set; }
     public string? Sertificate { get; set; }
-    public string? Modularity { get; set; }
-
-    public List<Config> Configs { get; set; } = new();
 }
