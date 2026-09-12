@@ -1,4 +1,5 @@
 using System.IO;
+using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 
 namespace PcConfigurator.shared.DataBase;
@@ -20,7 +21,7 @@ internal class DataBaseManager
     /// Инициализирует и проверяет подключение к БД.
     /// </summary>
     /// <returns>true, если подключение успешно; false, если произошла ошибка</returns>
-    public static bool TryInitConnection(string url)
+    public async static Task<bool> TryInitConnection(string url)
     {
         if (string.IsNullOrWhiteSpace(url)) return false;
 
@@ -28,9 +29,10 @@ internal class DataBaseManager
         {
             using var connection = new MySqlConnection(url);
             
-            connection.Open();
+            await connection.OpenAsync();
 
             _connectionString = url;
+
             return true;
         }
         catch (MySqlException error)
@@ -45,7 +47,7 @@ internal class DataBaseManager
                                                 string user, 
                                                 string password)
     {
-        return $"Server={server};Port={port};Database={db};Uid={user};Pwd={password}";
+        return $"Server={server};Port={port};Database={db};Uid={user};Pwd={password};";
     }
 
     public static void ChangeStatus(OrderStatus newStatus)
@@ -57,5 +59,5 @@ internal class DataBaseManager
 
     public static OrderStatus GetStatus() => currentStatus;
 
-    public static string? GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? null : _connectionString;
+    public static string GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? "" : _connectionString;
 }

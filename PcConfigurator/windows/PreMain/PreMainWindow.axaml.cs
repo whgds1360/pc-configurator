@@ -9,14 +9,14 @@ using System;
 
 namespace PcConfigurator.windows.PreMain;
 
-public partial class PreMainWindow : Window
+internal partial class PreMainWindow : Window
 {
     public PreMainWindow()
     {
         InitializeComponent();
     }
 
-    private void ConnectHandler(object sender, RoutedEventArgs e)
+    private async void ConnectHandler(object sender, RoutedEventArgs e)
     {   
         if (DataBaseManager.currentStatus != OrderStatus.Connect)
         {
@@ -26,11 +26,14 @@ public partial class PreMainWindow : Window
                                                                     user:Username.Text ?? String.Empty, 
                                                                     password:Password.Text ?? String.Empty);
 
-            if (DataBaseManager.TryInitConnection(url: connectUrl))
+            if (await DataBaseManager.TryInitConnection(url: connectUrl))
             {   
                 DataBaseManager.ChangeStatus(newStatus:OrderStatus.Connect);
 
-                using var db = new ApplicationContext();
+                using (var db = new ApplicationContext())
+                {
+                    await db.Database.EnsureCreatedAsync();
+                };
 
                 var nextWindow = new MainWindow();
                 MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindow);

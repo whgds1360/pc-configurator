@@ -12,21 +12,13 @@ public class ApplicationContext : DbContext
     public DbSet<Motherboard> Motherboards { get; set; }
     public DbSet<PowerUnit> PowerUnits { get; set; }
 
-
-
-    public ApplicationContext()
-    {
-        Database.EnsureCreated();
-    }
+    public ApplicationContext(){}
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (DataBaseManager.GetStatus() == OrderStatus.Connect)
         {
-            var connectionString = DataBaseManager.GetConnectionUrl();
-            var serverVersion = ServerVersion.AutoDetect(connectionString);
-
-            optionsBuilder.UseMySql(connectionString, serverVersion);
+            optionsBuilder.UseMySQL(connectionString: DataBaseManager.GetConnectionUrl());
         }
         else
         {

@@ -5,7 +5,7 @@ using PcConfigurator.windows.Configurator;
 
 namespace PcConfigurator.windows.Main;
 
-public partial class MainWindow : Window
+internal partial class MainWindow : Window
 {
     Button? currentConfiguration = null;
 
