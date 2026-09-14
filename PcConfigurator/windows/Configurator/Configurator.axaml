@@ -3,9 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
+        xmlns:models="clr-namespace:PcConfigurator.helpers.TableStructures"
+        xmlns:local="clr-namespace:PcConfigurator.windows.Configurator"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
         x:Class="PcConfigurator.windows.Configurator.ConfiguratorWindow"
+        x:DataType="local:ConfiguratorWindow"
         Title="PС Configurator"
         Width="1168"
         Height="784"
@@ -16,7 +19,17 @@
         <!-- CPU -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">CPU</Label>
-                <ComboBox Width="200" VerticalAlignment="Center" />
+                        <ComboBox Width="200"
+                                VerticalAlignment="Center" 
+                                ItemsSource="{Binding Cpus}"
+                                SelectedItem="{Binding SelectedCpu}">
+                                <ComboBox.ItemTemplate>
+                                        <DataTemplate x:DataType="models:Cpu">
+                                                <TextBlock Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                        </ComboBox>
+
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">Сокет</Label>
@@ -44,7 +57,18 @@
         <!-- GPU -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">GPU</Label>
-                <ComboBox Width="200" VerticalAlignment="Center" />
+                <ComboBox Width="200"
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding Gpus}"
+                        SelectedItem="{Binding SelectedGpu}">
+
+                        <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:Gpu">
+                                        <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                </ComboBox>
+
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">VRAM</Label>
@@ -72,7 +96,18 @@
         <!-- RAM -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">RAM</Label>
-                <ComboBox Width="200" VerticalAlignment="Center" />
+                <ComboBox Width="200" 
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding Rams}"
+                        SelectedItem="{Binding SelectedRam}">
+
+                        <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:Ram">
+                                        <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                </ComboBox>
+
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">Тип</Label>
@@ -100,7 +135,17 @@
         <!-- MotherBoard -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">MotherBoard</Label>
-                <ComboBox Width="200" VerticalAlignment="Center" />
+                <ComboBox Width="200" 
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding Motherboards}"
+                        SelectedItem="{Binding SelectedMotherboard}">
+
+                        <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:Motherboard">
+                                        <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                </ComboBox>
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">Форм-фактор</Label>
@@ -132,7 +177,16 @@
         <!-- PowerUnit -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">PowerUnit</Label>
-                <ComboBox Width="200" VerticalAlignment="Center" />
+                <ComboBox Width="200" 
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding Powerunits}"
+                        SelectedItem="{Binding SelectedPowerunit}">
+                        <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:PowerUnit">
+                                        <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                </ComboBox>
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">Мощность</Label>
