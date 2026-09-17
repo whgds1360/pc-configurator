@@ -11,6 +11,11 @@ public class ApplicationContext : DbContext
     public DbSet<Ram> Rams { get; set; }
     public DbSet<Motherboard> Motherboards { get; set; }
     public DbSet<PowerUnit> PowerUnits { get; set; }
+    public DbSet<Cooler> Coolers { get; set; }
+    
+    public DbSet<GpuPowerRequirement> GpuPowerRequirement { get; set; }
+    public DbSet<PsuConnector> PsuConnector { get; set; }
+    public DbSet<CpuCompatibility> CpuCompatibility { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
