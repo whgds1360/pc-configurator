@@ -31,9 +31,9 @@ public class Config
     [ForeignKey(nameof(RamId))]
     public Ram Ram { get; set; } = null!;
     
-    public int? CoolerId { get; set; }
+    public int CoolerId { get; set; }
     [ForeignKey(nameof(CoolerId))]
-    public Cooler? Cooler { get; set; }
+    public Cooler Cooler { get; set; } = null!;
 }
 
 public class Cpu
@@ -45,7 +45,7 @@ public class Cpu
     public string Name { get; set; } = string.Empty;
 
     [MaxLength(50)]
-    public string? Socket { get; set; }
+    public string Socket { get; set; } = string.Empty;
 
     public int Cores { get; set; }
     
@@ -68,14 +68,14 @@ public class Gpu
     public int VRAM { get; set; }
     
     [MaxLength(50)]
-    public string? MemoryType { get; set; }
+    public string MemoryType { get; set; } = string.Empty;
     
     public int MemoryBus { get; set; }
     
     public int TDP { get; set; }
     
     [MaxLength(50)]
-    public string? PCIe { get; set; }
+    public string PCIe { get; set; } = string.Empty;
 }
 
 public class Ram
@@ -87,14 +87,14 @@ public class Ram
     public string Name { get; set; } = string.Empty;
 
     [MaxLength(50)]
-    public string? Type { get; set; }
+    public string Type { get; set; } = string.Empty;
 
     public int Volume { get; set; }
     
     public int Freq { get; set; }
     
     [MaxLength(50)]
-    public string? Timings { get; set; }
+    public string Timings { get; set; } = string.Empty;
     
     public int ModulesCount { get; set; }
 }
@@ -114,23 +114,23 @@ public class Motherboard
     public string LanPorts { get; set; } = string.Empty;
 
     [MaxLength(50)]
-    public string? Socket { get; set; }
+    public string Socket { get; set; } = string.Empty;
 
     [MaxLength(50)]
-    public string? DdrType { get; set; }
+    public string DdrType { get; set; } = string.Empty;
 
     [MaxLength(50)]
-    public string? ChipSet { get; set; }
+    public string ChipSet { get; set; } = string.Empty;
 
     public int RamSlots { get; set; }
 
     public int M2slots { get; set; }
 
     [MaxLength(50)]
-    public string? PCIe { get; set; }
+    public string PCIe { get; set; } = string.Empty;
     
     [MaxLength(50)]
-    public string? FormFactor { get; set; }
+    public string FormFactor { get; set; } = string.Empty;
 }
 
 public class PowerUnit
@@ -144,7 +144,7 @@ public class PowerUnit
     public int Power { get; set; }
 
     [MaxLength(100)]
-    public string? Certificate { get; set; }
+    public string Certificate { get; set; } = string.Empty;
 }
 
 public class CpuCompatibility
