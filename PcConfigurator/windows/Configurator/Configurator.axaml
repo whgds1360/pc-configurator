@@ -164,12 +164,16 @@
                         <Label Name="MotherboardRamSlotsLabel"></Label>
                 </StackPanel>
                 <StackPanel>
-                        <Label FontWeight="Bold">M.2 слоты</Label>
-                        <Label Name="MotherboardM2SlotsLabel"></Label>
+                        <Label FontWeight="Bold">USB 2.0</Label>
+                        <Label Name="MotherboardUSB2Label"></Label>
                 </StackPanel>
                 <StackPanel>
-                        <Label FontWeight="Bold">PCIe x16</Label>
-                        <Label Name="MotherboardPCIeLabel"></Label>
+                        <Label FontWeight="Bold">USB 3.0</Label>
+                        <Label Name="MotherboardUSB3SlotsLabel"></Label>
+                </StackPanel>
+                <StackPanel>
+                        <Label FontWeight="Bold">DDrType</Label>
+                        <Label Name="MotherboardDDrTypeLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>
@@ -213,7 +217,7 @@
 
         <!-- PcCase -->
         <StackPanel Orientation="Horizontal" Spacing="10">
-                <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">Корпус</Label>
+                <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">PcCase</Label>
                 <ComboBox Width="200" 
                         VerticalAlignment="Center"
                         ItemsSource="{Binding PcCases}"
@@ -226,7 +230,7 @@
                 </ComboBox>
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
-                        <Label FontWeight="Bold">Тип</Label>
+                        <Label FontWeight="Bold">Размер</Label>
                         <Label Name="PcCaseSizeTypeLabel"></Label>
                 </StackPanel>
                 </StackPanel>
@@ -234,7 +238,7 @@
 
         <!-- Cooler -->
         <StackPanel Orientation="Horizontal" Spacing="10">
-                <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">Кулер</Label>
+                <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">Cooler</Label>
                 <ComboBox Width="200" 
                         VerticalAlignment="Center"
                         ItemsSource="{Binding Coolers}"
@@ -253,10 +257,6 @@
                 <StackPanel>
                         <Label FontWeight="Bold">TDP охлаждения</Label>
                         <Label Name="CoolerTdpCoolingLabel"></Label>
-                </StackPanel>
-                <StackPanel>
-                        <Label FontWeight="Bold">Высота</Label>
-                        <Label Name="CoolerHeightLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>

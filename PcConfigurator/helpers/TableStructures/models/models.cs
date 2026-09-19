@@ -165,8 +165,6 @@ public class Cooler
     public string Socket { get; set; } = string.Empty;
 
     public int TdpCooling { get; set; }
-
-    public int Height { get; set; }
 }
 
 public class PcCase
