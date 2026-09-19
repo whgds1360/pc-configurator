@@ -33,23 +33,23 @@
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">Сокет</Label>
-                        <Label>LGA 1700 / AM5</Label>
+                        <Label Name="CpuSoketLabel"></Label>
                 </StackPanel>
                 <StackPanel>
-                        <Label FontWeight="Bold">Ядра / Потоки</Label>
-                        <Label>до 24 / 32</Label>
+                        <Label FontWeight="Bold">Ядра</Label>
+                        <Label Name="CpuCoresLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Тактовая частота</Label>
-                        <Label>до 6.0 ГГц</Label>
+                        <Label Name="CpuFreqLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">TDP</Label>
-                        <Label>65-253 Вт</Label>
+                        <Label Name="CpuTDPLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Кэш L3</Label>
-                        <Label>до 128 МБ</Label>
+                        <Label Name="CpuCacheLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>
@@ -72,23 +72,23 @@
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">VRAM</Label>
-                        <Label>8-24 ГБ</Label>
+                        <Label Name="GpuVRAMLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Тип памяти</Label>
-                        <Label>GDDR6 / GDDR6X</Label>
+                        <Label Name="GpuMemoryTypeLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Шина памяти</Label>
-                        <Label>192-384 бит</Label>
+                        <Label Name="GpuMemoryBusLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">TDP</Label>
-                        <Label>200-450 Вт</Label>
+                        <Label Name="GpuTDPLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">PCIe</Label>
-                        <Label>PCIe 4.0 x16</Label>
+                        <Label Name="GpuPCIeLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>
@@ -111,23 +111,23 @@
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">Тип</Label>
-                        <Label>DDR4 / DDR5</Label>
+                        <Label Name="RamTypeLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Объем</Label>
-                        <Label>8-128 ГБ</Label>
+                        <Label Name="RamVolumeLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Частота</Label>
-                        <Label>3200-8000 МГц</Label>
+                        <Label Name="RamFreqLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Тайминги</Label>
-                        <Label>CL16-CL40</Label>
+                        <Label Name="RamTimingsLabel"></Label>
                 </StackPanel>
                 <StackPanel>
-                        <Label FontWeight="Bold">Напряжение</Label>
-                        <Label>1.2-1.45 В</Label>
+                        <Label FontWeight="Bold">Количество модулей</Label>
+                        <Label Name="RamModulesCountLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>
@@ -149,27 +149,27 @@
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">Форм-фактор</Label>
-                        <Label>ATX / Micro-ATX</Label>
+                        <Label Name="MotherboardFormFactorLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Сокет</Label>
-                        <Label>LGA 1700 / AM5</Label>
+                        <Label Name="MotherboardSocketLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Чипсет</Label>
-                        <Label>Z790 / B650</Label>
+                        <Label Name="MotherboardChipsetLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Слоты RAM</Label>
-                        <Label>4x DDR5</Label>
+                        <Label Name="MotherboardRamSlotsLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">M.2 слоты</Label>
-                        <Label>3-4 шт</Label>
+                        <Label Name="MotherboardM2SlotsLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">PCIe x16</Label>
-                        <Label>2-3 шт</Label>
+                        <Label Name="MotherboardPCIeLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>
@@ -190,23 +190,73 @@
                 <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
                 <StackPanel>
                         <Label FontWeight="Bold">Мощность</Label>
-                        <Label>750-1600 Вт</Label>
+                        <Label Name="PowerUnitPowerLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Сертификат</Label>
-                        <Label>80+ Gold / Platinum</Label>
+                        <Label Name="PowerUnitCertificateLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Модульность</Label>
-                        <Label>Full Modular</Label>
+                        <Label Name="PowerUnitModularLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Разъем CPU</Label>
-                        <Label>2x 8-pin</Label>
+                        <Label Name="PowerUnitCpuConnectorLabel"></Label>
                 </StackPanel>
                 <StackPanel>
                         <Label FontWeight="Bold">Разъем GPU</Label>
-                        <Label>2-4x 8-pin</Label>
+                        <Label Name="PowerUnitGpuConnectorLabel"></Label>
+                </StackPanel>
+                </StackPanel>
+        </StackPanel>
+
+        <!-- PcCase -->
+        <StackPanel Orientation="Horizontal" Spacing="10">
+                <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">Корпус</Label>
+                <ComboBox Width="200" 
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding PcCases}"
+                        SelectedItem="{Binding SelectedPcCase}">
+                        <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:PcCase">
+                                        <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                </ComboBox>
+                <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
+                <StackPanel>
+                        <Label FontWeight="Bold">Тип</Label>
+                        <Label Name="PcCaseSizeTypeLabel"></Label>
+                </StackPanel>
+                </StackPanel>
+        </StackPanel>
+
+        <!-- Cooler -->
+        <StackPanel Orientation="Horizontal" Spacing="10">
+                <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">Кулер</Label>
+                <ComboBox Width="200" 
+                        VerticalAlignment="Center"
+                        ItemsSource="{Binding Coolers}"
+                        SelectedItem="{Binding SelectedCooler}">
+                        <ComboBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:Cooler">
+                                        <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                </ComboBox>
+                <StackPanel Orientation="Horizontal" Spacing="15" Margin="10,0,0,0">
+                <StackPanel>
+                        <Label FontWeight="Bold">Сокет</Label>
+                        <Label Name="CoolerSocketLabel"></Label>
+                </StackPanel>
+                <StackPanel>
+                        <Label FontWeight="Bold">TDP охлаждения</Label>
+                        <Label Name="CoolerTdpCoolingLabel"></Label>
+                </StackPanel>
+                <StackPanel>
+                        <Label FontWeight="Bold">Высота</Label>
+                        <Label Name="CoolerHeightLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>

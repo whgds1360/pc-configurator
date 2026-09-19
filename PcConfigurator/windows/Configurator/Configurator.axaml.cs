@@ -14,12 +14,16 @@ internal partial class ConfiguratorWindow : Window
     public List<Ram> Rams { get; set; } = new();
     public List<Motherboard> Motherboards { get; set; } = new();
     public List<PowerUnit> Powerunits { get; set; } = new();
+    public List<PcCase> PcCases { get; set; } = new();
+    public List<Cooler> Coolers { get; set; } = new();
 
     public Cpu? SelectedCpu { get; set; }
     public Gpu? SelectedGpu { get; set; }
     public Ram? SelectedRam { get; set; }
     public Motherboard? SelectedMotherboard { get; set; }
     public PowerUnit? SelectedPowerunit { get; set; }
+    public PcCase? SelectedPcCase { get; set; }
+    public Cooler? SelectedCooler { get; set; }
 
     public ConfiguratorWindow()
     {
@@ -37,6 +41,8 @@ internal partial class ConfiguratorWindow : Window
             Rams = connect.Query<Ram>("SELECT * FROM rams").ToList();
             Motherboards = connect.Query<Motherboard>("SELECT * FROM motherboards").ToList();
             Powerunits = connect.Query<PowerUnit>("SELECT * FROM powerunits").ToList();
+            PcCases = connect.Query<PcCase>("SELECT * FROM pccases").ToList();
+            Coolers = connect.Query<Cooler>("SELECT * FROM coolers").ToList();
         }
     }
 }

@@ -15,7 +15,7 @@ internal class DataBaseManager
 {
     public static OrderStatus currentStatus = OrderStatus.NoConnect; 
 
-    private static string? _connectionString;
+    private static string? _connectionString = "Server=localhost;Port=3306;Database=test;Uid=root;Pwd=;";
 
     /// <summary>
     /// Инициализирует и проверяет подключение к БД.
