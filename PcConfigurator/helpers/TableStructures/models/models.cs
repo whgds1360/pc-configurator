@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
@@ -53,13 +52,16 @@ public class Cpu
     [MaxLength(50)]
     public string Socket { get; set; } = string.Empty;
 
+    [Column(TypeName = "tinyint unsigned")]
     public int Cores { get; set; }
     
+    [Column(TypeName = "smallint unsigned")]
     public int TDP { get; set; }
 
-    [Column(TypeName = "decimal(4,2)")]
+    [Column(TypeName = "decimal(3,2)")]
     public decimal Freq { get; set; }
 
+    [Column(TypeName = "tinyint unsigned")]
     public int L3Cache { get; set; }
 }
 
@@ -71,13 +73,16 @@ public class Gpu
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
+    [Column(TypeName = "tinyint unsigned")]
     public int VRAM { get; set; }
     
     [MaxLength(50)]
     public string MemoryType { get; set; } = string.Empty;
     
+    [Column(TypeName = "smallint unsigned")]
     public int MemoryBus { get; set; }
     
+    [Column(TypeName = "smallint unsigned")]
     public int TDP { get; set; }
     
     [MaxLength(50)]
@@ -94,15 +99,12 @@ public class Ram
 
     [MaxLength(50)]
     public string Type { get; set; } = string.Empty;
-
-    public int Volume { get; set; }
     
+    [Column(TypeName = "smallint unsigned")]
     public int Freq { get; set; }
     
     [MaxLength(50)]
     public string Timings { get; set; } = string.Empty;
-    
-    public int ModulesCount { get; set; }
 }
 
 public class Motherboard
@@ -113,27 +115,29 @@ public class Motherboard
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
-    [MaxLength(100)]
-    public string UsbPorts { get; set; } = string.Empty;
+    [Column(TypeName = "tinyint unsigned")]
+    public int UsbPorts { get; set; }
 
-    [MaxLength(100)]
-    public string LanPorts { get; set; } = string.Empty;
+    [Column(TypeName = "tinyint unsigned")]
+    public int LanPorts { get; set; }
 
     [MaxLength(50)]
     public string Socket { get; set; } = string.Empty;
 
-    [MaxLength(50)]
-    public string DdrType { get; set; } = string.Empty;
+    [Column(TypeName = "tinyint unsigned")]
+    public int DdrType { get; set; }
 
     [MaxLength(50)]
     public string ChipSet { get; set; } = string.Empty;
 
+    [Column(TypeName = "tinyint unsigned")]
     public int RamSlots { get; set; }
 
+    [Column(TypeName = "tinyint unsigned")]
     public int M2slots { get; set; }
 
-    [MaxLength(50)]
-    public string PCIe { get; set; } = string.Empty;
+    [Column(TypeName = "tinyint unsigned")]
+    public int PCIeVersion { get; set; }
     
     [MaxLength(50)]
     public string FormFactor { get; set; } = string.Empty;
@@ -147,6 +151,7 @@ public class PowerUnit
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
+    [Column(TypeName = "smallint unsigned")]
     public int Power { get; set; }
 
     [MaxLength(100)]
@@ -164,6 +169,7 @@ public class Cooler
     [MaxLength(50)]
     public string Socket { get; set; } = string.Empty;
 
+    [Column(TypeName = "smallint unsigned")]
     public int TdpCooling { get; set; }
 }
 
@@ -212,6 +218,7 @@ public class PsuConnector
     [MaxLength(50)]
     public string ConnectorType { get; set; } = string.Empty;
 
+    [Column(TypeName = "tinyint unsigned")]
     public int ConnectorCount { get; set; }
 }
 
@@ -225,5 +232,6 @@ public class GpuPowerRequirement
     [MaxLength(50)]
     public string ConnectorType { get; set; } = string.Empty;
 
+    [Column(TypeName = "tinyint unsigned")]
     public int ConnectorCount { get; set; }
 }
