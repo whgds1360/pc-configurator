@@ -172,8 +172,16 @@
                         <Label Name="MotherboardUSB3SlotsLabel"></Label>
                 </StackPanel>
                 <StackPanel>
-                        <Label FontWeight="Bold">DDrType</Label>
+                        <Label FontWeight="Bold">Тип DDR</Label>
                         <Label Name="MotherboardDDrTypeLabel"></Label>
+                </StackPanel>
+                <StackPanel>
+                        <Label FontWeight="Bold">PCIe</Label>
+                        <Label Name="MotherboardPCIeLabel"></Label>
+                </StackPanel>
+                <StackPanel>
+                        <Label FontWeight="Bold">Слоты M2</Label>
+                        <Label Name="MotherboardM2SlotsLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>
@@ -199,18 +207,6 @@
                 <StackPanel>
                         <Label FontWeight="Bold">Сертификат</Label>
                         <Label Name="PowerUnitCertificateLabel"></Label>
-                </StackPanel>
-                <StackPanel>
-                        <Label FontWeight="Bold">Модульность</Label>
-                        <Label Name="PowerUnitModularLabel"></Label>
-                </StackPanel>
-                <StackPanel>
-                        <Label FontWeight="Bold">Разъем CPU</Label>
-                        <Label Name="PowerUnitCpuConnectorLabel"></Label>
-                </StackPanel>
-                <StackPanel>
-                        <Label FontWeight="Bold">Разъем GPU</Label>
-                        <Label Name="PowerUnitGpuConnectorLabel"></Label>
                 </StackPanel>
                 </StackPanel>
         </StackPanel>

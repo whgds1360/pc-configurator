@@ -116,10 +116,10 @@ public class Motherboard
     public string Name { get; set; } = string.Empty;
 
     [Column(TypeName = "tinyint unsigned")]
-    public int UsbPorts { get; set; }
+    public int Usb2Ports { get; set; }
 
     [Column(TypeName = "tinyint unsigned")]
-    public int LanPorts { get; set; }
+    public int Usb3Ports { get; set; }
 
     [MaxLength(50)]
     public string Socket { get; set; } = string.Empty;
