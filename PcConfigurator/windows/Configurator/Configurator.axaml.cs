@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using Dapper;
 using PcConfigurator.helpers.TableStructures;
 using PcConfigurator.shared.DataBase;
@@ -44,5 +45,24 @@ internal partial class ConfiguratorWindow : Window
             PcCases = connect.Query<PcCase>("SELECT * FROM pccases").ToList();
             Coolers = connect.Query<Cooler>("SELECT * FROM coolers").ToList();
         }
+    }
+
+    private void ChangedHandler(object sender, RoutedEventArgs e)
+    {
+        var target = sender as ComboBox;
+
+        if (target is null || SelectedCpu is null) return;
+
+        switch (target.Tag)
+        {
+            case "Cpu" : 
+                CpuSoketLabel.Content = SelectedCpu.Socket;
+                CpuCoresLabel.Content = SelectedCpu.Cores;
+                CpuFreqLabel.Content = SelectedCpu.Freq;
+                CpuTDPLabel.Content = SelectedCpu.TDP;
+                CpuCacheLabel.Content = SelectedCpu.L3Cache;
+                break;
+        }
+        
     }
 }

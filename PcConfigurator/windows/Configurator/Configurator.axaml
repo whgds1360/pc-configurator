@@ -19,10 +19,12 @@
         <!-- CPU -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">CPU</Label>
-                        <ComboBox Width="200"
+                        <ComboBox Tag="Cpu" 
+                                Width="200"
                                 VerticalAlignment="Center" 
                                 ItemsSource="{Binding Cpus}"
-                                SelectedItem="{Binding SelectedCpu}">
+                                SelectedItem="{Binding SelectedCpu}"
+                                SelectionChanged="ChangedHandler">
                                 <ComboBox.ItemTemplate>
                                         <DataTemplate x:DataType="models:Cpu">
                                                 <TextBlock Text="{Binding Name}"/>
