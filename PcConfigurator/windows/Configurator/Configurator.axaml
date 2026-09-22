@@ -59,10 +59,12 @@
         <!-- GPU -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">GPU</Label>
-                <ComboBox Width="200"
+                <ComboBox Tag="Gpu"
+                        Width="200"
                         VerticalAlignment="Center"
                         ItemsSource="{Binding Gpus}"
-                        SelectedItem="{Binding SelectedGpu}">
+                        SelectedItem="{Binding SelectedGpu}"
+                        SelectionChanged="ChangedHandler">
 
                         <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models:Gpu">
@@ -98,10 +100,12 @@
         <!-- RAM -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">RAM</Label>
-                <ComboBox Width="200" 
+                <ComboBox Tag="Ram"
+                        Width="200" 
                         VerticalAlignment="Center"
                         ItemsSource="{Binding Rams}"
-                        SelectedItem="{Binding SelectedRam}">
+                        SelectedItem="{Binding SelectedRam}"
+                        SelectionChanged="ChangedHandler">
 
                         <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models:Ram">
@@ -116,10 +120,6 @@
                         <Label Name="RamTypeLabel"></Label>
                 </StackPanel>
                 <StackPanel>
-                        <Label FontWeight="Bold">Объем</Label>
-                        <Label Name="RamVolumeLabel"></Label>
-                </StackPanel>
-                <StackPanel>
                         <Label FontWeight="Bold">Частота</Label>
                         <Label Name="RamFreqLabel"></Label>
                 </StackPanel>
@@ -127,20 +127,18 @@
                         <Label FontWeight="Bold">Тайминги</Label>
                         <Label Name="RamTimingsLabel"></Label>
                 </StackPanel>
-                <StackPanel>
-                        <Label FontWeight="Bold">Количество модулей</Label>
-                        <Label Name="RamModulesCountLabel"></Label>
-                </StackPanel>
                 </StackPanel>
         </StackPanel>
 
         <!-- MotherBoard -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">MotherBoard</Label>
-                <ComboBox Width="200" 
+                <ComboBox Tag="MotherBoard" 
+                        Width="200" 
                         VerticalAlignment="Center"
                         ItemsSource="{Binding Motherboards}"
-                        SelectedItem="{Binding SelectedMotherboard}">
+                        SelectedItem="{Binding SelectedMotherboard}"
+                        SelectionChanged="ChangedHandler">
 
                         <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models:Motherboard">
@@ -191,10 +189,12 @@
         <!-- PowerUnit -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">PowerUnit</Label>
-                <ComboBox Width="200" 
+                <ComboBox Tag="PowerUnit" 
+                        Width="200" 
                         VerticalAlignment="Center"
                         ItemsSource="{Binding Powerunits}"
-                        SelectedItem="{Binding SelectedPowerunit}">
+                        SelectedItem="{Binding SelectedPowerunit}"
+                        SelectionChanged="ChangedHandler">
                         <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models:PowerUnit">
                                         <TextBlock Text="{Binding Name}"/>
@@ -216,10 +216,12 @@
         <!-- PcCase -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">PcCase</Label>
-                <ComboBox Width="200" 
+                <ComboBox Tag="PcCase" 
+                        Width="200" 
                         VerticalAlignment="Center"
                         ItemsSource="{Binding PcCases}"
-                        SelectedItem="{Binding SelectedPcCase}">
+                        SelectedItem="{Binding SelectedPcCase}"
+                        SelectionChanged="ChangedHandler">
                         <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models:PcCase">
                                         <TextBlock Text="{Binding Name}"/>
@@ -237,10 +239,12 @@
         <!-- Cooler -->
         <StackPanel Orientation="Horizontal" Spacing="10">
                 <Label Width="120" VerticalAlignment="Center" FontWeight="Bold">Cooler</Label>
-                <ComboBox Width="200" 
+                <ComboBox Tag="Cooler" 
+                        Width="200" 
                         VerticalAlignment="Center"
                         ItemsSource="{Binding Coolers}"
-                        SelectedItem="{Binding SelectedCooler}">
+                        SelectedItem="{Binding SelectedCooler}"
+                        SelectionChanged="ChangedHandler">
                         <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models:Cooler">
                                         <TextBlock Text="{Binding Name}"/>

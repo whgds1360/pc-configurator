@@ -51,17 +51,85 @@ internal partial class ConfiguratorWindow : Window
     {
         var target = sender as ComboBox;
 
-        if (target is null || SelectedCpu is null) return;
+        if (target is null) return;
 
         switch (target.Tag)
         {
-            case "Cpu" : 
+            case "Cpu" :
+
+                if (SelectedCpu is null) return;
+
                 CpuSoketLabel.Content = SelectedCpu.Socket;
                 CpuCoresLabel.Content = SelectedCpu.Cores;
                 CpuFreqLabel.Content = SelectedCpu.Freq;
                 CpuTDPLabel.Content = SelectedCpu.TDP;
                 CpuCacheLabel.Content = SelectedCpu.L3Cache;
                 break;
+
+            case "Gpu":
+
+                if (SelectedGpu is null) return;
+
+                GpuMemoryBusLabel.Content = SelectedGpu.MemoryBus;
+                GpuMemoryTypeLabel.Content = SelectedGpu.MemoryType;
+                GpuPCIeLabel.Content = SelectedGpu.PCIe;
+                GpuTDPLabel.Content = SelectedGpu.TDP;
+                GpuVRAMLabel.Content = SelectedGpu.VRAM;
+
+                break;
+
+            case "Ram": 
+
+                if (SelectedRam is null) return;
+
+                RamTypeLabel.Content = SelectedRam.Type;
+                RamFreqLabel.Content = SelectedRam.Freq;
+                RamTimingsLabel.Content = SelectedRam.Timings;
+
+                break;
+
+            case "MotherBoard":
+
+                if (SelectedMotherboard is null) return;
+
+                MotherboardChipsetLabel.Content = SelectedMotherboard.ChipSet;
+                MotherboardDDrTypeLabel.Content = SelectedMotherboard.DdrType;
+                MotherboardFormFactorLabel.Content = SelectedMotherboard.FormFactor;
+                MotherboardM2SlotsLabel.Content = SelectedMotherboard.M2slots;
+                MotherboardPCIeLabel.Content = SelectedMotherboard.PCIeVersion;
+                MotherboardRamSlotsLabel.Content = SelectedMotherboard.RamSlots;
+                MotherboardSocketLabel.Content = SelectedMotherboard.Socket;
+                MotherboardUSB2Label.Content = SelectedMotherboard.Usb2Ports;
+                MotherboardUSB3SlotsLabel.Content = SelectedMotherboard.Usb3Ports;
+
+                break;
+
+            case "PowerUnit":
+
+                if (SelectedPowerunit is null) return;
+
+                PowerUnitCertificateLabel.Content = SelectedPowerunit.Certificate;
+                PowerUnitPowerLabel.Content = SelectedPowerunit.Power;
+
+                break;
+
+            case "Cooler":
+
+                if (SelectedCooler is null) return;
+
+                CoolerSocketLabel.Content = SelectedCooler.Socket;
+                CoolerTdpCoolingLabel.Content = SelectedCooler.TdpCooling;
+
+                break;
+
+            case "PcCase":
+
+                if (SelectedPcCase is null) return;
+
+                PcCaseSizeTypeLabel.Content = SelectedPcCase.SizeType;
+
+                break;
+
         }
         
     }
