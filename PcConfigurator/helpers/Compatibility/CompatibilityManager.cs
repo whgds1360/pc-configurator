@@ -1,5 +1,7 @@
 using Dapper;
+using Org.BouncyCastle.Asn1.Ocsp;
 using PcConfigurator.helpers.TableStructures;
+using PcConfigurator.shared.DataBase;
 
 namespace PcConfigurator.helpers.Compatibility;
 
@@ -26,24 +28,69 @@ internal class CompatibilityManager
     public static Status status { get; set; } = Status.Empty;
     public static string? comment { get; set; } = null;
 
-    public static bool CheckChipset()
-    {}
+    public static bool CheckChipset(Motherboard selectedMotherboard, Cpu selectedCpu)
+    {
+        using (var connect = DataBaseManager.GetConnection())
+        {
+            if (connect.QueryFirstOrDefault(@"SELECT Chipset FROM cpucompatibility 
+                WHERE CpuId = @SelectedCpuId 
+                AND Chipset = @ChipsetSelectedMotherboard", 
+                new {SelectedCpuId = selectedCpu.Id, ChipsetSelectedMotherboard = selectedMotherboard.Id}) is not null)
+            {
+                return true;
+            }
 
-    public static bool CheckCooling()
-    {}
+            return false;
+        }
+    }
 
-    public static bool CheckSoketCooling()
-    {}
+    public static bool CheckCooling(Gpu selectedGpu, Cpu selectedCpu, PowerUnit selectedPowerUnit)
+    {
+        using (var connect = DataBaseManager.GetConnection())
+        {
+            var totalСonsumption = selectedGpu.TDP + selectedCpu.TDP + 100;
 
-    public static bool CheckFormFactor()
-    {}
+            if ((totalСonsumption + totalСonsumption*0.3) <= selectedPowerUnit.Power)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+
+    public static bool CheckSoketCooling(Motherboard selectedMotherboard, Cooler selectedCooler)
+    {
+        using (var connect = DataBaseManager.GetConnection())
+        {
+            if (selectedCooler.Socket == selectedMotherboard.Socket)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
+/*
+    public static bool CheckFormFactor(Motherboard selectedMotherboard, PcCase selectedPccase)
+    {
+        using (var connect = DataBaseManager.GetConnection())
+        {
+            if (selectedPccase.FormFactor == selectedMotherboard.FormFactor)
+            {
+                return true;
+            }
+
+            return false;
+        }
+    }
 
     public static bool CheckGpuCables()
     {}
 
     public static bool CheckDdrType()
     {}
-
+*/
 
 
 
