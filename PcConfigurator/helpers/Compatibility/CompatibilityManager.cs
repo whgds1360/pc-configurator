@@ -1,5 +1,6 @@
+using System.Collections.Generic;
 using Dapper;
-using Org.BouncyCastle.Asn1.Ocsp;
+using MySqlX.XDevAPI.Common;
 using PcConfigurator.helpers.TableStructures;
 using PcConfigurator.shared.DataBase;
 
@@ -12,6 +13,12 @@ enum Status
     Warning,
     Empty
 };
+
+public class AnswerTemplate
+{
+    public string? ConnectorType { get; set; }
+    public int ConnectorCount { get; set; }
+}
 
 /// <summary>
 /// Класс с проверками совместимости: 
@@ -32,7 +39,7 @@ internal class CompatibilityManager
     {
         using (var connect = DataBaseManager.GetConnection())
         {
-            if (connect.QueryFirstOrDefault(@"SELECT Chipset FROM cpucompatibility 
+            if (connect.QueryFirstOrDefault(@"SELECT * FROM cpucompatibility 
                 WHERE CpuId = @SelectedCpuId 
                 AND Chipset = @ChipsetSelectedMotherboard", 
                 new {SelectedCpuId = selectedCpu.Id, ChipsetSelectedMotherboard = selectedMotherboard.Id}) is not null)
@@ -71,12 +78,15 @@ internal class CompatibilityManager
             return false;
         }
     }
-/*
+
     public static bool CheckFormFactor(Motherboard selectedMotherboard, PcCase selectedPccase)
     {
         using (var connect = DataBaseManager.GetConnection())
         {
-            if (selectedPccase.FormFactor == selectedMotherboard.FormFactor)
+            if (connect.QueryFirstOrDefault(@"SELECT * FROM pccasecompatibility 
+                WHERE CaseId = @SelectedCaseId 
+                AND MotherboardFormFactor = @ChipsetSelectedMotherboard", 
+                new {SelectedCpuId = selectedPccase.Id, ChipsetSelectedMotherboard = selectedMotherboard.FormFactor}) is not null)
             {
                 return true;
             }
@@ -85,13 +95,53 @@ internal class CompatibilityManager
         }
     }
 
-    public static bool CheckGpuCables()
-    {}
+    public static bool CheckGpuCables(PowerUnit selectedPowerUnit, Gpu selectedGpu)
+    {
+        Dictionary<string, int> gpurequiredata = new();
+        Dictionary<string, int> powerunithasdata = new();
 
-    public static bool CheckDdrType()
-    {}
-*/
+        using (var connect = DataBaseManager.GetConnection())
+        {
+            var gpurequire = connect.Query<AnswerTemplate>(@"SELECT ConnectorType, ConnectorCount FROM gpupowerrequirement 
+                WHERE GpuId = @SelectedGpuId",
+                new {SelectedPowerUnitId = selectedGpu.Id});
+
+            foreach (var obj in gpurequire)
+            {
+                gpurequiredata[$"{obj.ConnectorType}"] = obj.ConnectorCount;
+            }
 
 
+            var powerunithas = connect.Query<AnswerTemplate>(@"SELECT ConnectorType, ConnectorCount FROM psuconnector 
+                WHERE PowerUnitId = @SelectedPowerUnitId",
+                new {SelectedPowerUnitId = selectedPowerUnit.Id});
+
+            foreach (var obj in powerunithas)
+            {
+                powerunithasdata[$"{obj.ConnectorType}"] = obj.ConnectorCount;
+            }
+
+            bool result = true;
+
+            foreach (var pair in gpurequiredata)
+            {
+                if (pair.Value != powerunithasdata[pair.Key])
+                {
+                    result = false;
+                }
+            }
+
+            return result;
+        }
+    }
+
+    public static bool CheckDdrType(Ram selectedRam, Motherboard selectedMotherboard)
+    {
+        if (selectedRam.DdrType == selectedMotherboard.DdrType)
+        {
+            return true;
+        }
+        return false;
+    }
 
 }

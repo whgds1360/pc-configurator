@@ -97,8 +97,8 @@ public class Ram
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
 
-    [MaxLength(50)]
-    public string Type { get; set; } = string.Empty;
+    [Column(TypeName = "tinyint unsigned")]
+    public int DdrType { get; set; }
     
     [Column(TypeName = "smallint unsigned")]
     public int Freq { get; set; }
