@@ -300,6 +300,8 @@
                         </StackPanel>
                        
                 </Border>
+
+                <Button Click="CheckCompatilibityHandler">Проверить совместимость</Button>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">

@@ -51,7 +51,7 @@ internal class CompatibilityManager
         }
     }
 
-    public static bool CheckCooling(Gpu selectedGpu, Cpu selectedCpu, PowerUnit selectedPowerUnit)
+    public static bool CheckPowerTDP(Gpu selectedGpu, Cpu selectedCpu, PowerUnit selectedPowerUnit)
     {
         using (var connect = DataBaseManager.GetConnection())
         {

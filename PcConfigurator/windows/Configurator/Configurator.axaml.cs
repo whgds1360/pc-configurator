@@ -5,8 +5,18 @@ using Avalonia.Interactivity;
 using Dapper;
 using PcConfigurator.helpers.TableStructures;
 using PcConfigurator.shared.DataBase;
+using PcConfigurator.helpers.Compatibility;
+using Avalonia.Media;
+using System;
+using Org.BouncyCastle.Asn1.Sec;
 
 namespace PcConfigurator.windows.Configurator;
+
+enum Status
+{
+    compatible = 0,
+    incompatible = 1,
+}
 
 internal partial class ConfiguratorWindow : Window
 {
@@ -45,6 +55,22 @@ internal partial class ConfiguratorWindow : Window
             PcCases = connect.Query<PcCase>("SELECT * FROM pccases").ToList();
             Coolers = connect.Query<Cooler>("SELECT * FROM coolers").ToList();
         }
+    }
+
+    private void CheckCompatilibityHandler(object sender, RoutedEventArgs e)
+    {
+        if (SelectedCpu is null ||  SelectedGpu is null || SelectedRam is null ||
+            SelectedMotherboard is null || SelectedPowerunit is null || SelectedPcCase is null ||
+            SelectedCooler is null)
+        {
+            StatusBar.Content = "Сборка не завершена!";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#540989"));
+            
+            return;
+        }
+
+        changeStatusBar(CompatibilityResult: CompatibilityCheck());
+
     }
 
     private void ChangedHandler(object sender, RoutedEventArgs e)
@@ -129,8 +155,73 @@ internal partial class ConfiguratorWindow : Window
                 PcCaseSizeTypeLabel.Content = SelectedPcCase.SizeType;
 
                 break;
-
         }
-        
     }
+
+    private void changeStatusBar(object[] CompatibilityResult)
+    {
+        switch (CompatibilityResult[0])
+        {
+            case Status.compatible: 
+
+            StatusBar.Content = "Совместимо";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#288016"));
+
+            break;
+
+            case Status.incompatible:
+
+            StatusBar.Content = "Не совместимо";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#921111"));
+
+            CommentStatusBar.Content = CompatibilityResult[1];
+
+            break;
+        
+        }
+    }
+
+    private object[] CompatibilityCheck()
+    {
+        string message = "";
+        Status status = Status.incompatible;
+
+        if (!CompatibilityManager.CheckChipset(selectedMotherboard: SelectedMotherboard, selectedCpu: SelectedCpu))
+        {
+            message += "- Чипсет материнской платы и процессора НЕСОВМЕСТИМЫ\n";
+        }
+
+        if (!CompatibilityManager.CheckPowerTDP(selectedGpu: SelectedGpu, selectedCpu: SelectedCpu, selectedPowerUnit: SelectedPowerunit))
+        {
+            message += "- Кулер не подходит по TDP для выбранного процессора\n";
+        }
+
+        if (!CompatibilityManager.CheckDdrType(selectedMotherboard: SelectedMotherboard, selectedRam: SelectedRam))
+        {
+            message += "- Тип DDR материнской платы и RAM НЕСОВМЕСТИМЫ\n";
+        }
+
+        if (!CompatibilityManager.CheckFormFactor(selectedMotherboard: SelectedMotherboard, selectedPccase: SelectedPcCase))
+        {
+            message += "- Форм-фактор материнской платы и корпуса НЕСОВМЕСТИМЫ\n";
+        }
+
+        if (!CompatibilityManager.CheckGpuCables(selectedGpu: SelectedGpu, selectedPowerUnit: SelectedPowerunit))
+        {
+            message += "- Блока питания недостаточно для питания видеокарты\n";
+        }
+
+        if (!CompatibilityManager.CheckSoketCooling(selectedCooler: SelectedCooler, selectedMotherboard: SelectedMotherboard))
+        {
+            message += "- Сокет кулера не подходит к сокету процессора\n";
+        }
+
+        if (string.IsNullOrEmpty(message))
+        {
+            status = Status.compatible;
+            message = "Все компоненты совместимы";
+        }
+
+        return [status, message];
+    }   
 }
