@@ -82,7 +82,7 @@ internal partial class ConfiguratorWindow : Window
 
                 if (SelectedRam is null) return;
 
-                RamTypeLabel.Content = SelectedRam.Type;
+                RamTypeLabel.Content = SelectedRam.DdrType;
                 RamFreqLabel.Content = SelectedRam.Freq;
                 RamTimingsLabel.Content = SelectedRam.Timings;
 
