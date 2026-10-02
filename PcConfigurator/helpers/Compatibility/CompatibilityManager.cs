@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using Dapper;
-using MySqlX.XDevAPI.Common;
+using MySql.Data.MySqlClient;
 using PcConfigurator.helpers.TableStructures;
 using PcConfigurator.shared.DataBase;
 
@@ -39,15 +40,25 @@ internal class CompatibilityManager
     {
         using (var connect = DataBaseManager.GetConnection())
         {
-            if (connect.QueryFirstOrDefault(@"SELECT * FROM cpucompatibility 
-                WHERE CpuId = @SelectedCpuId 
-                AND Chipset = @ChipsetSelectedMotherboard", 
-                new {SelectedCpuId = selectedCpu.Id, ChipsetSelectedMotherboard = selectedMotherboard.Id}) is not null)
+            try
             {
-                return true;
+                if (connect.QueryFirstOrDefault(@"SELECT * FROM cpucompatibility 
+                    WHERE CpuId = @SelectedCpuId 
+                    AND Chipset = @ChipsetSelectedMotherboard", 
+                    new {SelectedCpuId = selectedCpu.Id, ChipsetSelectedMotherboard = selectedMotherboard.Id}) is not null)
+                {
+                    return true;
+                }
+
+                return false;
             }
 
-            return false;
+            catch (MySqlException error)
+            {
+                Debug.WriteLine($"Ошибка при проверке совместимости чипсетов: {error}");
+                
+                return false;
+            }
         }
     }
 
@@ -83,15 +94,25 @@ internal class CompatibilityManager
     {
         using (var connect = DataBaseManager.GetConnection())
         {
-            if (connect.QueryFirstOrDefault(@"SELECT * FROM pccasecompatibility 
+            try
+            {
+               if (connect.QueryFirstOrDefault(@"SELECT * FROM pccasecompatibility 
                 WHERE CaseId = @SelectedCaseId 
                 AND MotherboardFormFactor = @ChipsetSelectedMotherboard", 
-                new {SelectedCpuId = selectedPccase.Id, ChipsetSelectedMotherboard = selectedMotherboard.FormFactor}) is not null)
+                new {SelectedCaseId = selectedPccase.Id, ChipsetSelectedMotherboard = selectedMotherboard.FormFactor}) is not null)
             {
                 return true;
             }
 
-            return false;
+            return false; 
+            }
+
+            catch (MySqlException error)
+            {
+                Debug.WriteLine($"Ошибка при проверке Форм Фактора: {error}");
+                
+                return false;
+            }
         }
     }
 
@@ -102,36 +123,45 @@ internal class CompatibilityManager
 
         using (var connect = DataBaseManager.GetConnection())
         {
-            var gpurequire = connect.Query<AnswerTemplate>(@"SELECT ConnectorType, ConnectorCount FROM gpupowerrequirement 
-                WHERE GpuId = @SelectedGpuId",
-                new {SelectedPowerUnitId = selectedGpu.Id});
-
-            foreach (var obj in gpurequire)
+            try
             {
-                gpurequiredata[$"{obj.ConnectorType}"] = obj.ConnectorCount;
-            }
+                var gpurequire = connect.Query<AnswerTemplate>(@"SELECT ConnectorType, ConnectorCount FROM gpupowerrequirement 
+                    WHERE GpuId = @SelectedGpuId",
+                new {SelectedGpuId = selectedGpu.Id});
 
-
-            var powerunithas = connect.Query<AnswerTemplate>(@"SELECT ConnectorType, ConnectorCount FROM psuconnector 
-                WHERE PowerUnitId = @SelectedPowerUnitId",
-                new {SelectedPowerUnitId = selectedPowerUnit.Id});
-
-            foreach (var obj in powerunithas)
-            {
-                powerunithasdata[$"{obj.ConnectorType}"] = obj.ConnectorCount;
-            }
-
-            bool result = true;
-
-            foreach (var pair in gpurequiredata)
-            {
-                if (pair.Value != powerunithasdata[pair.Key])
+                foreach (var obj in gpurequire)
                 {
-                    result = false;
+                    gpurequiredata[$"{obj.ConnectorType}"] = obj.ConnectorCount;
                 }
-            }
 
-            return result;
+
+                var powerunithas = connect.Query<AnswerTemplate>(@"SELECT ConnectorType, ConnectorCount FROM psuconnector 
+                        WHERE PowerUnitId = @SelectedPowerUnitId",
+                    new {SelectedPowerUnitId = selectedPowerUnit.Id});
+
+                foreach (var obj in powerunithas)
+                {
+                    powerunithasdata[$"{obj.ConnectorType}"] = obj.ConnectorCount;
+                }
+
+                bool result = true;
+
+                foreach (var pair in gpurequiredata)
+                {
+                    if (!powerunithasdata.TryGetValue(pair.Key, out var have) || have < pair.Value)
+                    {
+                        result = false;
+                    }
+                }
+
+                return result;
+            }
+            catch (MySqlException error)
+            {
+                Debug.WriteLine($"Ошибка при проверки кабелей GPU и PowerUnit: {error}");
+
+                return false;
+            }
         }
     }
 

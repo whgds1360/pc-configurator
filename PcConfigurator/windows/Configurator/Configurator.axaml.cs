@@ -185,7 +185,7 @@ internal partial class ConfiguratorWindow : Window
     {
         string message = "";
         Status status = Status.incompatible;
-
+        
         if (!CompatibilityManager.CheckChipset(selectedMotherboard: SelectedMotherboard, selectedCpu: SelectedCpu))
         {
             message += "- Чипсет материнской платы и процессора НЕСОВМЕСТИМЫ\n";
