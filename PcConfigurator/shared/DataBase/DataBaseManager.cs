@@ -28,6 +28,7 @@ internal class DataBaseManager
         try
         {
             using var connection = new MySqlConnection(url);
+            await connection.OpenAsync();
             _connectionString = url;
 
             return true;
@@ -44,6 +45,8 @@ internal class DataBaseManager
                                                 string user, 
                                                 string password)
     {
+        if (!int.TryParse(port, out _)){return "";}
+
         return $"Server={server};Port={port};Database={db};Uid={user};Pwd={password};";
     }
 

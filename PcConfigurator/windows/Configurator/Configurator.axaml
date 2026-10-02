@@ -296,7 +296,7 @@
 
                         <StackPanel>
                         <Label Name="StatusBar" HorizontalAlignment="Center" Foreground="#EABB9C13">Ожидание проверки</Label>
-                        <Label Name="CommentStatusBar">1. GPU не хватит проводов</Label>
+                        <Label Name="CommentStatusBar"></Label>
                         </StackPanel>
                        
                 </Border>

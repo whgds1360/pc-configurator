@@ -28,7 +28,7 @@ internal partial class PreMainWindow : Window
 
             if (await DataBaseManager.TryInitConnection(url: connectUrl))
             {   
-                DataBaseManager.ChangeStatus(newStatus:OrderStatus.Connect);
+                DataBaseManager.ChangeStatus(newStatus: OrderStatus.Connect);
 
                 using (var db = new ApplicationContext())
                 {
