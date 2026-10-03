@@ -3,12 +3,12 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Dapper;
+using PcConfigurator.windows.SaveConfiguration;
+using PcConfigurator.services.WindowsManager;
 using PcConfigurator.helpers.TableStructures;
 using PcConfigurator.shared.DataBase;
 using PcConfigurator.helpers.Compatibility;
 using Avalonia.Media;
-using System;
-using Org.BouncyCastle.Asn1.Sec;
 
 namespace PcConfigurator.windows.Configurator;
 
@@ -28,19 +28,35 @@ internal partial class ConfiguratorWindow : Window
     public List<PcCase> PcCases { get; set; } = new();
     public List<Cooler> Coolers { get; set; } = new();
 
-    public Cpu? SelectedCpu { get; set; }
-    public Gpu? SelectedGpu { get; set; }
-    public Ram? SelectedRam { get; set; }
-    public Motherboard? SelectedMotherboard { get; set; }
-    public PowerUnit? SelectedPowerunit { get; set; }
-    public PcCase? SelectedPcCase { get; set; }
-    public Cooler? SelectedCooler { get; set; }
+    public static Cpu? SelectedCpu { get; set; }
+    public static Gpu? SelectedGpu { get; set; }
+    public static Ram? SelectedRam { get; set; }
+    public static Motherboard? SelectedMotherboard { get; set; }
+    public static PowerUnit? SelectedPowerunit { get; set; }
+    public static PcCase? SelectedPcCase { get; set; }
+    public static Cooler? SelectedCooler { get; set; }
 
     public ConfiguratorWindow()
     {
         DataContext = this;
         ListsOfHardwareInit();
         InitializeComponent();
+    }
+
+    private void SaveButtonHandler(object? sender, RoutedEventArgs e)
+    {
+        if (SelectedCpu is null ||  SelectedGpu is null || SelectedRam is null ||
+            SelectedMotherboard is null || SelectedPowerunit is null || SelectedPcCase is null ||
+            SelectedCooler is null)
+        {
+            StatusBar.Content = "Сборка не завершена!";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#540989"));
+            
+            return;
+        }
+
+        var nextWindows = new SaveConfigurationWindow();
+        MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
     private void ListsOfHardwareInit()
