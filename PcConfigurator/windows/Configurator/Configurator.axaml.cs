@@ -43,7 +43,7 @@ internal partial class ConfiguratorWindow : Window
         InitializeComponent();
     }
 
-    private void SaveButtonHandler(object? sender, RoutedEventArgs e)
+    private void SaveButtonHandler(object sender, RoutedEventArgs e)
     {
         if (SelectedCpu is null ||  SelectedGpu is null || SelectedRam is null ||
             SelectedMotherboard is null || SelectedPowerunit is null || SelectedPcCase is null ||
@@ -55,7 +55,15 @@ internal partial class ConfiguratorWindow : Window
             return;
         }
 
-        var nextWindows = new SaveConfigurationWindow();
+        var nextWindows = new SaveConfigurationWindow(
+            cpuId:         SelectedCpu!.Id,
+            gpuId:         SelectedGpu!.Id,
+            ramId:         SelectedRam!.Id,
+            motherboardId: SelectedMotherboard!.Id,
+            powerUnitId:   SelectedPowerunit!.Id,
+            pcCaseId:      SelectedPcCase!.Id,
+            coolerId:      SelectedCooler!.Id
+        );
         MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 

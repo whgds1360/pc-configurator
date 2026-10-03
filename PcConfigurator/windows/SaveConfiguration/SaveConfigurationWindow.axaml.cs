@@ -6,6 +6,8 @@ using Dapper;
 using PcConfigurator.windows.Main;
 using PcConfigurator.services.WindowsManager;
 using PcConfigurator.shared.DataBase;
+using Avalonia.Media;
+using Avalonia;
 
 namespace PcConfigurator.windows.SaveConfiguration;
 
@@ -44,6 +46,13 @@ public partial class SaveConfigurationWindow : Window
 
         try
         {
+            var _name = getConfigName();
+
+            if (_name is null)
+            {
+                return;
+            }
+
             using var connect = DataBaseManager.GetConnection();
             var newId = connect.Execute(
                 @"INSERT INTO configs
@@ -70,9 +79,22 @@ public partial class SaveConfigurationWindow : Window
         }
     }
 
-    private void getConfigName()
+    private string? getConfigName()
     {
-        
+        if (string.IsNullOrEmpty(ConfigNameTextBlock.Text))
+        {
+            ActivateErrorBorder();
+
+            return null;
+        }
+
+        return ConfigNameTextBlock.Text;
+    }
+
+    private void ActivateErrorBorder()
+    {
+        ErrorBorder.BorderThickness = new Thickness(3);
+        ErrorBorder.BorderBrush = new SolidColorBrush(Color.Parse("#921111"));
     }
 
     private void SendSaveRequest(object? sender, RoutedEventArgs e)
