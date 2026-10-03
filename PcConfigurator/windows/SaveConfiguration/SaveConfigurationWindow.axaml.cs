@@ -28,19 +28,16 @@ public partial class SaveConfigurationWindow : Window
         {
             try
             {
-                if (connect.Execute(@"INSERT INTO сonfigs (CpuId, GpuId, MotherboardId, PowerUnitId, RamId, PcCaseId, CoolerId)
+                connect.Execute(@"INSERT INTO configs (CpuId, GpuId, MotherboardId, PowerUnitId, RamId, PcCaseId, CoolerId)
                     VALUES (@Cpu, @Gpu, @Motherboard, @PowerUnit, @Ram, @PcCase, @Cooler)",
                     new{
                         Cpu = Cpu, Gpu = Gpu, Motherboard = Motherboard, PowerUnit = PowerUnit,
                         Ram = Ram, PcCase = PcCase, Cooler = Cooler
-                    }) == 0)
-                {
-                    throw new ArgumentException("Ошибка сохранения конфига в БД");
-                }
+                    });
             }
             catch (Exception error)
             {
-                Debug.WriteLine($"Ошибка при сохранении: {error}");
+                Debug.WriteLine($"Ошибка при сохранении: {error.Message}");
             }
         }
     }
