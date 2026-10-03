@@ -28,13 +28,13 @@ internal partial class ConfiguratorWindow : Window
     public List<PcCase> PcCases { get; set; } = new();
     public List<Cooler> Coolers { get; set; } = new();
 
-    public static Cpu? SelectedCpu { get; set; }
-    public static Gpu? SelectedGpu { get; set; }
-    public static Ram? SelectedRam { get; set; }
-    public static Motherboard? SelectedMotherboard { get; set; }
-    public static PowerUnit? SelectedPowerunit { get; set; }
-    public static PcCase? SelectedPcCase { get; set; }
-    public static Cooler? SelectedCooler { get; set; }
+    public Cpu? SelectedCpu { get; set; }
+    public Gpu? SelectedGpu { get; set; }
+    public Ram? SelectedRam { get; set; }
+    public Motherboard? SelectedMotherboard { get; set; }
+    public PowerUnit? SelectedPowerunit { get; set; }
+    public PcCase? SelectedPcCase { get; set; }
+    public Cooler? SelectedCooler { get; set; }
 
     public ConfiguratorWindow()
     {

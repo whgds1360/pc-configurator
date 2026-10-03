@@ -14,7 +14,7 @@
         <StackPanel Margin="20" Spacing="20">
           <Label HorizontalAlignment="Center">Введите имя конфигурации</Label>
           <TextBox></TextBox>
-          <Button HorizontalAlignment="Center">Сохранить</Button>
+          <Button HorizontalAlignment="Center" Click="SendSaveRequest">Сохранить</Button>
           <Button HorizontalAlignment="Center">Отменить</Button>
         </StackPanel>
 </Window>
