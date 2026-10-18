@@ -10,6 +10,7 @@ using PcConfigurator.shared.DataBase;
 using PcConfigurator.windows.Configurator.Helpers;
 using Avalonia.Media;
 using PcConfigurator.windows.Main;
+using System;
 
 namespace PcConfigurator.windows.Configurator;
 
@@ -43,6 +44,23 @@ internal partial class ConfiguratorWindow : Window
         ListsOfHardwareInit();
         InitializeComponent();
     }
+
+    private async void AiQuery(object sender, RoutedEventArgs e)
+    {
+        AIManager.AgenInit(apiKey: "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",
+        model: "llama-3.3-70b-versatile",
+        temperature: 0.5,
+        maxtokensonresp: 100);
+        try
+        {
+            var response = await AIManager.SendQuery(prompt:"Привет расскажи кто ты");
+            AiResponse.Content = response;
+        }
+        catch (Exception error)
+        {
+            AiResponse.Content = $"Ошибка запроса: {error}";
+        }
+    } 
 
     private void SaveButtonHandler(object sender, RoutedEventArgs e)
     {

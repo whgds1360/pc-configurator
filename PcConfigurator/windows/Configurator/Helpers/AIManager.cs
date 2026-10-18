@@ -8,7 +8,7 @@ internal class AIManager
 {
     private static GroqClient? _groqClient = null;
 
-    public static void AgenInit(string apiKey, string model, float temperature, int maxtokensonresp)
+    public static void AgenInit(string apiKey, string model, double temperature, int maxtokensonresp)
     {
         _groqClient = new GroqClient(apiKey: apiKey, model: model);
     
