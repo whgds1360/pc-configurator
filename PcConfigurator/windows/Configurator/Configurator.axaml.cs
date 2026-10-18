@@ -47,7 +47,7 @@ internal partial class ConfiguratorWindow : Window
 
     private async void AiQuery(object sender, RoutedEventArgs e)
     {
-        AIManager.AgenInit(apiKey: "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",
+        AIManager.AgenInit(apiKey: "",
         model: "llama-3.3-70b-versatile",
         temperature: 0.5,
         maxtokensonresp: 100);
