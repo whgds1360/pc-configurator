@@ -308,7 +308,7 @@
 
         <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
                 <Button Click="SaveButtonHandler">Сохранить</Button>
-                <Button>Отменить</Button>
+                <Button Click="CancelButtonHandler">Отменить</Button>
         </StackPanel>
 
         </StackPanel>

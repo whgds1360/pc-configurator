@@ -9,6 +9,7 @@ using PcConfigurator.helpers.TableStructures;
 using PcConfigurator.shared.DataBase;
 using PcConfigurator.windows.Configurator.Helpers;
 using Avalonia.Media;
+using PcConfigurator.windows.Main;
 
 namespace PcConfigurator.windows.Configurator;
 
@@ -64,6 +65,13 @@ internal partial class ConfiguratorWindow : Window
             pcCaseId:      SelectedPcCase!.Id,
             coolerId:      SelectedCooler!.Id
         );
+        MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
+    }
+
+    private void CancelButtonHandler(object sender, RoutedEventArgs e)
+    {
+        var nextWindows = new MainWindow();
+        
         MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
