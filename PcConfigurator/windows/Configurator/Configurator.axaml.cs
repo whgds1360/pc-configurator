@@ -7,7 +7,7 @@ using PcConfigurator.windows.SaveConfiguration;
 using PcConfigurator.services.WindowsManager;
 using PcConfigurator.helpers.TableStructures;
 using PcConfigurator.shared.DataBase;
-using PcConfigurator.helpers.Compatibility;
+using PcConfigurator.windows.Configurator.Helpers;
 using Avalonia.Media;
 
 namespace PcConfigurator.windows.Configurator;
