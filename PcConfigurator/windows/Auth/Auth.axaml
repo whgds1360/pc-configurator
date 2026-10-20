@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
+        win32:Win32Properties.WindowCornerPreference="Round"
+        mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
+        x:Class="PcConfigurator.windows.Auth.AuthWindow"
+        Title="PС Configurator"
+        Width="1168"
+        Height="784"
+        CanResize="False">
+    
+        <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="350" Spacing="15">
+            <TextBlock Text="Вход в систему" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <StackPanel Spacing="5">
+                <Label Content="Логин" Padding="0"/>
+                <TextBox x:Name="LoginTextBox" PlaceholderText="Введите логин" FontSize="16" Padding="10,8"/>
+            </StackPanel>
+
+            <StackPanel Spacing="5">
+                <Label Content="Пароль" Padding="0"/>
+                <TextBox x:Name="PasswordTextBox" PlaceholderText="Введите пароль" PasswordChar="●" FontSize="16" Padding="10,8"/>
+            </StackPanel>
+
+            <Button x:Name="LoginButton" Content="Войти" 
+                    HorizontalAlignment="Stretch" 
+                    HorizontalContentAlignment="Center"
+                    FontSize="18" 
+                    Padding="0,10" 
+                    Margin="0,10,0,0"
+                    Background="#9C1FA0" 
+                    Foreground="White"
+                    CornerRadius="4"/>
+        </StackPanel>
+
+        <Border VerticalAlignment="Bottom" Background="Black" BorderBrush="#7500FC" BorderThickness="0,1,0,0" Padding="10,5">
+            <TextBlock x:Name="StatusText" Text="Ожидание ввода данных..." VerticalAlignment="Center" Foreground="#8908B1"/>
+        </Border>
+    </Grid>
+
+
+</Window>
