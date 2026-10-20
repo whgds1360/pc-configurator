@@ -19,6 +19,8 @@ public class ApplicationContext : DbContext
     public DbSet<CpuCompatibility> CpuCompatibility { get; set; }
     public DbSet<PcCaseCompatibility> PcCaseCompatibility { get; set; }
 
+    public DbSet<User> Users {get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (DataBaseManager.GetStatus() == OrderStatus.Connect)

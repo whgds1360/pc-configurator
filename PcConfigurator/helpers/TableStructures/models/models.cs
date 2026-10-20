@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace PcConfigurator.helpers.TableStructures;
@@ -234,4 +235,25 @@ public class GpuPowerRequirement
 
     [Column(TypeName = "tinyint unsigned")]
     public int ConnectorCount { get; set; }
+}
+
+public enum Role
+{
+    User,
+    Admin
+}
+
+public class User
+{
+    [Key]
+    [Required]
+    [MaxLength(100)]
+    public string Login { get; set; } = string.Empty;
+    
+    [Required]
+    [MaxLength(20)]
+    public string Password { get; set; } = string.Empty;
+
+    [Required]
+    public Role role {get; set; }
 }
