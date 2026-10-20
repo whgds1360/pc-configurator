@@ -48,17 +48,39 @@ internal partial class ConfiguratorWindow : Window
     private async void AiQuery(object sender, RoutedEventArgs e)
     {
         AIManager.AgenInit(apiKey: "",
-        model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-120b",
         temperature: 0.5,
-        maxtokensonresp: 100);
+        maxtokensonresp: 1000);
         try
         {
-            var response = await AIManager.SendQuery(prompt:"Привет расскажи кто ты");
-            AiResponse.Content = response;
+            var response = await AIManager.SendQuery(prompt:$"""
+
+                Ты — опытный эксперт по сборке ПК. Оцени представленную сборку на наличие «бутылочного горлышка» (bottleneck).
+
+                **Комплектующие:**
+                {SelectedCpu?.Name}, {SelectedGpu?.Name}, {SelectedMotherboard?.Name}, {SelectedPcCase?.Name}, {SelectedPowerunit?.Name},
+                {SelectedRam?.Name}, {SelectedCooler?.Name}
+
+                **Что нужно сделать:**
+                1. **Общая оценка: X/10** — насколько сбалансирована сборка (10 = идеальный баланс, 1 = критические несоответствия).
+                2. **Комментарий по каждому компоненту** (1–2 предложения): уместен ли он в этой сборке, не создаёт ли узкое место, нет ли избыточности.
+                3. **Главное бутылочное горлышко** — укажи, что сильнее всего ограничивает систему, и в каких задачах (игры, рендер, работа).
+                4. **Рекомендации** — что заменить/добавить в первую очередь (кратко, по приоритету).
+
+                **Требования:**
+                - Учитывай баланс CPU↔GPU, достаточность БП, объём и скорость RAM, охлаждение.
+                - Пиши по делу, без воды. **Максимум 300 слов.**
+                - Формат: короткие блоки с заголовками, оценка в начале.
+
+                ---
+
+                Если хочешь, могу адаптировать промт под конкретный сценарий (только игры / работа / стриминг) — скажи, и подправлю формулировки.    
+             """);
+            AiResponse.Text = response;
         }
         catch (Exception error)
         {
-            AiResponse.Content = $"Ошибка запроса: {error}";
+            AiResponse.Text = $"Ошибка запроса: {error}";
         }
     } 
 
