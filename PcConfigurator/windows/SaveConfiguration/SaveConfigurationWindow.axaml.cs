@@ -8,6 +8,7 @@ using PcConfigurator.services.WindowsManager;
 using PcConfigurator.shared.DataBase;
 using Avalonia.Media;
 using Avalonia;
+using PcConfigurator.windows.Configurator;
 
 namespace PcConfigurator.windows.SaveConfiguration;
 
@@ -102,5 +103,12 @@ public partial class SaveConfigurationWindow : Window
         AcceptConfiguration();
         var nextWindows = new MainWindow();
         MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
+    }
+
+    private void CancelButtonHandler(object sender, RoutedEventArgs e)
+    {
+        var nextWindow = new ConfiguratorWindow();
+
+        MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindow);
     }
 }
