@@ -25,7 +25,9 @@
                 <TextBox x:Name="PasswordTextBox" PlaceholderText="Введите пароль" PasswordChar="●" FontSize="16" Padding="10,8"/>
             </StackPanel>
 
-            <Button x:Name="LoginButton" Content="Войти" 
+            <Button x:Name="LoginButton"
+                    Click="AuthButtonHanlder"
+                    Content="Войти" 
                     HorizontalAlignment="Stretch" 
                     HorizontalContentAlignment="Center"
                     FontSize="18" 

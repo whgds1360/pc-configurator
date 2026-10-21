@@ -2,7 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using PcConfigurator.shared.DataBase;
 using PcConfigurator.services.WindowsManager;
-using PcConfigurator.windows.Main;
+using PcConfigurator.windows.Auth;
 using Avalonia.Media;
 using PcConfigurator.helpers.TableStructures;
 using System;
@@ -35,7 +35,7 @@ internal partial class PreMainWindow : Window
                     await db.Database.EnsureCreatedAsync();
                 };
 
-                var nextWindow = new MainWindow();
+                var nextWindow = new AuthWindow();
                 MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindow);
             }
             else
