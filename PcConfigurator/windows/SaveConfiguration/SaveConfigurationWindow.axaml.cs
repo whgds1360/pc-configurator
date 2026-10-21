@@ -22,6 +22,10 @@ public partial class SaveConfigurationWindow : Window
     private readonly int _pcCaseId;
     private readonly int _coolerId;
 
+    public SaveConfigurationWindow()
+    {
+        InitializeComponent();
+    }
     public SaveConfigurationWindow(
         int cpuId,
         int gpuId,
@@ -105,7 +109,7 @@ public partial class SaveConfigurationWindow : Window
         MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
-    private void CancelButtonHandler(object sender, RoutedEventArgs e)
+    private void CancelButtonHandler(object? sender, RoutedEventArgs e)
     {
         var nextWindow = new ConfiguratorWindow();
 

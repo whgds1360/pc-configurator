@@ -6,7 +6,8 @@
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
         x:Class="PcConfigurator.windows.Admin.AdminWindow"
-        Title="Admin">
+        Title="Admin"
+        CanResize="False">
 
     <DockPanel Margin="16">
 
