@@ -63,8 +63,7 @@ public partial class SaveConfigurationWindow : Window
                 @"INSERT INTO configs
                       (Name, CpuId, GpuId, MotherboardId, PowerUnitId, RamId, PcCaseId, CoolerId)
                   VALUES
-                      (@Name, @CpuId, @GpuId, @MotherboardId, @PowerUnitId, @RamId, @PcCaseId, @CoolerId)
-                  RETURNING Id;",
+                      (@Name, @CpuId, @GpuId, @MotherboardId, @PowerUnitId, @RamId, @PcCaseId, @CoolerId)",
                 new
                 {
                     Name = _name,
