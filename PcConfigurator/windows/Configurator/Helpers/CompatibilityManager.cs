@@ -45,7 +45,7 @@ internal class CompatibilityManager
                 if (connect.QueryFirstOrDefault(@"SELECT * FROM cpucompatibility 
                     WHERE CpuId = @SelectedCpuId 
                     AND Chipset = @ChipsetSelectedMotherboard", 
-                    new {SelectedCpuId = selectedCpu.Id, ChipsetSelectedMotherboard = selectedMotherboard.Id}) is not null)
+                    new {SelectedCpuId = selectedCpu.Id, ChipsetSelectedMotherboard = selectedMotherboard.ChipSet}) is not null)
                 {
                     return true;
                 }

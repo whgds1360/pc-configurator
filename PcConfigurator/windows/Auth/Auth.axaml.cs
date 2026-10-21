@@ -5,6 +5,8 @@ using PcConfigurator.windows.Main;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
+using System;
+using System.Diagnostics;
 
 
 namespace PcConfigurator.windows.Auth;
@@ -16,7 +18,7 @@ internal partial class AuthWindow : Window
         InitializeComponent();
     }
 
-    private void AuthButtonHanlder(object sender, RoutedEventArgs e)
+    private async void AuthButtonHanlder(object sender, RoutedEventArgs e)
     {
 
         var login = LoginTextBox.Text;
@@ -24,29 +26,35 @@ internal partial class AuthWindow : Window
 
         using (var connect = DataBaseManager.GetConnection())
         {
-            var response = connect.QuerySingleOrDefault<string>(@"""
-                SELECT role FROM users WHERE login = :login AND password = :password
-            """, new {login = login, password = password});
-
-            if (response != null)
+            try
             {
-                switch (response)
+                var response = await connect.QuerySingleOrDefaultAsync<string>("SELECT role FROM users WHERE login = @login AND password = @password", new {login = login, password = password});
+
+                if (response != null)
                 {
-                    case "admin":
+                    switch (response)
+                    {
+                        case "admin":
 
-                        break;
-                    
-                    case "user":
-                        MainWindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
+                            break;
+                        
+                        case "user":
+                            MainWindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
 
-                        break;
+                            break;
+                    }
+                }
+
+                else
+                {
+                    StatusText.Foreground = new SolidColorBrush(Color.Parse("#991f25"));
+                    StatusText.Text = "НЕВЕРНЫЕ ДАННЫЕ ДЛЯ ВХОДА";
                 }
             }
 
-            else
+            catch (Exception error)
             {
-                StatusText.Foreground = new SolidColorBrush(Color.Parse("#991f25"));
-                StatusText.Text = "НЕВЕРНЫЕ ДАННЫЕ ДЛЯ ВХОДА";
+                Debug.WriteLine($"Ошибка в окне авторизации: {error}");
             }
         }
     }
