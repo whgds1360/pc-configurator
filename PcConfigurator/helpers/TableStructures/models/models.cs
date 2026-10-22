@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace PcConfigurator.helpers.TableStructures;
@@ -9,6 +8,10 @@ public class Config
 {
     [Key]
     public int Id { get; set; }
+
+    public string UserLogin { get; set; } = string.Empty;
+    [ForeignKey(nameof(UserLogin))]
+    public User User { get; set; } = null!;
 
     [MaxLength(100)]
     public string Name { get; set; } = string.Empty;
