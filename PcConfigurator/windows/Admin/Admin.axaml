@@ -9,24 +9,44 @@
         Title="Admin"
         CanResize="False">
 
-    <DockPanel Margin="16">
+    <Window.Styles>
+        <Style Selector="Label.DbInfo">
+            <Setter Property="FontSize" Value="20"></Setter>
+        </Style>
+    </Window.Styles>
 
-        <StackPanel DockPanel.Dock="Bottom" Spacing="15">
-            <TextBlock x:Name="StatusText" Text="Готово"/>
+    <StackPanel Spacing="100" Margin="50">
+        <StackPanel>
+            <Label FontSize="50" HorizontalAlignment="Center">|Админ панель|</Label>
             
-            <StackPanel Orientation="Horizontal" Spacing="8">
-                <Button x:Name="SaveButton" Content="Сохранить"/>
-                <Button x:Name="ResetButton" Content="Сбросить"/>
+            <Label FontSize="40">Информация о БД:</Label>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Classes="DbInfo">Версия сервера:</Label>
+                <Label Classes="DbInfo">Maria DB v2.3</Label>
             </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Classes="DbInfo">iP адрес:</Label>
+                <Label Classes="DbInfo">localhost</Label>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Classes="DbInfo">Порт:</Label>
+                <Label Classes="DbInfo">3306</Label>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Classes="DbInfo">Подключено как:</Label>
+                <Label Classes="DbInfo">root</Label>
+            </StackPanel>
+
         </StackPanel>
 
-        <StackPanel Spacing="10">
-            <TextBlock Text="Лимит токенов"/>
-            <TextBox x:Name="MaxTokensBox"/>
-
-            <TextBlock Text="Температура ответов AI"/>
-            <TextBox x:Name="TemperatureBox"/>
+        <StackPanel Orientation="Horizontal" Spacing="50" HorizontalAlignment="Center">
+            <Button FontSize="30">Добавить запись</Button>
+            <Button FontSize="30">Удалить запись</Button>
         </StackPanel>
+    </StackPanel>
 
-    </DockPanel>
 </Window>
