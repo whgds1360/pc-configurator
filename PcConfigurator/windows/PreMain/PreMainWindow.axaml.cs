@@ -18,7 +18,7 @@ internal partial class PreMainWindow : Window
 
     private async void ConnectHandler(object sender, RoutedEventArgs e)
     {   
-        if (DataBaseManager.currentStatus != OrderStatus.Connect)
+        if (DataBaseManager.GetStatus() != OrderStatus.Connect)
         {
             var connectUrl = DataBaseManager.CreateUrlConnection(server:Server.Text ?? String.Empty, 
                                                                     port:Port.Text ?? String.Empty, 

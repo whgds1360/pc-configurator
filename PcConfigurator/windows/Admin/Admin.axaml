@@ -16,23 +16,29 @@
         </Style>
     </Window.Styles>
 
-    <StackPanel Spacing="100" Margin="50">
-       <StackPanel>
-        <ItemsControl x:Name="DbInfoList">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate x:DataType="local:DbInfoTemplate">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Classes="DbInfo" Width="220" Content="{Binding Key}"/>
-                        <Label Classes="DbInfo" Content="{Binding Value}"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-    </StackPanel>
+    <StackPanel Spacing="30">
+        <StackPanel>
+            <Label FontSize="50" HorizontalAlignment="Center">|АДМИН ПАНЕЛЬ|</Label>
+        </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Spacing="50" HorizontalAlignment="Center">
-            <Button FontSize="30">Добавить запись</Button>
-            <Button FontSize="30">Удалить запись</Button>
+        <StackPanel Spacing="100" Margin="50">
+        <StackPanel>
+            <ItemsControl x:Name="DbInfoList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:DbInfoTemplate">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Classes="DbInfo" Width="220" Content="{Binding Key}"/>
+                            <Label Classes="DbInfo" Content="{Binding Value}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Spacing="50" HorizontalAlignment="Center">
+                <Button FontSize="30">Добавить запись</Button>
+                <Button FontSize="30">Удалить запись</Button>
+            </StackPanel>
         </StackPanel>
     </StackPanel>
 
