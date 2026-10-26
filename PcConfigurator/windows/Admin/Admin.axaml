@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
+        xmlns:local="using:PcConfigurator.windows.Admin"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
         x:Class="PcConfigurator.windows.Admin.AdminWindow"
@@ -16,32 +17,18 @@
     </Window.Styles>
 
     <StackPanel Spacing="100" Margin="50">
-        <StackPanel>
-            <Label FontSize="50" HorizontalAlignment="Center">|Админ панель|</Label>
-            
-            <Label FontSize="40">Информация о БД:</Label>
-
-            <StackPanel Orientation="Horizontal">
-                <Label Classes="DbInfo">Версия сервера:</Label>
-                <Label Classes="DbInfo">Maria DB v2.3</Label>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <Label Classes="DbInfo">iP адрес:</Label>
-                <Label Classes="DbInfo">localhost</Label>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <Label Classes="DbInfo">Порт:</Label>
-                <Label Classes="DbInfo">3306</Label>
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-                <Label Classes="DbInfo">Подключено как:</Label>
-                <Label Classes="DbInfo">root</Label>
-            </StackPanel>
-
-        </StackPanel>
+       <StackPanel>
+        <ItemsControl x:Name="DbInfoList">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:DbInfoTemplate">
+                    <StackPanel Orientation="Horizontal">
+                        <Label Classes="DbInfo" Width="220" Content="{Binding Key}"/>
+                        <Label Classes="DbInfo" Content="{Binding Value}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
 
         <StackPanel Orientation="Horizontal" Spacing="50" HorizontalAlignment="Center">
             <Button FontSize="30">Добавить запись</Button>

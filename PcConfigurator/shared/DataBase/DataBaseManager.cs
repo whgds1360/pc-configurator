@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
@@ -13,7 +14,8 @@ public enum OrderStatus
 
 internal class DataBaseManager
 {
-    public static OrderStatus currentStatus = OrderStatus.NoConnect; 
+    private static Dictionary<string, string> dataBaseInfo = new();
+    private static OrderStatus currentStatus = OrderStatus.NoConnect; 
 
     private static string? _connectionString = "Server=localhost;Port=3306;Database=test;Uid=root;Pwd=;";
 
@@ -47,6 +49,11 @@ internal class DataBaseManager
     {
         if (!int.TryParse(port, out _)){return "";}
 
+        dataBaseInfo["ip"] = server;
+        dataBaseInfo["port"] = server;
+        dataBaseInfo["db"] = server;
+        dataBaseInfo["user"] = server;
+
         return $"Server={server};Port={port};Database={db};Uid={user};Pwd={password};";
     }
 
@@ -54,6 +61,8 @@ internal class DataBaseManager
     {
         currentStatus = newStatus;
     }
+
+    public static Dictionary<string, string> GetInfo() => dataBaseInfo;
 
     public static MySqlConnection GetConnection() => !string.IsNullOrEmpty(_connectionString) ? new MySqlConnection(_connectionString) : throw new InvalidDataException("Ошибка БД");
 
