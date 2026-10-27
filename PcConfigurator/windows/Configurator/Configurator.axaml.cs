@@ -234,6 +234,7 @@ internal partial class ConfiguratorWindow : Window
 
             StatusBar.Content = "Совместимо";
             StatusBar.Foreground = new SolidColorBrush(Color.Parse("#288016"));
+            CommentStatusBar.Content = string.Empty;
 
             break;
 

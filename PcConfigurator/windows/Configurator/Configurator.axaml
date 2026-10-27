@@ -280,7 +280,7 @@
                         Padding="10">
 
                         <StackPanel>
-                        <Label Name="StatusBar" MaxWidth="500" HorizontalAlignment="Center" Foreground="#EABB9C13">- Форм-фактор материнской платы и корпуса НЕСОВМЕСТИМЫ</Label>
+                        <Label Name="StatusBar" MaxWidth="500" HorizontalAlignment="Center" Foreground="#EABB9C13">Ожидание проверки</Label>
                         <Label Name="CommentStatusBar" MaxHeight="130"></Label>
                         </StackPanel>
                        
