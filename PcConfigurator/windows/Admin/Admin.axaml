@@ -39,6 +39,13 @@
                 <Button FontSize="30">Добавить запись</Button>
                 <Button FontSize="30">Удалить запись</Button>
             </StackPanel>
+
+            <ComboBox ItemsSource="{Binding Tables}"
+                SelectedItem="{Binding SelectTable}"
+                SelectionChanged="ChangedTableHandler" 
+                IsVisible="true" 
+                MaxDropDownHeight="50" 
+                MinWidth="250"></ComboBox>
         </StackPanel>
     </StackPanel>
 

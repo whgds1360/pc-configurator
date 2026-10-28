@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using PcConfigurator.shared.DataBase;
 
 namespace PcConfigurator.windows.Admin;
@@ -13,10 +14,23 @@ public class DbInfoTemplate
 
 public partial class AdminWindow : Window
 {
+    object? SelectTable { get; set; } = null;
+    object[] Tables { get; set; } = [];
+
     public AdminWindow()
     {
         InitializeComponent();
         GetDbInfo();
+    }
+
+    private void initTablesCombo()
+    {
+        
+    }
+
+    private void ChangedTableHandler(object sender, RoutedEventArgs e)
+    {
+        
     }
 
     private void GetDbInfo()
