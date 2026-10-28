@@ -14,15 +14,23 @@ public class DbInfoTemplate
     public string Value { get; set; } = string.Empty;
 }
 
+public class PropetryListTemplate
+{
+    public string Name { get; set; } = string.Empty;
+    public string Tag { get; set; } = string.Empty;
+}
+
 public partial class AdminWindow : Window
 {
-    private static MetaData? SelectTable { get; set; } = null;
+    private string SelectTable { get; set; } = string.Empty;
     private static List<MetaData> TablesMeta { get; set; } = new();
-    private static List<string> TablesName { get; set; } = new();
+    private List<string> TablesName { get; set; } = new();
 
     public AdminWindow()
     {
+        initTablesCombo();
         InitializeComponent();
+        DataContext = this; 
         GetDbInfo();
     }
 
@@ -47,7 +55,24 @@ public partial class AdminWindow : Window
 
     private void ChangedTableHandler(object sender, RoutedEventArgs e)
     {
-        
+        if (SelectTable is null) return;
+
+        var dataItems = new List<PropetryListTemplate>();
+
+        foreach (var table in TablesMeta)
+        {
+            if (table.TableName == SelectTable)
+            {
+                if (table.Properties is null) continue;
+                
+                foreach (var prop in table.Properties)
+                {
+                    dataItems.Add(new PropetryListTemplate {Name = prop, Tag = prop});
+                }
+            }
+        }
+
+        PropertyList.ItemsSource =  dataItems;
     }
 
     private void GetDbInfo()

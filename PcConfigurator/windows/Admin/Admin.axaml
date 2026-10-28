@@ -7,6 +7,7 @@
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
         x:Class="PcConfigurator.windows.Admin.AdminWindow"
+        x:DataType="local:AdminWindow"
         Title="Admin"
         CanResize="False">
 
@@ -40,12 +41,24 @@
                 <Button FontSize="30">Удалить запись</Button>
             </StackPanel>
 
-            <ComboBox ItemsSource="{Binding Tables}"
+            <ComboBox ItemsSource="{Binding TablesName}"
                 SelectedItem="{Binding SelectTable}"
                 SelectionChanged="ChangedTableHandler" 
                 IsVisible="true" 
                 MaxDropDownHeight="50" 
-                MinWidth="250"></ComboBox>
+                MinWidth="250">
+            </ComboBox>
+
+            <ItemsControl x:Name="PropertyList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="local:PropetryListTemplate">
+                        <StackPanel>
+                            <Label Content="{Binding Name}" Tag = "{Binding Tag}"></Label>
+                            <TextBox Tag="{Binding Tag}" PlaceholderText="Введите новое значение"></TextBox>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </StackPanel>
 
