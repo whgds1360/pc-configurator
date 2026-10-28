@@ -10,6 +10,6 @@ namespace PcConfigurator.helpers.TableStructures;
 /// </summary>
 internal class MetaData
 {
-    string? TableName { set; get; }
-    List<string>? Properties { set; get; } 
+    public string? TableName { set; get; }
+    public List<string>? Properties { set; get; } 
 }
