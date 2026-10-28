@@ -50,9 +50,9 @@ internal class DataBaseManager
         if (!int.TryParse(port, out _)){return "";}
 
         dataBaseInfo["ip"] = server;
-        dataBaseInfo["port"] = server;
-        dataBaseInfo["db"] = server;
-        dataBaseInfo["user"] = server;
+        dataBaseInfo["port"] = port;
+        dataBaseInfo["db"] = db;
+        dataBaseInfo["user"] = user;
 
         return $"Server={server};Port={port};Database={db};Uid={user};Pwd={password};";
     }

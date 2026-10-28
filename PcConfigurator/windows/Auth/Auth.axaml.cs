@@ -2,6 +2,7 @@ using Dapper;
 using PcConfigurator.shared.DataBase;
 using PcConfigurator.services.WindowsManager;
 using PcConfigurator.windows.Main;
+using PcConfigurator.windows.Admin;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -35,6 +36,8 @@ internal partial class AuthWindow : Window
                     switch (response)
                     {
                         case "admin":
+
+                            MainWindowsManager.changeWindow(closingWindow: this, newWindow: new AdminWindow());
 
                             break;
                         
