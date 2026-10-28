@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using PcConfigurator.shared.DataBase;
 using PcConfigurator.helpers.TableStructures;
 using System.Linq;
+using System.Diagnostics;
 
 namespace PcConfigurator.windows.Admin;
 
@@ -22,9 +23,9 @@ public class PropetryListTemplate
 
 public partial class AdminWindow : Window
 {
-    private string SelectTable { get; set; } = string.Empty;
-    private static List<MetaData> TablesMeta { get; set; } = new();
-    private List<string> TablesName { get; set; } = new();
+    internal string SelectTable { get; set; } = string.Empty;
+    internal static List<MetaData> TablesMeta { get; set; } = new();
+    internal List<string> TablesName { get; set; } = new();
 
     public AdminWindow()
     {
@@ -45,12 +46,14 @@ public partial class AdminWindow : Window
                 })
             .ToList();
 
+        Debug.WriteLine($"Из контекста: {TablesMeta}");
         foreach (var table in TablesMeta)
         {
-            if (table.TableName is null) continue;
+            if (table.TableName is null) Debug.WriteLine("Пустота ёпт");
 
-            TablesName.Add(table.TableName);
-        }        
+            TablesName.Add(table.TableName ?? "");
+        }
+        Debug.WriteLine($"{TablesName}");        
     }
 
     private void ChangedTableHandler(object sender, RoutedEventArgs e)
