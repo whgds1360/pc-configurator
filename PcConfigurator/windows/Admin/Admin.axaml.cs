@@ -46,48 +46,52 @@ public partial class AdminWindow : Window
 
     private void AddButtonHandler()
     {
-        var textBoxs = PropertyList
+        var textBoxes = PropertyList
             .GetVisualDescendants()
             .OfType<TextBox>()
             .ToList();
 
-        var status = Status.ok;
+        var values = new List<string>();
 
-        foreach (var textBox in textBoxs)
+        foreach (var tb in textBoxes)
         {
-            if (string.IsNullOrEmpty(textBox.Text))
-            {   
-                StatusBar.Content = "Не все поля заполнены!";
+            if (string.IsNullOrWhiteSpace(tb.Text))
+            {
+                StatusBar.Content = $"Поле '{tb.Tag}' не заполнено или есть белые пробелы!";
                 StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
-
-                status = Status.error;
-                break;
+                return;
             }
+            values.Add(tb.Text);
         }
 
-        if (status == Status.ok)
+        if (values.Count == 0)
         {
-            using (var connect = DataBaseManager.GetConnection())
-            {
-                try
-                {
-                    var data = new
-                    {
-                        
-                    }
+            StatusBar.Content = "Нет данных для вставки.";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+            return;
+        }
 
-                    connect.Execute(sql:@"
-                        INSERT INTO @table
-                        VALUES @values
-                    ");
+        using var connect = DataBaseManager.GetConnection();
+        try
+        {
+            var placeholders = new List<string>();
+            var parameters = new Dictionary<string, string>();
 
-                    
-                }
-                catch (Exception error)
-                {
-                    StatusBar.Content = $"Ошибка записи в БД: {error.Message}";
-                }
+            for (int i = 0; i < values.Count; i++)
+            {   
+                placeholders.Add($"@p{i}");
+                parameters[$"p{i}"] = values[i];
             }
+
+            connect.Execute($"INSERT INTO \"{SelectTable}\" VALUES ({string.Join(", ", placeholders)})", parameters);
+
+            StatusBar.Content = "Запись добавлена!";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#00a000"));
+        }
+        catch (Exception error)
+        {
+            StatusBar.Content = $"Ошибка записи в БД: {error.Message}";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
         }
     }
 
