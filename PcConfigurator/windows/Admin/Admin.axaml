@@ -67,6 +67,8 @@
                 </ItemsControl.ItemTemplate>
 
             </ItemsControl>
+            
+            <Label Name="StatusBar"></Label>
         </StackPanel>
     </StackPanel>
 

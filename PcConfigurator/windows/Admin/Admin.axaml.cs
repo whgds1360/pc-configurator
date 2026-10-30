@@ -5,9 +5,18 @@ using PcConfigurator.shared.DataBase;
 using PcConfigurator.helpers.TableStructures;
 using System.Linq;
 using System.Diagnostics;
+using Avalonia.VisualTree;
+using Avalonia.Media;
+using System;
+using Dapper;
 
 namespace PcConfigurator.windows.Admin;
 
+enum Status
+{
+    ok,
+    error
+}
 
 public class DbInfoTemplate
 {
@@ -33,6 +42,53 @@ public partial class AdminWindow : Window
         InitializeComponent();
         DataContext = this; 
         GetDbInfo();
+    }
+
+    private void AddButtonHandler()
+    {
+        var textBoxs = PropertyList
+            .GetVisualDescendants()
+            .OfType<TextBox>()
+            .ToList();
+
+        var status = Status.ok;
+
+        foreach (var textBox in textBoxs)
+        {
+            if (string.IsNullOrEmpty(textBox.Text))
+            {   
+                StatusBar.Content = "Не все поля заполнены!";
+                StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+
+                status = Status.error;
+                break;
+            }
+        }
+
+        if (status == Status.ok)
+        {
+            using (var connect = DataBaseManager.GetConnection())
+            {
+                try
+                {
+                    var data = new
+                    {
+                        
+                    }
+
+                    connect.Execute(sql:@"
+                        INSERT INTO @table
+                        VALUES @values
+                    ");
+
+                    
+                }
+                catch (Exception error)
+                {
+                    StatusBar.Content = $"Ошибка записи в БД: {error.Message}";
+                }
+            }
+        }
     }
 
     private void initTablesCombo()
