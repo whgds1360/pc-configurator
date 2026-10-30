@@ -17,12 +17,12 @@
         </Style>
     </Window.Styles>
 
-    <StackPanel Spacing="30">
+    <StackPanel Spacing="15">
         <StackPanel>
             <Label FontSize="50" HorizontalAlignment="Center">|АДМИН ПАНЕЛЬ|</Label>
         </StackPanel>
 
-        <StackPanel Spacing="100" Margin="50">
+        <StackPanel Spacing="40" Margin="50">
         <StackPanel>
             <ItemsControl x:Name="DbInfoList">
                 <ItemsControl.ItemTemplate>
@@ -50,14 +50,22 @@
             </ComboBox>
 
             <ItemsControl x:Name="PropertyList">
+
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" ItemSpacing="5"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="local:PropetryListTemplate">
                         <StackPanel>
-                            <Label Content="{Binding Name}" Tag = "{Binding Tag}"></Label>
-                            <TextBox Tag="{Binding Tag}" PlaceholderText="Введите новое значение"></TextBox>
+                            <Label Content="{Binding Name}" Tag = "{Binding Tag}" FontSize="10"></Label>
+                            <TextBox Tag="{Binding Tag}" PlaceholderText="Введите новое значение" FontSize="10"></TextBox>
                         </StackPanel>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
+
             </ItemsControl>
         </StackPanel>
     </StackPanel>
