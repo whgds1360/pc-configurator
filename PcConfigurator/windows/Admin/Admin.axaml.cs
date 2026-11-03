@@ -36,6 +36,9 @@ public partial class AdminWindow : Window
     internal static List<MetaData> TablesMeta { get; set; } = new();
     internal List<string> TablesName { get; set; } = new();
 
+    List<string> placeholders = new();
+    Dictionary<string, string> parameters = new();
+
     public AdminWindow()
     {
         initTablesCombo();
@@ -44,7 +47,58 @@ public partial class AdminWindow : Window
         GetDbInfo();
     }
 
-    private void AddButtonHandler()
+    private List<TextBox> GetTexboxes()
+    {
+        var textBoxes = PropertyList
+            .GetVisualDescendants()
+            .OfType<TextBox>()
+            .ToList();
+
+        return textBoxes;
+    }
+
+    private Dictionary<string, List<string>> GetValues()
+    {   
+        Dictionary<string, List<string>> data = new();
+
+        List<string> valid = new();
+        List<string> problem = new();
+
+        data["Valid"] = valid;
+        data["Problem"] =  problem;
+
+        foreach (var texbox in GetTexboxes())
+        {
+            if (!string.IsNullOrWhiteSpace(texbox.Text))
+            {
+                values.Add(texbox.Text);
+            }
+            else
+            {
+                
+            }
+        }
+    }
+
+    private void DeleteButtonHandler(object sender, RoutedEventArgs e)
+    {
+        var values = new List<string>();
+
+        foreach (var tb in GetTexboxes())
+        {
+            if (!string.IsNullOrWhiteSpace(tb.Text))
+            {
+                values.Add(tb.Text);
+            }
+        }
+
+        if (values.Count > 1)
+        {
+            var
+        }
+    }
+
+    private void AddButtonHandler(object sender, RoutedEventArgs e)
     {
         var textBoxes = PropertyList
             .GetVisualDescendants()

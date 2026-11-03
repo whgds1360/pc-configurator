@@ -37,7 +37,7 @@
         </StackPanel>
 
             <StackPanel Orientation="Horizontal" Spacing="50" HorizontalAlignment="Center">
-                <Button FontSize="30">Добавить запись</Button>
+                <Button FontSize="30" Click="AddButtonHandler">Добавить запись</Button>
                 <Button FontSize="30">Удалить запись</Button>
             </StackPanel>
 
