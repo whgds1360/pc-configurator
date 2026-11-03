@@ -9,6 +9,7 @@ using Avalonia.VisualTree;
 using Avalonia.Media;
 using System;
 using Dapper;
+using Org.BouncyCastle.Tls;
 
 namespace PcConfigurator.windows.Admin;
 
@@ -61,23 +62,27 @@ public partial class AdminWindow : Window
     {   
         Dictionary<string, List<string>> data = new();
 
-        List<string> valid = new();
-        List<string> problem = new();
+        data["Valid"] = new List<string>();
+        data["Problem"] =  new List<string>();
 
-        data["Valid"] = valid;
-        data["Problem"] =  problem;
-
-        foreach (var texbox in GetTexboxes())
+        foreach (var textbox in GetTexboxes())
         {
-            if (!string.IsNullOrWhiteSpace(texbox.Text))
+            if (!string.IsNullOrEmpty(textbox.Text))
             {
-                values.Add(texbox.Text);
+                data["Valid"].Add(textbox.Text.Trim());
             }
             else
             {
-                
+                var problem_value = textbox?.Tag?.ToString();
+
+                if (problem_value is not null)
+                {
+                    data["Problem"].Add(problem_value);
+                }
             }
         }
+
+        return data;
     }
 
     private void DeleteButtonHandler(object sender, RoutedEventArgs e)
