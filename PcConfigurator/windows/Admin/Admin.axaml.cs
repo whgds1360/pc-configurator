@@ -84,37 +84,39 @@ internal partial class AdminWindow : Window
         return data;
     }
 
+    private Dictionary<string, object> CreateParams(List<string> values)
+    {
+        var placeholders = new List<string>();
+        var parameters = new Dictionary<string, string>();
+
+            for (int i = 0; i < values.Count; i++)
+            {   
+                placeholders.Add($"@p{i}");
+                parameters[$"p{i}"] = values[i];
+            }
+
+        return new Dictionary<string, object>
+        {
+            { "placeholders", placeholders },
+            { "parameters", parameters}
+        };
+    }
+
     private void DeleteButtonHandler(object sender, RoutedEventArgs e)
     {
         var data = GetValues();
 
-        if (values.Count > 1)
+        if (data["Valid"].Count > 1)
         {
-            var
+           var parameters = CreateParams(data["Valid"]);
         }
     }
 
     private void AddButtonHandler(object sender, RoutedEventArgs e)
     {
-        var textBoxes = PropertyList
-            .GetVisualDescendants()
-            .OfType<TextBox>()
-            .ToList();
+        var data = GetValues();
 
-        var values = new List<string>();
-
-        foreach (var tb in textBoxes)
-        {
-            if (string.IsNullOrWhiteSpace(tb.Text))
-            {
-                StatusBar.Content = $"Поле '{tb.Tag}' не заполнено или есть белые пробелы!";
-                StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
-                return;
-            }
-            values.Add(tb.Text);
-        }
-
-        if (values.Count == 0)
+        if (data["Valid"].Count == 0)
         {
             StatusBar.Content = "Нет данных для вставки.";
             StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
@@ -124,14 +126,7 @@ internal partial class AdminWindow : Window
         using var connect = DataBaseManager.GetConnection();
         try
         {
-            var placeholders = new List<string>();
-            var parameters = new Dictionary<string, string>();
-
-            for (int i = 0; i < values.Count; i++)
-            {   
-                placeholders.Add($"@p{i}");
-                parameters[$"p{i}"] = values[i];
-            }
+            var parameters = CreateParams(data["Valid"]);
 
             connect.Execute($"INSERT INTO \"{SelectTable}\" VALUES ({string.Join(", ", placeholders)})", parameters);
 
