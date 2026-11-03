@@ -9,7 +9,6 @@ using Avalonia.VisualTree;
 using Avalonia.Media;
 using System;
 using Dapper;
-using Org.BouncyCastle.Tls;
 
 namespace PcConfigurator.windows.Admin;
 
@@ -19,26 +18,26 @@ enum Status
     error
 }
 
-public class DbInfoTemplate
+internal class DbInfoTemplate
 {
-    public string Key { get; set; } = string.Empty;
-    public string Value { get; set; } = string.Empty;
+    internal string Key { get; set; } = string.Empty;
+    internal string Value { get; set; } = string.Empty;
 }
 
-public class PropetryListTemplate
+internal class PropetryListTemplate
 {
-    public string Name { get; set; } = string.Empty;
-    public string Tag { get; set; } = string.Empty;
+    internal string Name { get; set; } = string.Empty;
+    internal string Tag { get; set; } = string.Empty;
 }
 
-public partial class AdminWindow : Window
+internal partial class AdminWindow : Window
 {
     internal string SelectTable { get; set; } = string.Empty;
-    internal static List<MetaData> TablesMeta { get; set; } = new();
+    private List<MetaData> TablesMeta { get; set; } = new();
     internal List<string> TablesName { get; set; } = new();
 
-    List<string> placeholders = new();
-    Dictionary<string, string> parameters = new();
+    private List<string> placeholders = new();
+    private Dictionary<string, string> parameters = new();
 
     public AdminWindow()
     {
@@ -87,15 +86,7 @@ public partial class AdminWindow : Window
 
     private void DeleteButtonHandler(object sender, RoutedEventArgs e)
     {
-        var values = new List<string>();
-
-        foreach (var tb in GetTexboxes())
-        {
-            if (!string.IsNullOrWhiteSpace(tb.Text))
-            {
-                values.Add(tb.Text);
-            }
-        }
+        var data = GetValues();
 
         if (values.Count > 1)
         {
