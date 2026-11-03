@@ -151,14 +151,10 @@ internal partial class AdminWindow : Window
                 })
             .ToList();
 
-        Debug.WriteLine($"Из контекста: {TablesMeta}");
         foreach (var table in TablesMeta)
         {
-            if (table.TableName is null) Debug.WriteLine("Пустота ёпт");
-
             TablesName.Add(table.TableName ?? "");
-        }
-        Debug.WriteLine($"{TablesName}");        
+        }      
     }
 
     private void ChangedTableHandler(object sender, RoutedEventArgs e)
