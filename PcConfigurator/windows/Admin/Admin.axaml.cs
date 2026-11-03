@@ -110,6 +110,18 @@ internal partial class AdminWindow : Window
         {
            var parameters = CreateParams(data["Valid"]);
         }
+        else if (data["Valid"].Count == 1)
+        {
+            using (var connect = DataBaseManager.GetConnection())
+            {
+                connect.Execute("DELETE FROM @table WHERE id = @id;" , new{table = SelectTable, id = data["Valid"][0]});
+            }
+        }
+        else
+        {
+            StatusBar.Content = $"Нету данных по которым можно понять, что именно удалять.";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+        }
     }
 
     private void AddButtonHandler(object sender, RoutedEventArgs e)
