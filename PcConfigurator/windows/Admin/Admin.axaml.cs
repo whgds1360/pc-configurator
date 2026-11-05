@@ -141,9 +141,9 @@ internal partial class AdminWindow : Window
         using var connect = DataBaseManager.GetConnection();
         try
         {
-            var parameters = CreateParams(data["Valid"]);
+            var parameters = CreateParams(data["Valid"], out var placeholders);
 
-            connect.Execute($"INSERT INTO \"{SelectTable}\" VALUES ({string.Join(", ", placeholders)})", parameters);
+            connect.Execute($"INSERT INTO `{SelectTable}` VALUES ({string.Join(", ", placeholders)})", parameters);
 
             StatusBar.Content = "Запись добавлена!";
             StatusBar.Foreground = new SolidColorBrush(Color.Parse("#00a000"));
