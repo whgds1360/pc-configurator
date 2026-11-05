@@ -111,7 +111,7 @@ internal partial class AdminWindow : Window
             {
                 try
                 {
-                    connect.Execute("DELETE FROM @table WHERE id = @id;" , new{table = SelectTable, id = data["Valid"][0]});
+                    connect.Execute($"DELETE FROM `{SelectTable}` WHERE id = @id;", new { id = data["Valid"][0] });
                 }
                 catch (MySqlException error)
                 {
