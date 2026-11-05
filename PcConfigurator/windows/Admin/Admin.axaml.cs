@@ -9,6 +9,7 @@ using Avalonia.VisualTree;
 using Avalonia.Media;
 using System;
 using Dapper;
+using MySql.Data.MySqlClient;
 
 namespace PcConfigurator.windows.Admin;
 
@@ -35,9 +36,6 @@ internal partial class AdminWindow : Window
     internal string SelectTable { get; set; } = string.Empty;
     private List<MetaData> TablesMeta { get; set; } = new();
     internal List<string> TablesName { get; set; } = new();
-
-    private List<string> placeholders = new();
-    private Dictionary<string, string> parameters = new();
 
     public AdminWindow()
     {
@@ -84,22 +82,18 @@ internal partial class AdminWindow : Window
         return data;
     }
 
-    private Dictionary<string, object> CreateParams(List<string> values)
+    private Dictionary<string, object> CreateParams(List<string> values, out List<string> placeholders)
     {
-        var placeholders = new List<string>();
-        var parameters = new Dictionary<string, string>();
+        placeholders = new List<string>();
+        var parameters = new Dictionary<string, object>();
 
-            for (int i = 0; i < values.Count; i++)
-            {   
-                placeholders.Add($"@p{i}");
-                parameters[$"p{i}"] = values[i];
-            }
-
-        return new Dictionary<string, object>
+        for (int i = 0; i < values.Count; i++)
         {
-            { "placeholders", placeholders },
-            { "parameters", parameters}
-        };
+            placeholders.Add($"@p{i}");
+            parameters[$"p{i}"] = values[i];
+        }
+
+        return parameters;
     }
 
     private void DeleteButtonHandler(object sender, RoutedEventArgs e)
@@ -108,13 +102,22 @@ internal partial class AdminWindow : Window
 
         if (data["Valid"].Count > 1)
         {
-           var parameters = CreateParams(data["Valid"]);
+            StatusBar.Content = $"Пока поддерживается только удаление по id";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
         }
         else if (data["Valid"].Count == 1)
         {
             using (var connect = DataBaseManager.GetConnection())
             {
-                connect.Execute("DELETE FROM @table WHERE id = @id;" , new{table = SelectTable, id = data["Valid"][0]});
+                try
+                {
+                    connect.Execute("DELETE FROM @table WHERE id = @id;" , new{table = SelectTable, id = data["Valid"][0]});
+                }
+                catch (MySqlException error)
+                {
+                    StatusBar.Content = $"Неверные данные для удаления! {error.Message}";
+                    StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+                }
             }
         }
         else
