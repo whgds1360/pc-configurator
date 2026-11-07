@@ -1,5 +1,4 @@
-namespace PcConfigurator.helpers.TableStructures;
-
+namespace PcConfigurator.helpers.TableStructures.Models;
 public class Motherboard
 {
     [Key]

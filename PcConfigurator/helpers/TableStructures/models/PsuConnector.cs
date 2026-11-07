@@ -1,4 +1,4 @@
-namespace PcConfigurator.helpers.TableStructures;
+namespace PcConfigurator.helpers.TableStructures.Models;
 
 [PrimaryKey(nameof(PowerUnitId), nameof(ConnectorType))]
 public class PsuConnector

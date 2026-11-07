@@ -1,4 +1,4 @@
-namespace PcConfigurator.helpers.TableStructures;
+namespace PcConfigurator.helpers.TableStructures.Models;
 
 [PrimaryKey(nameof(CpuId), nameof(Chipset))]
 public class CpuCompatibility

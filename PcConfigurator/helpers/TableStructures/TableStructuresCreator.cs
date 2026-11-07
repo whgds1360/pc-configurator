@@ -1,3 +1,4 @@
+using PcConfigurator.helpers.TableStructures.Models;
 using PcConfigurator.shared.DataBase;
 
 namespace PcConfigurator.helpers.TableStructures;
