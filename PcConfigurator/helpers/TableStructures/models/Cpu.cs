@@ -3,23 +3,26 @@ namespace PcConfigurator.helpers.TableStructures.Models;
 public class Cpu
 {
     [Key]
+    [Column("id")]
     public int Id { get; set; }
 
     [MaxLength(100)]
+    [Column("name")]
     public string Name { get; set; } = string.Empty;
 
     [MaxLength(50)]
+    [Column("socket")]
     public string Socket { get; set; } = string.Empty;
 
-    [Column(TypeName = "tinyint unsigned")]
+    [Column("cores", TypeName = "tinyint unsigned")]
     public int Cores { get; set; }
     
-    [Column(TypeName = "smallint unsigned")]
+    [Column("tdp", TypeName = "smallint unsigned")]
     public int TDP { get; set; }
 
-    [Column(TypeName = "decimal(3,2)")]
+    [Column("freq", TypeName = "decimal(3,2)")]
     public decimal Freq { get; set; }
 
-    [Column(TypeName = "tinyint unsigned")]
+    [Column("l3cache", TypeName = "tinyint unsigned")]
     public int L3Cache { get; set; }
 }
