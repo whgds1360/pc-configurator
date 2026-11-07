@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using PcConfigurator.shared.DataBase;
 
 namespace PcConfigurator.helpers.TableStructures;
