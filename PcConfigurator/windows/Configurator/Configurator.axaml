@@ -3,7 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
-        xmlns:models="clr-namespace:PcConfigurator.helpers.TableStructures"
+        xmlns:models="clr-namespace:PcConfigurator.helpers.TableStructures.Models"
         xmlns:local="clr-namespace:PcConfigurator.windows.Configurator"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"

@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System.Diagnostics;
 using Dapper;
 using MySql.Data.MySqlClient;
-using PcConfigurator.helpers.TableStructures;
+using PcConfigurator.helpers.TableStructures.Models;
 using PcConfigurator.shared.DataBase;
 
 namespace PcConfigurator.windows.Configurator.Helpers;

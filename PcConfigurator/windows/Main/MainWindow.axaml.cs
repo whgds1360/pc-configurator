@@ -5,7 +5,7 @@ using PcConfigurator.services.WindowsManager;
 using PcConfigurator.windows.Configurator;
 using PcConfigurator.shared.DataBase;
 using Dapper;
-using PcConfigurator.helpers.TableStructures;
+using PcConfigurator.helpers.TableStructures.Models;
 using System.Collections.Generic;
 using System;
 using Avalonia.Media;

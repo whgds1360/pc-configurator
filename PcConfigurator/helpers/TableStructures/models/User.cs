@@ -15,6 +15,7 @@ public class User
     public string Password { get; set; } = string.Empty;
 
     [Required]
+    [MaxLength(10)]
     [Column("role")]
-    public Role role {get; set; }
+    public string Role {get; set; } = string.Empty;
 }
