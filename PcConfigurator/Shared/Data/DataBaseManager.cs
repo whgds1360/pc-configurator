@@ -1,6 +1,8 @@
+using System.Diagnostics;
+
 namespace PcConfigurator.Shared;
 
-public enum OrderStatus
+internal enum DbConnectStatus
 {
     NoConnect,
     Connect,
@@ -9,59 +11,82 @@ public enum OrderStatus
 
 internal class DataBaseManager
 {
-    private static Dictionary<string, string> dataBaseInfo = new();
-    private static OrderStatus currentStatus = OrderStatus.NoConnect; 
-
+    private static Dictionary<string, string> _dataBaseInfo = new();
+    private static DbConnectStatus _currentStatus = DbConnectStatus.NoConnect; 
     private static string? _connectionString = "Server=localhost;Port=3306;Database=test;Uid=root;Pwd=;";
 
     /// <summary>
     /// Инициализирует и проверяет подключение к БД.
     /// </summary>
     /// <returns>true, если подключение успешно; false, если произошла ошибка</returns>
-    public async static Task<bool> TryInitConnection(string url)
+    internal async static Task<bool> TryInitConnection(string url)
     {
-        if (string.IsNullOrWhiteSpace(url)) return false;
+        url = url.Trim();
+
+        if (string.IsNullOrEmpty(url)) return false;
 
         try
         {
-            using var connection = new MySqlConnection(url);
-            await connection.OpenAsync();
-            _connectionString = url;
+            using (var connection = new MySqlConnection(url))
+            {
+                await connection.OpenAsync();
+                _connectionString = url;
+            }
 
             return true;
         }
+
         catch (MySqlException error)
         {
-            System.Diagnostics.Debug.WriteLine($"Ошибка подключения к БД: {error}");
+            Debug.WriteLine($"Ошибка подключения к БД: {error}");
+
             return false;
         }
     }
-    public static string CreateUrlConnection(string server, 
+    internal static string CreateUrlConnection(string server, 
                                                 string port, 
                                                 string db, 
                                                 string user, 
                                                 string password)
     {
-        if (!int.TryParse(port, out _)){return "";}
+        if (uint.TryParse(port, out uint readyPort))
+        {
+            _dataBaseInfo["ip"] = server;
+            _dataBaseInfo["port"] = port;
+            _dataBaseInfo["db"] = db;
+            _dataBaseInfo["user"] = user;
 
-        dataBaseInfo["ip"] = server;
-        dataBaseInfo["port"] = port;
-        dataBaseInfo["db"] = db;
-        dataBaseInfo["user"] = user;
+            var url = new MySqlConnectionStringBuilder()
+            {
+                Server = server,
+                Port = readyPort,
+                Database = db,
+                UserID = user,
+                Password = password,
+                
+            };
 
-        return $"Server={server};Port={port};Database={db};Uid={user};Pwd={password};";
+            return url.ConnectionString;
+        }
+
+        else
+        {
+            Debug.WriteLine("Неверные данные или их формат для создания ссылки подключения БД");
+        }
+
+        return "";
     }
 
-    public static void ChangeStatus(OrderStatus newStatus)
+    internal static void ChangeStatus(DbConnectStatus newStatus)
     {
-        currentStatus = newStatus;
+        _currentStatus = newStatus;
     }
 
-    public static Dictionary<string, string> GetInfo() => dataBaseInfo;
+    internal static Dictionary<string, string> GetInfo() => _dataBaseInfo;
 
-    public static MySqlConnection GetConnection() => !string.IsNullOrEmpty(_connectionString) ? new MySqlConnection(_connectionString) : throw new InvalidDataException("Ошибка БД");
+    internal static MySqlConnection GetConnection() => !string.IsNullOrEmpty(_connectionString) ? new MySqlConnection(_connectionString) : throw new InvalidDataException("Ошибка БД");
 
-    public static OrderStatus GetStatus() => currentStatus;
+    internal static DbConnectStatus GetStatus() => _currentStatus;
 
-    public static string GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? "" : _connectionString;
+    internal static string GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? "" : _connectionString;
 }
