@@ -1,15 +1,4 @@
-using System.Collections.Generic;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using PcConfigurator.shared.DataBase;
-using PcConfigurator.helpers.TableStructures;
-using System.Linq;
-using System.Diagnostics;
-using Avalonia.VisualTree;
-using Avalonia.Media;
-using System;
-using Dapper;
-using MySql.Data.MySqlClient;
+using PcConfigurator.Shared;
 
 namespace PcConfigurator.windows.Admin;
 

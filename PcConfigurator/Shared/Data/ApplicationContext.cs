@@ -1,6 +1,6 @@
 using PcConfigurator.Shared.Models;
 
-namespace PcConfigurator.Shared.TableStructures;
+namespace PcConfigurator.Shared;
 
 public class ApplicationContext : DbContext
 {
