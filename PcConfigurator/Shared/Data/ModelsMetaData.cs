@@ -1,4 +1,4 @@
-namespace PcConfigurator.helpers.TableStructures;
+namespace PcConfigurator.Shared;
 
 
 /// <summary>

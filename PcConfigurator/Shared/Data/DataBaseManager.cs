@@ -1,9 +1,4 @@
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
-
-namespace PcConfigurator.shared.DataBase;
+namespace PcConfigurator.Shared;
 
 public enum OrderStatus
 {

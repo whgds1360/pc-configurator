@@ -1,7 +1,6 @@
-using PcConfigurator.helpers.TableStructures.Models;
-using PcConfigurator.shared.DataBase;
+using PcConfigurator.Shared.Models;
 
-namespace PcConfigurator.helpers.TableStructures;
+namespace PcConfigurator.Shared.TableStructures;
 
 public class ApplicationContext : DbContext
 {

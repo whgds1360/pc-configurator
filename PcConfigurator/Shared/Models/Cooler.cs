@@ -1,4 +1,4 @@
-namespace PcConfigurator.helpers.TableStructures.Models;
+namespace PcConfigurator.Shared.Models;
 
 [Table("coolers")]
 public class Cooler

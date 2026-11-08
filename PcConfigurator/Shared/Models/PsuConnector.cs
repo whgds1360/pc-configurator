@@ -1,4 +1,4 @@
-namespace PcConfigurator.helpers.TableStructures.Models;
+namespace PcConfigurator.Shared.Models;
 
 [Table("psu_connector")]
 [PrimaryKey(nameof(PowerUnitId), nameof(ConnectorType))]

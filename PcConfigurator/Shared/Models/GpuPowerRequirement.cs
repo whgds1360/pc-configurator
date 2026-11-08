@@ -1,4 +1,4 @@
-namespace PcConfigurator.helpers.TableStructures.Models;
+namespace PcConfigurator.Shared.Models;
 
 [Table("gpu_power_requirement")]
 [PrimaryKey(nameof(GpuId), nameof(ConnectorType))]

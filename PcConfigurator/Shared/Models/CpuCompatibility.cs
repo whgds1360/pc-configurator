@@ -1,4 +1,4 @@
-namespace PcConfigurator.helpers.TableStructures.Models;
+namespace PcConfigurator.Shared.Models;
 
 [Table("cpu_compatibility")]
 [PrimaryKey(nameof(CpuId), nameof(Chipset))]

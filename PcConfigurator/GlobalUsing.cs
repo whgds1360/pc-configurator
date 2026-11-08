@@ -2,3 +2,6 @@ global using System.ComponentModel.DataAnnotations;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.Collections.Generic;
 global using Microsoft.EntityFrameworkCore;
+global using System.IO;
+global using System.Threading.Tasks;
+global using MySql.Data.MySqlClient;
