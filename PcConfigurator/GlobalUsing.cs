@@ -5,3 +5,5 @@ global using Microsoft.EntityFrameworkCore;
 global using System.IO;
 global using System.Threading.Tasks;
 global using MySql.Data.MySqlClient;
+global using Avalonia;
+global using Avalonia.Controls;
