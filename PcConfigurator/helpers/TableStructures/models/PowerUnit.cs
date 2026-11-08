@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("power_units")]
 public class PowerUnit
 {
     [Key]

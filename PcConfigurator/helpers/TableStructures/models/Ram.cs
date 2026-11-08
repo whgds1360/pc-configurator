@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("rams")]
 public class Ram
 {
     [Key]

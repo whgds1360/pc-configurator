@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("gpus")]
 public class Gpu
 {
     [Key]

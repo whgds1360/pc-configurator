@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("pc_cases")]
 public class PcCase
 {
     [Key]

@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("configs")]
 public class Config
 {
     [Key]

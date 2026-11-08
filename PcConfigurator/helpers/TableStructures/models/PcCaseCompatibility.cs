@@ -1,5 +1,7 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+
+[Table("pc_case_compatibility")]
 [PrimaryKey(nameof(CaseId), nameof(MotherboardFormFactor))]
 public class PcCaseCompatibility
 {

@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("cpu_compatibility")]
 [PrimaryKey(nameof(CpuId), nameof(Chipset))]
 public class CpuCompatibility
 {

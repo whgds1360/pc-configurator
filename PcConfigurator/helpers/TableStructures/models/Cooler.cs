@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("coolers")]
 public class Cooler
 {
     [Key]

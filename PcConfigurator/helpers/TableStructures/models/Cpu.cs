@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("cpus")]
 public class Cpu
 {
     [Key]

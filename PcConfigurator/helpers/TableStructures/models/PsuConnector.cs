@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("psu_connector")]
 [PrimaryKey(nameof(PowerUnitId), nameof(ConnectorType))]
 public class PsuConnector
 {

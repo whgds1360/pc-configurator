@@ -1,4 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
+
+[Table("motherboards")]
 public class Motherboard
 {
     [Key]

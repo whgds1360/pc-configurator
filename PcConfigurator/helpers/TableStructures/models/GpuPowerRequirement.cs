@@ -1,5 +1,6 @@
 namespace PcConfigurator.helpers.TableStructures.Models;
 
+[Table("gpu_power_requirement")]
 [PrimaryKey(nameof(GpuId), nameof(ConnectorType))]
 public class GpuPowerRequirement
 {
