@@ -3,14 +3,14 @@ using System.Diagnostics;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Dapper;
-using PcConfigurator.windows.Main;
+using PcConfigurator.Windows.Main;
 using PcConfigurator.services.WindowsManager;
 using PcConfigurator.shared.DataBase;
 using Avalonia.Media;
 using Avalonia;
-using PcConfigurator.windows.Configurator;
+using PcConfigurator.Windows.Configurator;
 
-namespace PcConfigurator.windows.SaveConfiguration;
+namespace PcConfigurator.Windows.SaveConfiguration;
 
 public partial class SaveConfigurationWindow : Window
 {

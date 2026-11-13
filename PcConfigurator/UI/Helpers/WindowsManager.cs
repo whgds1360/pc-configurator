@@ -1,6 +1,6 @@
-namespace PcConfigurator.services.WindowsManager;
+namespace PcConfigurator.Helpers;
 
-internal class MainWindowsManager
+internal sealed class WindowsManager
 {
     internal static void changeWindow(Window newWindow)
     {

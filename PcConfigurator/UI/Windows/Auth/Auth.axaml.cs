@@ -1,8 +1,8 @@
 using Dapper;
 using PcConfigurator.shared.DataBase;
 using PcConfigurator.services.WindowsManager;
-using PcConfigurator.windows.Main;
-using PcConfigurator.windows.Admin;
+using PcConfigurator.Windows.Main;
+using PcConfigurator.Windows.Admin;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Media;
@@ -10,7 +10,7 @@ using System;
 using System.Diagnostics;
 
 
-namespace PcConfigurator.windows.Auth;
+namespace PcConfigurator.Windows.Auth;
 
 internal partial class AuthWindow : Window
 {

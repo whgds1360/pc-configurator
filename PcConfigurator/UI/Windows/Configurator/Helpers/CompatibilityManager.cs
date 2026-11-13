@@ -4,7 +4,7 @@ using MySql.Data.MySqlClient;
 using PcConfigurator.helpers.TableStructures.Models;
 using PcConfigurator.shared.DataBase;
 
-namespace PcConfigurator.windows.Configurator.Helpers;
+namespace PcConfigurator.Windows.Configurator.Helpers;
 
 enum Status
 {

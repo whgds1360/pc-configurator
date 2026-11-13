@@ -2,7 +2,7 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using PcConfigurator.services.WindowsManager;
-using PcConfigurator.windows.Configurator;
+using PcConfigurator.Windows.Configurator;
 using PcConfigurator.shared.DataBase;
 using Dapper;
 using PcConfigurator.helpers.TableStructures.Models;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System;
 using Avalonia.Media;
 
-namespace PcConfigurator.windows.Main;
+namespace PcConfigurator.Windows.Main;
 
 internal partial class MainWindow : Window
 {

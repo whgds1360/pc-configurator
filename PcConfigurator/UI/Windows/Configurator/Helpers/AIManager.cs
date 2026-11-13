@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using GroqSharp.Models;
 
-namespace PcConfigurator.windows.Configurator.Helpers;
+namespace PcConfigurator.Windows.Configurator.Helpers;
 
 internal class AIManager
 {

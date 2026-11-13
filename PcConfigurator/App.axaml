@@ -4,8 +4,17 @@
              RequestedThemeVariant="Dark">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
+    
+    
     <Application.Styles>
         <FluentTheme />
+
+        <Style Selector="Window">
+            <Setter Property="Title" Value="PС Configurator"></Setter>
+            <Setter Property="Width" Value="1168"></Setter>
+            <Setter Property="Height" Value="784"></Setter>
+            <Setter Property="CanResize" Value="False"></Setter>
+        </Style>
 
         <Style Selector="Button.Manage">
             <Setter Property="FontFamily" Value="Impact"></Setter>

@@ -1,6 +1,6 @@
 using PcConfigurator.Shared;
 
-namespace PcConfigurator.windows.Admin;
+namespace PcConfigurator.Windows.Admin;
 
 enum Status
 {

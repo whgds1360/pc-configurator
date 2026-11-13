@@ -3,16 +3,16 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Dapper;
-using PcConfigurator.windows.SaveConfiguration;
+using PcConfigurator.Windows.SaveConfiguration;
 using PcConfigurator.services.WindowsManager;
 using PcConfigurator.helpers.TableStructures.Models;
 using PcConfigurator.shared.DataBase;
-using PcConfigurator.windows.Configurator.Helpers;
+using PcConfigurator.Windows.Configurator.Helpers;
 using Avalonia.Media;
-using PcConfigurator.windows.Main;
+using PcConfigurator.Windows.Main;
 using System;
 
-namespace PcConfigurator.windows.Configurator;
+namespace PcConfigurator.Windows.Configurator;
 
 enum Status
 {
