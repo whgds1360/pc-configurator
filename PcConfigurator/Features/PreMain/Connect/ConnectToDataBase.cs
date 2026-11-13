@@ -4,7 +4,7 @@ namespace PcConfigurator.Feature.PreMain.Connect;
 
 internal sealed class ConnectToDatabaseHandler
 {
-    internal async Task<bool> ConnectToDataBase(string server, string port, string db, string user, string password)
+    internal static async Task<bool> ConnectToDataBase(string server, string port, string db, string user, string password)
     {   
         if (DataBaseManager.GetStatus()== DbConnectionStatus.Connected)
         {
@@ -34,6 +34,6 @@ internal sealed class ConnectToDatabaseHandler
             }
         }
 
-        return false
+        return false;
     }
 }

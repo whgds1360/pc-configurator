@@ -21,16 +21,16 @@
                   <DataTemplate x:DataType="local:DbProperties">
                     <StackPanel>
                       <Label Content="{Binding Title}"/>
-                        <TextBox Tag = "{Binding Tag}"/>
+                      <TextBox Tag = "{Binding Tag}" Text="{Binding Value, Mode=TwoWay}"/>
                     </StackPanel>
                   </DataTemplate>
                 </ItemsControl.ItemTemplate>
               </ItemsControl>
 
-              <Button HorizontalAlignment="Center" Name="Connect" Click="ConnectHandler">ПОДКЛЮЧИТЬСЯ</Button>
-              <Label Name="Status" Background="#E66565" HorizontalAlignment="Center">Не подключено</Label>
+              <Button HorizontalAlignment="Center" Click="ConnectHandler">ПОДКЛЮЧИТЬСЯ</Button>
+              <Label Name="StatusBar" Background="#E66565" HorizontalAlignment="Center">Не подключено</Label>
             </StackPanel>
           </Border>
-          
+
         </Grid>
 </Window>
