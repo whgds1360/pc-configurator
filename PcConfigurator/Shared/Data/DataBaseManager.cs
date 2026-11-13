@@ -1,12 +1,10 @@
-using System.Diagnostics;
-
 namespace PcConfigurator.Shared;
 
 internal class DataBaseManager
 {
     private static Dictionary<string, string> _dataBaseInfo = new();
     private static DbConnectionStatus _currentStatus = DbConnectionStatus.Disconected; 
-    private static string? _connectionString = "Server=localhost;Port=3306;Database=test;Uid=root;Pwd=;";
+    private static string? _connectionString = string.Empty;
 
     /// <summary>
     /// Инициализирует и проверяет подключение к БД.
@@ -14,8 +12,6 @@ internal class DataBaseManager
     /// <returns>true, если подключение успешно; false, если произошла ошибка</returns>
     internal async static Task<bool> TryInitConnection(string url)
     {
-        url = url.Trim();
-
         if (string.IsNullOrEmpty(url)) return false;
 
         try
@@ -23,6 +19,8 @@ internal class DataBaseManager
             using (var connection = new MySqlConnection(url))
             {
                 await connection.OpenAsync();
+
+                ChangeStatus(DbConnectionStatus.Connected);
                 _connectionString = url;
             }
 
@@ -31,7 +29,8 @@ internal class DataBaseManager
 
         catch (MySqlException error)
         {
-            Debug.WriteLine($"Ошибка подключения к БД: {error}");
+            ChangeStatus(DbConnectionStatus.Error);
+            Debug.WriteLine($"Ошибка подключения к БД: {error.Message}");
 
             return false;
         }
@@ -64,16 +63,14 @@ internal class DataBaseManager
 
         else
         {
+            ChangeStatus(DbConnectionStatus.Error);
             Debug.WriteLine("Неверные данные или их формат для создания ссылки подключения БД");
         }
 
         return "";
     }
 
-    internal static void ChangeStatus(DbConnectionStatus newStatus)
-    {
-        _currentStatus = newStatus;
-    }
+    internal static void ChangeStatus(DbConnectionStatus newStatus){_currentStatus = newStatus;}
 
     internal static Dictionary<string, string> GetInfo() => _dataBaseInfo;
 
