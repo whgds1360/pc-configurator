@@ -22,7 +22,7 @@ public class ApplicationContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (DataBaseManager.GetStatus() == DbConnectStatus.Connect)
+        if (DataBaseManager.GetStatus() == DbConnectionStatus.Connected)
         {
             optionsBuilder.UseMySQL(connectionString: DataBaseManager.GetConnectionUrl());
         }

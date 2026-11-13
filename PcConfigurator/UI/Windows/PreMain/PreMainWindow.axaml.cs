@@ -1,11 +1,7 @@
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using PcConfigurator.shared.DataBase;
 using PcConfigurator.services.WindowsManager;
 using PcConfigurator.windows.Auth;
-using Avalonia.Media;
-using PcConfigurator.helpers.TableStructures;
-using System;
+using PcConfigurator.Shared;
+
 
 namespace PcConfigurator.windows.PreMain;
 
@@ -18,7 +14,7 @@ internal partial class PreMainWindow : Window
 
     private async void ConnectHandler(object sender, RoutedEventArgs e)
     {   
-        if (DataBaseManager.GetStatus() != OrderStatus.Connect)
+        if (DataBaseManager.GetStatus()== DbConnectionStatus.Connected)
         {
             var connectUrl = DataBaseManager.CreateUrlConnection(server:Server.Text ?? String.Empty, 
                                                                     port:Port.Text ?? String.Empty, 

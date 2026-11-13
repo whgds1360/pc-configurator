@@ -2,17 +2,10 @@ using System.Diagnostics;
 
 namespace PcConfigurator.Shared;
 
-internal enum DbConnectStatus
-{
-    NoConnect,
-    Connect,
-    ErrorConnect
-}
-
 internal class DataBaseManager
 {
     private static Dictionary<string, string> _dataBaseInfo = new();
-    private static DbConnectStatus _currentStatus = DbConnectStatus.NoConnect; 
+    private static DbConnectionStatus _currentStatus = DbConnectionStatus.Disconected; 
     private static string? _connectionString = "Server=localhost;Port=3306;Database=test;Uid=root;Pwd=;";
 
     /// <summary>
@@ -77,7 +70,7 @@ internal class DataBaseManager
         return "";
     }
 
-    internal static void ChangeStatus(DbConnectStatus newStatus)
+    internal static void ChangeStatus(DbConnectionStatus newStatus)
     {
         _currentStatus = newStatus;
     }
@@ -86,7 +79,7 @@ internal class DataBaseManager
 
     internal static MySqlConnection GetConnection() => !string.IsNullOrEmpty(_connectionString) ? new MySqlConnection(_connectionString) : throw new InvalidDataException("Ошибка БД");
 
-    internal static DbConnectStatus GetStatus() => _currentStatus;
+    internal static DbConnectionStatus GetStatus() => _currentStatus;
 
     internal static string GetConnectionUrl() => string.IsNullOrEmpty(_connectionString) ? "" : _connectionString;
 }
