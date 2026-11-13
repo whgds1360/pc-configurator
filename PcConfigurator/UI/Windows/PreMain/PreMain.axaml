@@ -2,11 +2,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="using:PcConfigurator.Windows"
+        xmlns:local="using:PcConfigurator.Windows.PreMain.ControlTemplates"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
         x:Class="PcConfigurator.Windows.PreMain.PreMainWindow">
 
         <Grid>
+
           <Border BorderBrush="#333232"
                   BorderThickness="4" 
                   CornerRadius="5" 
@@ -15,32 +16,21 @@
             <StackPanel Spacing="20">
               <Label HorizontalAlignment="Center">Введите данные для подключения к БД</Label>
 
-                <ItemsControl x:Name="ConnectProperties">
+              <ItemsControl x:Name="ConnectProperties">
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="local:DbInfoTemplate">
-                        <StackPanel Orientation="Horizontal">
-                            <Label Classes="DbInfo" Width="220" Content="{Binding Key}"/>
-                            <Label Classes="DbInfo" Content="{Binding Value}"/>
-                        </StackPanel>
-                    </DataTemplate>
+                  <DataTemplate x:DataType="local:DbProperties">
+                    <StackPanel>
+                      <Label Content="{Binding Title}"/>
+                        <TextBox Tag = "{Binding Tag}"/>
+                    </StackPanel>
+                  </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
-              
-              <Label HorizontalAlignment="Left">Ip сервера</Label>
-              <TextBox Name="Server"></TextBox>
-                <Label HorizontalAlignment="Left">Порт</Label>
-              <TextBox Name="Port"></TextBox>
-                <Label HorizontalAlignment="Left">Имя БД</Label>
-              <TextBox Name="DbName"></TextBox>
-                <Label HorizontalAlignment="Left">Имя пользовотеля</Label>
-              <TextBox Name="Username"></TextBox>
-                <Label HorizontalAlignment="Left">Пароль</Label>
-              <TextBox Name="Password"></TextBox>
+              </ItemsControl>
 
               <Button HorizontalAlignment="Center" Name="Connect" Click="ConnectHandler">ПОДКЛЮЧИТЬСЯ</Button>
               <Label Name="Status" Background="#E66565" HorizontalAlignment="Center">Не подключено</Label>
             </StackPanel>
-
           </Border>
+          
         </Grid>
 </Window>
