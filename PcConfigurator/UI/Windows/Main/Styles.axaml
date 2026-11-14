@@ -13,4 +13,11 @@
     <Setter Property="CornerRadius" Value="5"></Setter>
     <Setter Property="Padding" Value="20"></Setter>
   </Style>
+
+  <Style Selector="Button">
+    <Setter Property="FontFamily" Value="Impact"></Setter>
+    <Setter Property="FontSize" Value="50"></Setter>
+    <Setter Property="Background" Value="#3F4347"></Setter>
+  </Style>
+
 </Styles>
