@@ -1,6 +1,5 @@
 using PcConfigurator.Windows.Configurator;
 using PcConfigurator.Ui.Helpers;
-using PcConfigurator.Shared;
 using PcConfigurator.Feature.Main.Configs;
 
 namespace PcConfigurator.Windows.Main;
@@ -50,29 +49,15 @@ internal partial class MainWindow : Window
 
     private void DeleteHandler(object? sender, RoutedEventArgs e)
     {
-        using(var connect = DataBaseManager.GetConnection())
-        {   
-            try 
-            {
-                if (_currentConfiguration is null) return;
+        if (_currentConfiguration is null) return;
+        
+        var configName = _currentConfiguration.Content?.ToString();
+        
+        if (string.IsNullOrEmpty(configName)) return;
 
-                var affected = connect.Execute(
-                    "DELETE FROM `configs` WHERE Name = @Name",
-                    new { Name = _currentConfiguration.Content });
+        DeleteConfigs.DeleteOneConfiguration(name: configName);
 
-                if (affected == 0)
-                {
-                    Debug.WriteLine("Запись не найдена");
-                    return;
-                }
-
-                Configuration.Children.Remove(_currentConfiguration);
-                _currentConfiguration = null;
-            }
-            catch (Exception error)
-            {
-                Debug.WriteLine($"Ошибка удаления: {error}");
-            }
-        }
+        Configuration.Children.Remove(_currentConfiguration);
+        _currentConfiguration = null;
     }
 }
