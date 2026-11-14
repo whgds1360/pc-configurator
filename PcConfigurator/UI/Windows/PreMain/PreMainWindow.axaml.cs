@@ -1,4 +1,6 @@
 using PcConfigurator.Feature.PreMain.Connect;
+using PcConfigurator.Windows.Main;
+using PcConfigurator.Helpers;
 using PcConfigurator.Windows.PreMain.ControlTemplates;
 
 namespace PcConfigurator.Windows.PreMain;
@@ -29,15 +31,19 @@ internal partial class PreMainWindow : Window
     
     private async void ConnectHandler(object sender, RoutedEventArgs e)
     {   
-        var ip = _dbProperties.FirstOrDefault(x => x.Tag == "ip")?.Value ?? string.Empty;
-        var port = _dbProperties.FirstOrDefault(x => x.Tag == "port")?.Value ?? string.Empty;
-        var db = _dbProperties.FirstOrDefault(x => x.Tag == "db")?.Value ?? string.Empty;
-        var user = _dbProperties.FirstOrDefault(x => x.Tag == "username")?.Value ?? string.Empty;
-        var password = _dbProperties.FirstOrDefault(x => x.Tag == "password")?.Value ?? string.Empty;
+        var ip = _dbProperties.FirstOrDefault(v => v.Tag == "ip")?.Value ?? string.Empty;
+        var port = _dbProperties.FirstOrDefault(v => v.Tag == "port")?.Value ?? string.Empty;
+        var db = _dbProperties.FirstOrDefault(v => v.Tag == "db")?.Value ?? string.Empty;
+        var user = _dbProperties.FirstOrDefault(v => v.Tag == "username")?.Value ?? string.Empty;
+        var password = _dbProperties.FirstOrDefault(v => v.Tag == "password")?.Value ?? string.Empty;
 
         var result = await ConnectToDatabaseHandler.ConnectToDataBase(server: ip, port: port, db: db, user: user, password: password);
 
-        if (!result)
+        if (result)
+        {
+            WindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
+        }
+        else
         {
             StatusBar.Content = "Неверная ссылка";
             StatusBar.Background = new SolidColorBrush(Color.Parse("#b8ab71"));
