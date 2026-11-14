@@ -5,19 +5,15 @@
         xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
-        x:Class="PcConfigurator.windows.Main.MainWindow"
-        Title="PС Configurator"
-        Width="1168"
-        Height="784"
-        CanResize="False">
+        x:Class="PcConfigurator.Windows.Main.MainWindow">
+
+        <Window.Styles>
+            <StyleInclude Source="Styles.axaml"></StyleInclude>
+        </Window.Styles>
 
         <Grid RowDefinitions="120, *, 200" RowSpacing="30" Background="#1a1f25">
-            <Border BorderBrush="#333232"
-                    BorderThickness="4" 
-                    CornerRadius="5" 
-                    Padding="20"
-                    Grid.Row="0">
-
+            
+            <Border Grid.Row="0">
                 <DockPanel>
                     <Button DockPanel.Dock="Left" Classes="Manage" Click="CreateHandler">[ Новая конфигурация ]</Button>
                     <Button DockPanel.Dock="Right" HorizontalAlignment="Right" Classes="Manage" Click="DeleteHandler">[ Удалить ]</Button>
@@ -25,41 +21,15 @@
             </Border>
             
             <StackPanel Grid.Row="1">
-
                 <Label FontSize="30">Сохраненные сборки:</Label>
-                <Border BorderBrush="#333232"
-                    BorderThickness="4" 
-                    CornerRadius="5" 
-                    Padding="20"
-                    MaxHeight="330">
 
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
-                    <StackPanel Spacing="20" Name="Configuration">
-                    </StackPanel>
-                </ScrollViewer>
-            </Border>
-
+                <Border MaxHeight="330">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Spacing="20" Name="Configuration">
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
             </StackPanel>
 
-            <StackPanel Grid.Row="2">
-                <Label FontSize="30"> Информация о сборке:</Label>
-                <Border BorderBrush="#333232"
-                    BorderThickness="4" 
-                    CornerRadius="5" 
-                    Padding="20">
-
-            
-                <WrapPanel>
-                    <Label Classes="InfoConfiguration" Name="CPU">Cpu:</Label>
-                    <Label Classes="InfoConfiguration" Name="GPU">Gpu:</Label>
-                    <Label Classes="InfoConfiguration" Name="RAM">Ram:</Label>
-                    <Label Classes="InfoConfiguration" Name="Storage">Storage:</Label>
-                    <Label Classes="InfoConfiguration" Name="PowerUnit">PowerUnit:</Label>
-                    <Label Classes="InfoConfiguration" Name="MotherBoard">MotherBoard:</Label>
-                </WrapPanel>
-            </Border>
-
-            </StackPanel>
         </Grid>
-
 </Window>
