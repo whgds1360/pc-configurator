@@ -3,6 +3,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="using:PcConfigurator.Ui.Windows.PreMain.ControlTemplates"
+        xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
+        win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
         x:Class="PcConfigurator.Ui.Windows.PreMain.PreMainWindow">
 
