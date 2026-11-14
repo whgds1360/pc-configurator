@@ -5,7 +5,7 @@
         xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
-        x:Class="PcConfigurator.windows.SaveConfiguration.SaveConfigurationWindow"
+        x:Class="PcConfigurator.Windows.SaveConfiguration.SaveConfigurationWindow"
         Title="PС Configurator"
         Width="600"
         Height="400"
@@ -13,9 +13,11 @@
 
         <StackPanel Margin="20" Spacing="20">
           <Label HorizontalAlignment="Center">Введите имя конфигурации</Label>
+          
           <Border Name="ErrorBorder">
             <TextBox Name="ConfigNameTextBlock"></TextBox>
           </Border>
+
           <Button HorizontalAlignment="Center" Click="SendSaveRequest">Сохранить</Button>
           <Button HorizontalAlignment="Center" Click="CancelButtonHandler">Отменить</Button>
         </StackPanel>

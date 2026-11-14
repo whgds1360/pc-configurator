@@ -1,18 +1,11 @@
-using System;
-using System.Diagnostics;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Dapper;
 using PcConfigurator.Windows.Main;
-using PcConfigurator.services.WindowsManager;
-using PcConfigurator.shared.DataBase;
-using Avalonia.Media;
-using Avalonia;
 using PcConfigurator.Windows.Configurator;
+using PcConfigurator.Feature.SaveConfiguration.Requests;
+using PcConfigurator.Ui.Helpers;
 
 namespace PcConfigurator.Windows.SaveConfiguration;
 
-public partial class SaveConfigurationWindow : Window
+internal partial class SaveConfigurationWindow : Window
 {
     private readonly int _cpuId;
     private readonly int _gpuId;
@@ -26,6 +19,7 @@ public partial class SaveConfigurationWindow : Window
     {
         InitializeComponent();
     }
+
     public SaveConfigurationWindow(
         int cpuId,
         int gpuId,
@@ -46,44 +40,7 @@ public partial class SaveConfigurationWindow : Window
         InitializeComponent();
     }
 
-    public void AcceptConfiguration()
-    {
-
-        try
-        {
-            var _name = getConfigName();
-
-            if (_name is null)
-            {
-                return;
-            }
-
-            using var connect = DataBaseManager.GetConnection();
-            var newId = connect.Execute(
-                @"INSERT INTO configs
-                      (Name, CpuId, GpuId, MotherboardId, PowerUnitId, RamId, PcCaseId, CoolerId)
-                  VALUES
-                      (@Name, @CpuId, @GpuId, @MotherboardId, @PowerUnitId, @RamId, @PcCaseId, @CoolerId)",
-                new
-                {
-                    Name = _name,
-                    CpuId         = _cpuId,
-                    GpuId         = _gpuId,
-                    MotherboardId = _motherboardId,
-                    PowerUnitId   = _powerUnitId,
-                    RamId         = _ramId,
-                    PcCaseId      = _pcCaseId,
-                    CoolerId      = _coolerId
-                });
-        }
-
-        catch (Exception error)
-        {
-            Debug.WriteLine($"Ошибка при сохранении конфига: {error.Message}");
-        }
-    }
-
-    private string? getConfigName()
+    private string? GetConfigName()
     {
         if (string.IsNullOrEmpty(ConfigNameTextBlock.Text))
         {
@@ -103,15 +60,23 @@ public partial class SaveConfigurationWindow : Window
 
     private void SendSaveRequest(object? sender, RoutedEventArgs e)
     {
-        AcceptConfiguration();
-        var nextWindows = new MainWindow();
-        MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
+        var configName = GetConfigName();
+        if (string.IsNullOrEmpty(configName)) return;
+
+        SaveRequest.AcceptConfiguration(configName: configName,
+                                        cpuId: _cpuId,
+                                        gpuId: _gpuId,
+                                        motherboardId: _motherboardId,
+                                        powerUnitId: _powerUnitId,
+                                        ramId: _ramId,
+                                        pcCaseId: _pcCaseId,
+                                        coolerId: _coolerId);
+
+        WindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
     }
 
     private void CancelButtonHandler(object? sender, RoutedEventArgs e)
     {
-        var nextWindow = new ConfiguratorWindow();
-
-        MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindow);
+        WindowsManager.changeWindow(closingWindow: this, newWindow: new ConfiguratorWindow());
     }
 }
