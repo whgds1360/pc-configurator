@@ -1,9 +1,9 @@
 using PcConfigurator.Feature.PreMain.Connect;
 using PcConfigurator.Windows.Main;
-using PcConfigurator.Helpers;
-using PcConfigurator.Windows.PreMain.ControlTemplates;
+using PcConfigurator.Ui.Helpers;
+using PcConfigurator.Ui.Windows.PreMain.ControlTemplates;
 
-namespace PcConfigurator.Windows.PreMain;
+namespace PcConfigurator.Ui.Windows.PreMain;
 
 internal partial class PreMainWindow : Window
 {

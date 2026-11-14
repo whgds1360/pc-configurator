@@ -1,4 +1,4 @@
-namespace PcConfigurator.Helpers;
+namespace PcConfigurator.Ui.Helpers;
 
 internal sealed class WindowsManager
 {

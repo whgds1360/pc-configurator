@@ -1,14 +1,6 @@
-using System.Linq;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using PcConfigurator.services.WindowsManager;
 using PcConfigurator.Windows.Configurator;
-using PcConfigurator.shared.DataBase;
-using Dapper;
-using PcConfigurator.helpers.TableStructures.Models;
-using System.Collections.Generic;
-using System;
-using Avalonia.Media;
+using PcConfigurator.Ui.Helpers;
+using PcConfigurator.Shared;
 
 namespace PcConfigurator.Windows.Main;
 
@@ -75,7 +67,7 @@ internal partial class MainWindow : Window
 
                 if (affected == 0)
                 {
-                    System.Diagnostics.Debug.WriteLine("Запись не найдена");
+                    Debug.WriteLine("Запись не найдена");
                     return;
                 }
 
@@ -84,7 +76,7 @@ internal partial class MainWindow : Window
             }
             catch (Exception error)
             {
-                System.Diagnostics.Debug.WriteLine($"Ошибка удаления: {error}");
+                Debug.WriteLine($"Ошибка удаления: {error}");
             }
         }
     }

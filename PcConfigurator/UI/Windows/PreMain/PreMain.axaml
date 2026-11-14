@@ -2,9 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="using:PcConfigurator.Windows.PreMain.ControlTemplates"
+        xmlns:local="using:PcConfigurator.Ui.Windows.PreMain.ControlTemplates"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
-        x:Class="PcConfigurator.Windows.PreMain.PreMainWindow">
+        x:Class="PcConfigurator.Ui.Windows.PreMain.PreMainWindow">
 
         <Grid>
 

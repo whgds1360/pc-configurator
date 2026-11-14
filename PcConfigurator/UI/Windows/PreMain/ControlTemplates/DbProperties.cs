@@ -1,4 +1,4 @@
-namespace PcConfigurator.Windows.PreMain.ControlTemplates;
+namespace PcConfigurator.Ui.Windows.PreMain.ControlTemplates;
 
 internal sealed class DbProperties
 {
