@@ -3,9 +3,9 @@ using PcConfigurator.Shared.Models;
 
 namespace PcConfigurator.Feature.Main.Configs;
 
-internal sealed class getConfigs
+internal sealed class GetConfigs
 {
-    internal List<Config> GetAllConfiguration()
+    internal static List<Config> GetAllConfiguration()
     {
         try
         {
