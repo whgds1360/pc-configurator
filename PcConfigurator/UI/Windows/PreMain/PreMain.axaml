@@ -30,6 +30,7 @@
               <Button HorizontalAlignment="Center" Click="ConnectHandler">ПОДКЛЮЧИТЬСЯ</Button>
               <Label Name="StatusBar" Background="#E66565" HorizontalAlignment="Center">Не подключено</Label>
             </StackPanel>
+          
           </Border>
 
         </Grid>

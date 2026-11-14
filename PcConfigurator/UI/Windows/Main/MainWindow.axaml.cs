@@ -1,13 +1,13 @@
 using PcConfigurator.Windows.Configurator;
 using PcConfigurator.Ui.Helpers;
 using PcConfigurator.Shared;
+using PcConfigurator.Shared.Models;
 
 namespace PcConfigurator.Windows.Main;
 
 internal partial class MainWindow : Window
 {
     private Button? currentConfiguration = null;
-    private List<Config> configs = new();
 
     public MainWindow()
     {
@@ -48,9 +48,7 @@ internal partial class MainWindow : Window
 
     private void CreateHandler(object? sender, RoutedEventArgs e)
     {
-        var nextWindow = new ConfiguratorWindow();
-
-        MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindow);
+        WindowsManager.changeWindow(closingWindow: this, newWindow: new ConfiguratorWindow());
     }
 
     private void DeleteHandler(object? sender, RoutedEventArgs e)
