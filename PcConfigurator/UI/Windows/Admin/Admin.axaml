@@ -3,10 +3,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
-        xmlns:local="using:PcConfigurator.windows.Admin"
+        xmlns:local="using:PcConfigurator.Ui.Windows.Admin"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
-        x:Class="PcConfigurator.windows.Admin.AdminWindow"
+        x:Class="PcConfigurator.Ui.Windows.Admin.AdminWindow"
         x:DataType="local:AdminWindow"
         Title="Admin"
         CanResize="False">

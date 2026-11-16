@@ -1,5 +1,6 @@
-using PcConfigurator.Windows.Main;
-using PcConfigurator.Windows.Admin;
+using PcConfigurator.Ui.Windows.Main;
+using PcConfigurator.Ui.Windows.Admin;
+
 
 
 namespace PcConfigurator.Ui.Windows.Auth;

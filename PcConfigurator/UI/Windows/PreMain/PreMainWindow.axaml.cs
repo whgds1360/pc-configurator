@@ -1,5 +1,5 @@
 using PcConfigurator.Feature.PreMain.Connect;
-using PcConfigurator.Windows.Main;
+using PcConfigurator.Ui.Windows.Main;
 using PcConfigurator.Ui.Helpers;
 using PcConfigurator.Ui.Windows.PreMain.ControlTemplates;
 

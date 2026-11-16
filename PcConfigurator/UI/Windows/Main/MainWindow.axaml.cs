@@ -2,7 +2,7 @@ using PcConfigurator.Windows.Configurator;
 using PcConfigurator.Ui.Helpers;
 using PcConfigurator.Feature.Main.Configs;
 
-namespace PcConfigurator.Windows.Main;
+namespace PcConfigurator.Ui.Windows.Main;
 
 internal partial class MainWindow : Window
 {

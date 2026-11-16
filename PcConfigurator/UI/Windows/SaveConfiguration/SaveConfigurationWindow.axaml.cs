@@ -1,9 +1,9 @@
-using PcConfigurator.Windows.Main;
+using PcConfigurator.Ui.Windows.Main;
 using PcConfigurator.Windows.Configurator;
 using PcConfigurator.Feature.SaveConfiguration.Requests;
 using PcConfigurator.Ui.Helpers;
 
-namespace PcConfigurator.Windows.SaveConfiguration;
+namespace PcConfigurator.Ui.Windows.SaveConfiguration;
 
 internal partial class SaveConfigurationWindow : Window
 {
