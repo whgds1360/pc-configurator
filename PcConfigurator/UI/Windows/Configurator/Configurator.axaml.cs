@@ -12,7 +12,7 @@ using Avalonia.Media;
 using PcConfigurator.Windows.Main;
 using System;
 
-namespace PcConfigurator.Windows.Configurator;
+namespace PcConfigurator.Ui.Windows.Configurator;
 
 enum Status
 {
