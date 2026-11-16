@@ -5,11 +5,7 @@
         xmlns:win32="clr-namespace:Avalonia.Controls;assembly=Avalonia.Controls"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
-        x:Class="PcConfigurator.windows.Auth.AuthWindow"
-        Title="PС Configurator"
-        Width="1168"
-        Height="784"
-        CanResize="False">
+        x:Class="PcConfigurator.Ui.Windows.Auth.AuthWindow">
     
         <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="350" Spacing="15">
