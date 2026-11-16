@@ -1,4 +1,7 @@
 using PcConfigurator.Feature.Auth;
+using PcConfigurator.Ui.Helpers;
+using PcConfigurator.Ui.Windows.Admin;
+using PcConfigurator.Ui.Windows.Main;
 
 
 namespace PcConfigurator.Ui.Windows.Auth;
@@ -33,12 +36,18 @@ internal partial class AuthWindow : Window
             switch (Role)
             {
                 case "admin": 
-                case "user":
+                    WindowsManager.changeWindow(closingWindow: this, newWindow: new AdminWindow());
+                    break;
 
-                default: break;
+                case "user":
+                    WindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
+                    break;
+
+                default: 
+                    PanicStatusBar(Comment);
+                    break;
             }
         }
-
     }
 
     private void PanicStatusBar(string comment)
