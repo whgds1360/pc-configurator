@@ -1,6 +1,4 @@
-using PcConfigurator.Ui.Windows.Main;
-using PcConfigurator.Ui.Windows.Admin;
-using PcConfigurator.Shared;
+using PcConfigurator.Feature.Auth;
 
 
 namespace PcConfigurator.Ui.Windows.Auth;
@@ -18,8 +16,34 @@ internal partial class AuthWindow : Window
         var login = LoginTextBox.Text;
         var password = PasswordTextBox.Text;
 
-        StatusText.Foreground = new SolidColorBrush(Color.Parse("#991f25"));
-        StatusText.Text = "НЕВЕРНЫЕ ДАННЫЕ ДЛЯ ВХОДА";
+        if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+        {
+            PanicStatusBar("Не все поля формы заполнены!");
+            return;
+        }
 
+        var (IsError, Comment, Role) = await AuthResponse.CheckCorrectUserData(login: login, password: password);
+
+        if (IsError == true)
+        {
+            PanicStatusBar(Comment);
+        }
+        else
+        {
+            switch (Role)
+            {
+                case "admin": 
+                case "user":
+
+                default: break;
+            }
+        }
+
+    }
+
+    private void PanicStatusBar(string comment)
+    {
+        StatusText.Foreground = new SolidColorBrush(Color.Parse("#991f25"));
+        StatusText.Text = comment;
     }
 }
