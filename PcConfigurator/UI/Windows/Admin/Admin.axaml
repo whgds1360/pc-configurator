@@ -12,9 +12,7 @@
         CanResize="False">
 
     <Window.Styles>
-        <Style Selector="Label.DbInfo">
-            <Setter Property="FontSize" Value="20"></Setter>
-        </Style>
+        <StyleInclude Source="Styles.axaml"></StyleInclude>
     </Window.Styles>
 
     <StackPanel Spacing="15">
