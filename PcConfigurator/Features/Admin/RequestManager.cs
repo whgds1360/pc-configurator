@@ -1,6 +1,6 @@
 namespace PcConfigurator.Feature.Admin;
 
-internal sealed class RequestManager
+internal static class RequestManager
 {
     internal static Dictionary<string, object> CreateRequestParams(List<string> values, out List<string> placeholders)
     {

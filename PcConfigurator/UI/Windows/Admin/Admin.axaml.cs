@@ -1,4 +1,5 @@
 using PcConfigurator.Shared;
+using PcConfigurator.Feature.Admin;
 
 namespace PcConfigurator.Ui.Windows.Admin;
 
@@ -53,20 +54,6 @@ internal partial class AdminWindow : Window
         return data;
     }
 
-    private Dictionary<string, object> CreateParams(List<string> values, out List<string> placeholders)
-    {
-        placeholders = new List<string>();
-        var parameters = new Dictionary<string, object>();
-
-        for (int i = 0; i < values.Count; i++)
-        {
-            placeholders.Add($"@p{i}");
-            parameters[$"p{i}"] = values[i];
-        }
-
-        return parameters;
-    }
-
     private void DeleteButtonHandler(object sender, RoutedEventArgs e)
     {
         var data = GetValues();
@@ -112,7 +99,7 @@ internal partial class AdminWindow : Window
         using var connect = DataBaseManager.GetConnection();
         try
         {
-            var parameters = CreateParams(data["Valid"], out var placeholders);
+            var parameters = RequestManager.CreateRequestParams(data["Valid"], out var placeholders);
 
             connect.Execute($"INSERT INTO `{SelectTable}` VALUES ({string.Join(", ", placeholders)})", parameters);
 
