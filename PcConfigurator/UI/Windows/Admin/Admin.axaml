@@ -6,10 +6,7 @@
         xmlns:local="using:PcConfigurator.Ui.Windows.Admin"
         win32:Win32Properties.WindowCornerPreference="Round"
         mc:Ignorable="d" d:DesignWidth="1168" d:DesignHeight="784"
-        x:Class="PcConfigurator.Ui.Windows.Admin.AdminWindow"
-        x:DataType="local:AdminWindow"
-        Title="Admin"
-        CanResize="False">
+        x:Class="PcConfigurator.Ui.Windows.Admin.AdminWindow">
 
     <Window.Styles>
         <StyleInclude Source="Styles.axaml"></StyleInclude>
@@ -39,7 +36,8 @@
                 <Button FontSize="30">Удалить запись</Button>
             </StackPanel>
 
-            <ComboBox ItemsSource="{Binding TablesName}"
+            <ComboBox x:DataType="local:AdminWindow" 
+                ItemsSource="{Binding TablesName}"
                 SelectedItem="{Binding SelectTable}"
                 SelectionChanged="ChangedTableHandler" 
                 IsVisible="true" 
