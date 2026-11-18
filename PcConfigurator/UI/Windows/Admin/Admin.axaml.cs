@@ -1,5 +1,6 @@
 using PcConfigurator.Shared;
 using PcConfigurator.Feature.Admin;
+using PcConfigurator.Ui.Windows.Configurator;
 
 namespace PcConfigurator.Ui.Windows.Admin;
 
@@ -88,27 +89,21 @@ internal partial class AdminWindow : Window
     private void AddButtonHandler(object sender, RoutedEventArgs e)
     {
         var data = GetValues();
+        var result = RecordManager.AddRecord(data:data, selectTable:SelectTable, out var comment);
 
-        if (data["Valid"].Count == 0)
+        ChangeStatusBar(comment: comment, IsError: result);
+    }
+
+    private void ChangeStatusBar(string comment, bool IsError)
+    {
+        StatusBar.Content = comment;
+
+        if (!IsError)
         {
-            StatusBar.Content = "Нет данных для вставки.";
-            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
-            return;
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#00ff08"));
         }
-
-        using var connect = DataBaseManager.GetConnection();
-        try
+        else
         {
-            var parameters = RequestManager.CreateRequestParams(data["Valid"], out var placeholders);
-
-            connect.Execute($"INSERT INTO `{SelectTable}` VALUES ({string.Join(", ", placeholders)})", parameters);
-
-            StatusBar.Content = "Запись добавлена!";
-            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#00a000"));
-        }
-        catch (Exception error)
-        {
-            StatusBar.Content = $"Ошибка записи в БД: {error.Message}";
             StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
         }
     }
