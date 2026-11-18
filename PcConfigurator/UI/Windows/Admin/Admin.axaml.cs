@@ -2,24 +2,6 @@ using PcConfigurator.Shared;
 
 namespace PcConfigurator.Ui.Windows.Admin;
 
-enum Status
-{
-    ok,
-    error
-}
-
-internal class DbInfoTemplate
-{
-    internal string Key { get; set; } = string.Empty;
-    internal string Value { get; set; } = string.Empty;
-}
-
-internal class PropetryListTemplate
-{
-    internal string Name { get; set; } = string.Empty;
-    internal string Tag { get; set; } = string.Empty;
-}
-
 internal partial class AdminWindow : Window
 {
     internal string SelectTable { get; set; } = string.Empty;
@@ -165,7 +147,7 @@ internal partial class AdminWindow : Window
     {
         if (SelectTable is null) return;
 
-        var dataItems = new List<PropetryListTemplate>();
+        var dataItems = new List<PropertyListTemplate>();
 
         foreach (var table in TablesMeta)
         {
@@ -175,7 +157,7 @@ internal partial class AdminWindow : Window
                 
                 foreach (var prop in table.Properties)
                 {
-                    dataItems.Add(new PropetryListTemplate {Name = prop, Tag = prop});
+                    dataItems.Add(new PropertyListTemplate {Name = prop, Tag = prop});
                 }
             }
         }

@@ -58,7 +58,7 @@
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="local:PropetryListTemplate">
+                    <DataTemplate x:DataType="local:PropertyListTemplate">
                         <StackPanel>
                             <Label Content="{Binding Name}" Tag = "{Binding Tag}" FontSize="10"></Label>
                             <TextBox Tag="{Binding Tag}" PlaceholderText="Введите новое значение" FontSize="10"></TextBox>
