@@ -28,4 +28,35 @@ internal static class RecordManager
             return false;
         }
     }
+
+    internal static bool DeleteRecord
+    {
+        var data = GetValues();
+
+        if (data["Valid"].Count > 1)
+        {
+            StatusBar.Content = $"Пока поддерживается только удаление по id";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+        }
+        else if (data["Valid"].Count == 1)
+        {
+            using (var connect = DataBaseManager.GetConnection())
+            {
+                try
+                {
+                    connect.Execute($"DELETE FROM `{SelectTable}` WHERE id = @id;", new { id = data["Valid"][0] });
+                }
+                catch (MySqlException error)
+                {
+                    StatusBar.Content = $"Неверные данные для удаления! {error.Message}";
+                    StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+                }
+            }
+        }
+        else
+        {
+            StatusBar.Content = $"Нету данных по которым можно понять, что именно удалять.";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+        }
+    }
 }

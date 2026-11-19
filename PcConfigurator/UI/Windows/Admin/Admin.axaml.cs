@@ -91,14 +91,14 @@ internal partial class AdminWindow : Window
         var data = GetValues();
         var result = RecordManager.AddRecord(data:data, selectTable:SelectTable, out var comment);
 
-        ChangeStatusBar(comment: comment, IsError: !result);
+        ChangeStatusBar(comment: comment, IsSuccess: result);
     }
 
-    private void ChangeStatusBar(string comment, bool IsError)
+    private void ChangeStatusBar(string comment, bool IsSuccess)
     {
         StatusBar.Content = comment;
 
-        if (!IsError)
+        if (IsSuccess)
         {
             StatusBar.Foreground = new SolidColorBrush(Color.Parse("#00ff08"));
         }
