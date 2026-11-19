@@ -91,7 +91,7 @@ internal partial class AdminWindow : Window
         var data = GetValues();
         var result = RecordManager.AddRecord(data:data, selectTable:SelectTable, out var comment);
 
-        ChangeStatusBar(comment: comment, IsError: result);
+        ChangeStatusBar(comment: comment, IsError: !result);
     }
 
     private void ChangeStatusBar(string comment, bool IsError)
