@@ -17,7 +17,7 @@ internal sealed class AuthResponse()
                     switch (response)
                     {
                         case "admin": return (false, "Успешный вход", "admin");
-                        case "user": return (false, "Успешный вход", "admin");
+                        case "user": return (false, "Успешный вход", "user");
                         default : return (true, "Ошибка определения роли", "");
                     }
                 }
