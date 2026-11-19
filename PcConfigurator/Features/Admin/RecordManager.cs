@@ -29,14 +29,12 @@ internal static class RecordManager
         }
     }
 
-    internal static bool DeleteRecord
+    internal static bool DeleteRecord(Dictionary<string, List<string>> data, string selectTable,  out string comment)
     {
-        var data = GetValues();
-
         if (data["Valid"].Count > 1)
         {
-            StatusBar.Content = $"Пока поддерживается только удаление по id";
-            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+            comment = $"Пока поддерживается только удаление по id";
+            return false;
         }
         else if (data["Valid"].Count == 1)
         {
@@ -44,19 +42,22 @@ internal static class RecordManager
             {
                 try
                 {
-                    connect.Execute($"DELETE FROM `{SelectTable}` WHERE id = @id;", new { id = data["Valid"][0] });
+                    connect.Execute($"DELETE FROM `{selectTable}` WHERE id = @id;", new { id = data["Valid"][0] });
+
+                    comment = "Успешно удалено!";
+                    return true;
                 }
                 catch (MySqlException error)
                 {
-                    StatusBar.Content = $"Неверные данные для удаления! {error.Message}";
-                    StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+                    comment = $"Неверные данные для удаления! {error.Message}";
+                    return false;
                 }
             }
         }
         else
         {
-            StatusBar.Content = $"Нету данных по которым можно понять, что именно удалять.";
-            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#f80000"));
+            comment = $"Нету данных по которым можно понять, что именно удалять.";
+            return false;
         }
     }
 }
