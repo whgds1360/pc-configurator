@@ -19,7 +19,7 @@ internal sealed class SaveRequest
             using var connect = DataBaseManager.GetConnection();
             var newId = connect.Execute(
                 @"INSERT INTO configs
-                      (Name, CpuId, GpuId, MotherboardId, PowerUnitId, RamId, PcCaseId, CoolerId)
+                      (name, cpu_id, gpu_id, motherboard_id, power_unit_id, ram_id, pc_case_Id, cooler_id)
                   VALUES
                       (@Name, @CpuId, @GpuId, @MotherboardId, @PowerUnitId, @RamId, @PcCaseId, @CoolerId)",
                 new
