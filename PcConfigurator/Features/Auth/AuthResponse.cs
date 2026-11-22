@@ -24,7 +24,7 @@ internal sealed class AuthResponse()
 
                 else
                 {
-                    return (false, "Неверные данные для входа!", "");
+                    return (true, "Неверные данные для входа!", "");
                 }
             }
 

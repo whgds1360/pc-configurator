@@ -27,7 +27,7 @@ internal partial class AuthWindow : Window
 
         var (IsError, Comment, Role) = await AuthResponse.CheckCorrectUserData(login: login, password: password);
 
-        if (IsError == true)
+        if (IsError)
         {
             PanicStatusBar(Comment);
         }
