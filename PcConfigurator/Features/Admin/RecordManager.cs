@@ -57,6 +57,10 @@ internal static class RecordManager
                         case >1: 
                             comment = "Удалено >1 записи, аномалия удаления!";
                             return false;
+
+                        default: 
+                            comment = "Неизветсная ошибка";
+                            return false;
                     }
                 }
                 catch (MySqlException error)
