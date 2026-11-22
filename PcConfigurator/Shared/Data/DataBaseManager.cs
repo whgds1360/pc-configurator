@@ -2,6 +2,7 @@ namespace PcConfigurator.Shared;
 
 internal class DataBaseManager
 {
+    internal static string CurrentUser { get; set; } = string.Empty;
     private static Dictionary<string, string> _dataBaseInfo = new();
     private static DbConnectionStatus _currentStatus = DbConnectionStatus.Disconected; 
     private static string? _connectionString = string.Empty;

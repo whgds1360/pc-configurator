@@ -1,4 +1,4 @@
-using PcConfigurator.Windows.Configurator;
+using PcConfigurator.Ui.Windows.Configurator;
 using PcConfigurator.Ui.Helpers;
 using PcConfigurator.Feature.Main.Configs;
 
@@ -24,6 +24,7 @@ internal partial class MainWindow : Window
         {
             Button btn = new();
             btn.Content = config.Name;
+            btn.Tag = config.Id;
             btn.Classes.Add("Configuration");
             btn.Click += SelectHandler;
             
@@ -51,11 +52,7 @@ internal partial class MainWindow : Window
     {
         if (_currentConfiguration is null) return;
         
-        var configName = _currentConfiguration.Content?.ToString();
-        
-        if (string.IsNullOrEmpty(configName)) return;
-
-        DeleteConfigs.DeleteOneConfiguration(id: configName);
+        if (_currentConfiguration.Tag is not int id || !DeleteConfigs.DeleteOneConfiguration(id)) return;
 
         Configuration.Children.Remove(_currentConfiguration);
         _currentConfiguration = null;

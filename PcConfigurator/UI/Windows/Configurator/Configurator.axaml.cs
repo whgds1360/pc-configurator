@@ -3,13 +3,13 @@ using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Dapper;
-using PcConfigurator.Windows.SaveConfiguration;
-using PcConfigurator.services.WindowsManager;
-using PcConfigurator.helpers.TableStructures.Models;
-using PcConfigurator.shared.DataBase;
+using PcConfigurator.Ui.Windows.SaveConfiguration;
+using PcConfigurator.Ui.Helpers;
+using PcConfigurator.Shared.Models;
+using PcConfigurator.Shared;
 using PcConfigurator.Windows.Configurator.Helpers;
 using Avalonia.Media;
-using PcConfigurator.Windows.Main;
+using PcConfigurator.Ui.Windows.Main;
 using System;
 
 namespace PcConfigurator.Ui.Windows.Configurator;
@@ -101,14 +101,14 @@ internal partial class ConfiguratorWindow : Window
             pcCaseId:      SelectedPcCase!.Id,
             coolerId:      SelectedCooler!.Id
         );
-        MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
+        WindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
     private void CancelButtonHandler(object sender, RoutedEventArgs e)
     {
         var nextWindows = new MainWindow();
         
-        MainWindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
+        WindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
     private void ListsOfHardwareInit()
@@ -262,7 +262,7 @@ internal partial class ConfiguratorWindow : Window
 
         if (!CompatibilityManager.CheckPowerTDP(selectedGpu: SelectedGpu, selectedCpu: SelectedCpu, selectedPowerUnit: SelectedPowerunit))
         {
-            message += "- Кулер не подходит по TDP для выбранного процессора\n";
+            message += "- Недостаточная мощность блока питания\n";
         }
 
         if (!CompatibilityManager.CheckDdrType(selectedMotherboard: SelectedMotherboard, selectedRam: SelectedRam))

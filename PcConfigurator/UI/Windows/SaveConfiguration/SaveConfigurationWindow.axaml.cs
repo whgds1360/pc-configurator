@@ -1,5 +1,5 @@
 using PcConfigurator.Ui.Windows.Main;
-using PcConfigurator.Windows.Configurator;
+using PcConfigurator.Ui.Windows.Configurator;
 using PcConfigurator.Feature.SaveConfiguration.Requests;
 using PcConfigurator.Ui.Helpers;
 

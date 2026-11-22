@@ -1,4 +1,5 @@
 using PcConfigurator.Feature.Auth;
+using PcConfigurator.Shared;
 using PcConfigurator.Ui.Helpers;
 using PcConfigurator.Ui.Windows.Admin;
 using PcConfigurator.Ui.Windows.Main;
@@ -33,6 +34,7 @@ internal partial class AuthWindow : Window
         }
         else
         {
+            DataBaseManager.CurrentUser = login;
             switch (Role)
             {
                 case "admin": 

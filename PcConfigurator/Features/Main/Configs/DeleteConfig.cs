@@ -4,19 +4,19 @@ namespace PcConfigurator.Feature.Main.Configs;
 
 internal sealed class DeleteConfigs
 {
-    internal static bool DeleteOneConfiguration(string name)
+    internal static bool DeleteOneConfiguration(int id)
     {
         using(var connect = DataBaseManager.GetConnection())
         {   
             try 
             {
-                if (string.IsNullOrEmpty(name)) return false;
+                if (id <= 0) return false;
 
                 var affected = connect.Execute(
-                    "DELETE FROM `configs` WHERE Name = @Name",
-                    new { Name = name });
+                    "DELETE FROM `configs` WHERE id = @Id AND user_login = @UserLogin",
+                    new { Id = id, UserLogin = DataBaseManager.CurrentUser });
 
-                if (affected == 0)
+                if (affected != 1)
                 {
                     Debug.WriteLine("Запись не найдена");
                     return false;

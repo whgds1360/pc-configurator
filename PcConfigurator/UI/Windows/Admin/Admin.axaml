@@ -33,7 +33,7 @@
 
             <StackPanel Orientation="Horizontal" Spacing="50" HorizontalAlignment="Center">
                 <Button FontSize="30" Click="AddButtonHandler">Добавить запись</Button>
-                <Button FontSize="30">Удалить запись</Button>
+                <Button FontSize="30" Click="DeleteButtonHandler">Удалить запись</Button>
             </StackPanel>
 
             <ComboBox x:DataType="local:AdminWindow" 

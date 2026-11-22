@@ -6,7 +6,7 @@ internal sealed class ConnectToDatabaseHandler
 {
     internal static async Task<bool> ConnectToDataBase(string server, string port, string db, string user, string password)
     {   
-        if (DataBaseManager.GetStatus()== DbConnectionStatus.Disconected)
+        if (DataBaseManager.GetStatus()!= DbConnectionStatus.Connected)
         {
             var connectUrl = DataBaseManager.CreateUrlConnection(server: server, 
                                                                     port: port, 

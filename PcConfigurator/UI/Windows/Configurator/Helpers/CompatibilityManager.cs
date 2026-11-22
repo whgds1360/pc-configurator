@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Dapper;
 using MySql.Data.MySqlClient;
-using PcConfigurator.helpers.TableStructures.Models;
-using PcConfigurator.shared.DataBase;
+using PcConfigurator.Shared.Models;
+using PcConfigurator.Shared;
 
 namespace PcConfigurator.Windows.Configurator.Helpers;
 
@@ -41,9 +41,9 @@ internal class CompatibilityManager
         {
             try
             {
-                if (connect.QueryFirstOrDefault(@"SELECT * FROM cpucompatibility 
-                    WHERE CpuId = @SelectedCpuId 
-                    AND Chipset = @ChipsetSelectedMotherboard", 
+                if (connect.QueryFirstOrDefault(@"SELECT * FROM cpu_compatibility 
+                    WHERE cpu_id = @SelectedCpuId 
+                    AND chipset = @ChipsetSelectedMotherboard", 
                     new {SelectedCpuId = selectedCpu.Id, ChipsetSelectedMotherboard = selectedMotherboard.ChipSet}) is not null)
                 {
                     return true;
@@ -95,9 +95,9 @@ internal class CompatibilityManager
         {
             try
             {
-               if (connect.QueryFirstOrDefault(@"SELECT * FROM pccasecompatibility 
-                WHERE CaseId = @SelectedCaseId 
-                AND MotherboardFormFactor = @ChipsetSelectedMotherboard", 
+               if (connect.QueryFirstOrDefault(@"SELECT * FROM pc_case_compatibility 
+                WHERE case_id = @SelectedCaseId 
+                AND motherboard_form_factor = @ChipsetSelectedMotherboard", 
                 new {SelectedCaseId = selectedPccase.Id, ChipsetSelectedMotherboard = selectedMotherboard.FormFactor}) is not null)
             {
                 return true;
@@ -124,8 +124,8 @@ internal class CompatibilityManager
         {
             try
             {
-                var gpurequire = connect.Query<AnswerTemplate>(@"SELECT ConnectorType, ConnectorCount FROM gpupowerrequirement 
-                    WHERE GpuId = @SelectedGpuId",
+                var gpurequire = connect.Query<AnswerTemplate>(@"SELECT connector_type AS ConnectorType, connector_count AS ConnectorCount FROM gpu_power_requirement 
+                    WHERE gpu_id = @SelectedGpuId",
                 new {SelectedGpuId = selectedGpu.Id});
 
                 foreach (var obj in gpurequire)
@@ -134,8 +134,8 @@ internal class CompatibilityManager
                 }
 
 
-                var powerunithas = connect.Query<AnswerTemplate>(@"SELECT ConnectorType, ConnectorCount FROM psuconnector 
-                        WHERE PowerUnitId = @SelectedPowerUnitId",
+                var powerunithas = connect.Query<AnswerTemplate>(@"SELECT connector_type AS ConnectorType, connector_count AS ConnectorCount FROM psu_connector 
+                        WHERE power_unit_id = @SelectedPowerUnitId",
                     new {SelectedPowerUnitId = selectedPowerUnit.Id});
 
                 foreach (var obj in powerunithas)
@@ -143,7 +143,7 @@ internal class CompatibilityManager
                     powerunithasdata[$"{obj.ConnectorType}"] = obj.ConnectorCount;
                 }
 
-                bool result = true;
+                bool result = gpurequiredata.Count > 0;
 
                 foreach (var pair in gpurequiredata)
                 {

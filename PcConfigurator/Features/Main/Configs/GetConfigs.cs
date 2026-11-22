@@ -11,7 +11,8 @@ internal sealed class GetConfigs
         {
             using(var connect = DataBaseManager.GetConnection())
             {
-                var configs = connect.Query<Config>("SELECT * FROM `configs`").ToList();
+                DefaultTypeMap.MatchNamesWithUnderscores = true;
+                var configs = connect.Query<Config>("SELECT * FROM `configs` WHERE user_login = @UserLogin", new { UserLogin = DataBaseManager.CurrentUser }).ToList();
                 return configs;
             }
         }
