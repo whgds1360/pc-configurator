@@ -17,7 +17,7 @@ internal sealed class SaveRequest
         try
         {
             using var connect = DataBaseManager.GetConnection();
-            var newId = connect.Execute(
+            var affected = connect.Execute(
                 @"INSERT INTO configs
                       (name, cpu_id, gpu_id, motherboard_id, power_unit_id, ram_id, pc_case_Id, cooler_id)
                   VALUES
@@ -34,7 +34,20 @@ internal sealed class SaveRequest
                     CoolerId      = coolerId
                 });
 
-            return true;
+            switch(affected)
+                    {
+                        case 0: 
+                            return false;
+
+                        case 1: 
+                            return true;
+
+                        case >1: 
+                            return false;
+
+                        default: 
+                            return false;
+                    }
         }
 
         catch (Exception error)
