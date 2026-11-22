@@ -55,7 +55,7 @@ internal partial class MainWindow : Window
         
         if (string.IsNullOrEmpty(configName)) return;
 
-        DeleteConfigs.DeleteOneConfiguration(name: configName);
+        DeleteConfigs.DeleteOneConfiguration(id: configName);
 
         Configuration.Children.Remove(_currentConfiguration);
         _currentConfiguration = null;

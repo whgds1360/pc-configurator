@@ -63,7 +63,7 @@ internal partial class SaveConfigurationWindow : Window
         var configName = GetConfigName();
         if (string.IsNullOrEmpty(configName)) return;
 
-        SaveRequest.AcceptConfiguration(configName: configName,
+        var result = SaveRequest.AcceptConfiguration(configName: configName,
                                         cpuId: _cpuId,
                                         gpuId: _gpuId,
                                         motherboardId: _motherboardId,
@@ -72,7 +72,14 @@ internal partial class SaveConfigurationWindow : Window
                                         pcCaseId: _pcCaseId,
                                         coolerId: _coolerId);
 
-        WindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
+        if (result)
+        {
+            WindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
+        }
+        else
+        {
+            ActivateErrorBorder();
+        }
     }
 
     private void CancelButtonHandler(object? sender, RoutedEventArgs e)
