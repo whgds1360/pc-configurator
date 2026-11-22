@@ -42,10 +42,22 @@ internal static class RecordManager
             {
                 try
                 {
-                    connect.Execute($"DELETE FROM `{selectTable}` WHERE id = @id;", new { id = data["Valid"][0] });
+                    var affected = connect.Execute($"DELETE FROM `{selectTable}` WHERE id = @id;", new { id = data["Valid"][0] });
 
-                    comment = "Успешно удалено!";
-                    return true;
+                    switch(affected)
+                    {
+                        case 0: 
+                            comment = "Удалено 0 записей, записи не найдены!";
+                            return false;
+
+                        case 1: 
+                            comment = "Успешно удалено!";
+                            return true;
+
+                        case >1: 
+                            comment = "Удалено >1 записи, аномалия удаления!";
+                            return false;
+                    }
                 }
                 catch (MySqlException error)
                 {
