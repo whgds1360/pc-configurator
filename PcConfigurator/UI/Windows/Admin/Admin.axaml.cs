@@ -88,11 +88,11 @@ internal partial class AdminWindow : Window
     private void initTablesCombo()
     {
         var context = new ApplicationContext();
-
+        
         TablesMeta = context.Model.GetEntityTypes()
             .Select(data => new MetaData{
-                TableName = data.DisplayName(), 
-                Properties =data.GetProperties().Select(p => p.Name).ToList()
+                TableName = data.GetTableName(), 
+                Properties =data.GetProperties().Select(p => p.GetColumnName()).ToList()
                 })
             .ToList();
 
