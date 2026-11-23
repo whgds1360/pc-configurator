@@ -58,12 +58,14 @@ internal partial class SaveConfigurationWindow : Window
         ErrorBorder.BorderBrush = new SolidColorBrush(Color.Parse("#921111"));
     }
 
-    private void SendSaveRequest(object? sender, RoutedEventArgs e)
+    private async void SendSaveRequest(object? sender, RoutedEventArgs e)
     {
         var configName = GetConfigName();
         if (string.IsNullOrEmpty(configName)) return;
 
-        var result = SaveRequest.AcceptConfiguration(configName: configName,
+        var button = (Button)sender!;
+        button.IsEnabled = false;
+        var result = await SaveRequest.AcceptConfiguration(configName: configName,
                                         cpuId: _cpuId,
                                         gpuId: _gpuId,
                                         motherboardId: _motherboardId,
@@ -72,6 +74,7 @@ internal partial class SaveConfigurationWindow : Window
                                         pcCaseId: _pcCaseId,
                                         coolerId: _coolerId);
 
+        button.IsEnabled = true;
         if (result)
         {
             WindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
@@ -79,6 +82,7 @@ internal partial class SaveConfigurationWindow : Window
         else
         {
             ActivateErrorBorder();
+            SaveStatus.Text = "Не удалось сохранить конфигурацию. Проверьте подключение к базе данных.";
         }
     }
 

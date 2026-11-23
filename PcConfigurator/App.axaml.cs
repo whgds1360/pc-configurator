@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using PcConfigurator.Windows.PreMain;
+using PcConfigurator.Ui.Windows.PreMain;
 
 namespace PcConfigurator;
 

@@ -4,7 +4,7 @@ namespace PcConfigurator.Feature.Main.Configs;
 
 internal sealed class DeleteConfigs
 {
-    internal static bool DeleteOneConfiguration(int id)
+    internal static async Task<bool> DeleteOneConfiguration(int id)
     {
         using(var connect = DataBaseManager.GetConnection())
         {   
@@ -12,7 +12,7 @@ internal sealed class DeleteConfigs
             {
                 if (id <= 0) return false;
 
-                var affected = connect.Execute(
+                var affected = await connect.ExecuteAsync(
                     "DELETE FROM `configs` WHERE id = @Id AND user_login = @UserLogin",
                     new { Id = id, UserLogin = DataBaseManager.CurrentUser });
 
@@ -27,7 +27,7 @@ internal sealed class DeleteConfigs
             catch (Exception error)
             {
                 Debug.WriteLine($"Ошибка удаления: {error.Message}");
-                return false;
+                throw;
             }
         }
     }

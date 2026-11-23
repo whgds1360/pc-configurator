@@ -4,7 +4,7 @@ namespace PcConfigurator.Feature.SaveConfiguration.Requests;
 
 internal sealed class SaveRequest
 {
-    internal static bool AcceptConfiguration(string configName,
+    internal static async Task<bool> AcceptConfiguration(string configName,
                                         int cpuId,
                                         int gpuId,
                                         int motherboardId,
@@ -17,7 +17,7 @@ internal sealed class SaveRequest
         try
         {
             using var connect = DataBaseManager.GetConnection();
-            var affected = connect.Execute(
+            var affected = await connect.ExecuteAsync(
                 @"INSERT INTO configs
                       (user_login, name, cpu_id, gpu_id, motherboard_id, power_unit_id, ram_id, pc_case_Id, cooler_id)
                   VALUES

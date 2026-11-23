@@ -18,6 +18,7 @@
             <TextBox Name="ConfigNameTextBlock"></TextBox>
           </Border>
 
+          <TextBlock Name="SaveStatus" Foreground="Red" TextWrapping="Wrap"/>
           <Button HorizontalAlignment="Center" Click="SendSaveRequest">Сохранить</Button>
           <Button HorizontalAlignment="Center" Click="CancelButtonHandler">Отменить</Button>
         </StackPanel>

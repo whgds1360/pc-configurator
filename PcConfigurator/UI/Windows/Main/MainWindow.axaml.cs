@@ -14,11 +14,14 @@ internal partial class MainWindow : Window
         Loaded += CreateButtons;
     }
 
-    private void CreateButtons(object? sender, RoutedEventArgs e)
+    private async void CreateButtons(object? sender, RoutedEventArgs e)
     {
         Configuration.Children.Clear();
 
-        var configs = GetConfigs.GetAllConfiguration();
+        List<PcConfigurator.Shared.Models.Config> configs;
+        try { configs = await GetConfigs.GetAllConfiguration(); }
+        catch (Exception error) { ConfigStatus.Content = $"Ошибка загрузки конфигураций: {error.Message}"; return; }
+        ConfigStatus.Content = "";
 
         foreach (var config in configs)
         {
@@ -48,13 +51,22 @@ internal partial class MainWindow : Window
         WindowsManager.changeWindow(closingWindow: this, newWindow: new ConfiguratorWindow());
     }
 
-    private void DeleteHandler(object? sender, RoutedEventArgs e)
+    private async void DeleteHandler(object? sender, RoutedEventArgs e)
     {
         if (_currentConfiguration is null) return;
         
-        if (_currentConfiguration.Tag is not int id || !DeleteConfigs.DeleteOneConfiguration(id)) return;
-
-        Configuration.Children.Remove(_currentConfiguration);
-        _currentConfiguration = null;
+        var selected = _currentConfiguration;
+        if (selected.Tag is not int id) return;
+        var button = (Button)sender!;
+        button.IsEnabled = false;
+        try
+        {
+            if (!await DeleteConfigs.DeleteOneConfiguration(id)) { ConfigStatus.Content = "Конфигурация не найдена."; return; }
+            Configuration.Children.Remove(selected);
+            if (_currentConfiguration == selected) _currentConfiguration = null;
+            ConfigStatus.Content = "";
+        }
+        catch (Exception error) { ConfigStatus.Content = $"Ошибка удаления: {error.Message}"; }
+        finally { button.IsEnabled = true; }
     }
 }
