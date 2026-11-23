@@ -2,6 +2,7 @@ using PcConfigurator.Feature.PreMain.Connect;
 using PcConfigurator.Ui.Windows.Main;
 using PcConfigurator.Ui.Helpers;
 using PcConfigurator.Ui.Windows.PreMain.ControlTemplates;
+using PcConfigurator.Ui.Windows.Auth;
 
 namespace PcConfigurator.Ui.Windows.PreMain;
 
@@ -44,7 +45,7 @@ internal partial class PreMainWindow : Window
         button.IsEnabled = true;
         if (result)
         {
-            WindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
+            WindowsManager.changeWindow(closingWindow: this, newWindow: new AuthWindow());
         }
         else
         {
