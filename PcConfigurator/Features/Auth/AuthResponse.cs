@@ -1,4 +1,5 @@
 using PcConfigurator.Shared;
+using PcConfigurator.Shared.Models;
 
 namespace PcConfigurator.Feature.Auth;
 
@@ -6,33 +7,26 @@ internal sealed class AuthResponse()
 {
     internal async static Task<(bool IsError, string Comment, string Role)> CheckCorrectUserData(string login, string password)
     {
-        using (var connect = DataBaseManager.GetConnection())
+        try
         {
-            try
+            using var connect = DataBaseManager.GetConnection();
+            var user = await connect.QuerySingleOrDefaultAsync<User>("SELECT login, password, role FROM users WHERE login = @login", new { login });
+            if (user == null || !await Task.Run(() => PasswordHash.Verify(password, user.Password)))
+                return (true, "Неверные данные для входа!", "");
+            if (user.Role != "admin" && user.Role != "user") return (true, "Ошибка определения роли", "");
+            if (!user.Password.StartsWith("$pbkdf2-sha256$", StringComparison.Ordinal))
             {
-                var response = await connect.QuerySingleOrDefaultAsync<string>("SELECT role FROM users WHERE login = @login AND password = @password", new {login = login, password = password});
-
-                if (response != null)
-                {
-                    switch (response)
-                    {
-                        case "admin": return (false, "Успешный вход", "admin");
-                        case "user": return (false, "Успешный вход", "user");
-                        default : return (true, "Ошибка определения роли", "");
-                    }
-                }
-
-                else
-                {
-                    return (true, "Неверные данные для входа!", "");
-                }
+                await PasswordHash.EnsureColumnAsync(connect);
+                var hash = await Task.Run(() => PasswordHash.Create(password));
+                if (await connect.ExecuteAsync("UPDATE users SET password = @hash WHERE login = @login AND BINARY password = BINARY @old", new { hash, login, old = user.Password }) != 1)
+                    return (true, "Пароль изменился, повторите вход.", "");
             }
-
-            catch (Exception error)
-            {
-                Debug.WriteLine($"Ошибка в окне авторизации: {error}");
-                return (true, "Ошибка входа попробуйте позже!", "");
-            }
+            return (false, "Успешный вход", user.Role);
+        }
+        catch (Exception error)
+        {
+            Debug.WriteLine($"Ошибка в окне авторизации: {error}");
+            return (true, "Ошибка доступа к базе данных или обновления пароля!", "");
         }
     }
 }

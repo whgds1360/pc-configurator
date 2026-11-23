@@ -1,4 +1,5 @@
 using PcConfigurator.Shared;
+using PcConfigurator.Feature.Auth;
 
 namespace PcConfigurator.Feature.PreMain.Connect;
 
@@ -18,12 +19,19 @@ internal sealed class ConnectToDatabaseHandler
             {   
                 DataBaseManager.ChangeStatus(newStatus: DbConnectionStatus.Connected);
 
-                using (var context = new ApplicationContext())
+                try
                 {
+                    using var context = new ApplicationContext();
                     await context.Database.EnsureCreatedAsync();
-                };
-
-                return true;
+                    await PasswordHash.MigrateLegacyAsync();
+                    return true;
+                }
+                catch (Exception error)
+                {
+                    Debug.WriteLine($"Ошибка подготовки базы данных: {error.Message}");
+                    DataBaseManager.ChangeStatus(DbConnectionStatus.Error);
+                    return false;
+                }
     
             }
             else

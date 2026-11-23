@@ -37,15 +37,18 @@ internal partial class PreMainWindow : Window
         var user = _dbProperties.FirstOrDefault(v => v.Tag == "username")?.Value ?? string.Empty;
         var password = _dbProperties.FirstOrDefault(v => v.Tag == "password")?.Value ?? string.Empty;
 
+        var button = (Button)sender;
+        button.IsEnabled = false;
         var result = await ConnectToDatabaseHandler.ConnectToDataBase(server: ip, port: port, db: db, user: user, password: password);
 
+        button.IsEnabled = true;
         if (result)
         {
             WindowsManager.changeWindow(closingWindow: this, newWindow: new MainWindow());
         }
         else
         {
-            StatusBar.Content = "Неверная ссылка";
+            StatusBar.Content = "Не удалось подключиться к базе данных или обновить пароли. Проверьте подключение и права.";
             StatusBar.Background = new SolidColorBrush(Color.Parse("#b8ab71"));
         }
     }

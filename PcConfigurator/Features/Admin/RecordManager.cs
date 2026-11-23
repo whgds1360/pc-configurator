@@ -1,79 +1,33 @@
 using PcConfigurator.Shared;
+using PcConfigurator.Feature.Auth;
 
 namespace PcConfigurator.Feature.Admin;
 
 internal static class RecordManager
 {
-    internal static bool AddRecord(Dictionary<string, List<string>> data, string selectTable, out string comment)
+    internal static async Task<(bool Success, string Comment)> AddRecord(Dictionary<string, List<string>> data, string selectTable)
     {
-        if (data["Valid"].Count == 0)
-        {
-            comment = "Нет данных для вставки.";
-            return false;
-        }
-
-        using var connect = DataBaseManager.GetConnection();
+        if (data["Valid"].Count == 0) return (false, "Нет данных для вставки.");
         try
         {
+            using var connect = DataBaseManager.GetConnection();
+            if (selectTable == "users") await PasswordHash.EnsureColumnAsync(connect);
             var parameters = RequestManager.CreateRequestParams(data["Valid"], out var placeholders);
-
-            connect.Execute($"INSERT INTO `{selectTable}` VALUES ({string.Join(", ", placeholders)})", parameters);
-
-            comment = "Запись добавлена!";
-            return true;
+            await connect.ExecuteAsync($"INSERT INTO `{selectTable}` VALUES ({string.Join(", ", placeholders)})", parameters);
+            return (true, "Запись добавлена!");
         }
-        catch (Exception error)
-        {
-            comment = $"Ошибка записи в БД: {error.Message}";
-            return false;
-        }
+        catch (Exception error) { return (false, $"Ошибка записи в БД: {error.Message}"); }
     }
 
-    internal static bool DeleteRecord(Dictionary<string, List<string>> data, string selectTable,  out string comment)
+    internal static async Task<(bool Success, string Comment)> DeleteRecord(Dictionary<string, List<string>> data, string selectTable)
     {
-        if (data["Valid"].Count > 1)
+        if (data["Valid"].Count != 1) return (false, "Для удаления укажите только id.");
+        try
         {
-            comment = $"Пока поддерживается только удаление по id";
-            return false;
+            using var connect = DataBaseManager.GetConnection();
+            var affected = await connect.ExecuteAsync($"DELETE FROM `{selectTable}` WHERE id = @id;", new { id = data["Valid"][0] });
+            return affected == 1 ? (true, "Успешно удалено!") : (false, affected == 0 ? "Запись не найдена!" : "Удалено больше одной записи!");
         }
-        else if (data["Valid"].Count == 1)
-        {
-            using (var connect = DataBaseManager.GetConnection())
-            {
-                try
-                {
-                    var affected = connect.Execute($"DELETE FROM `{selectTable}` WHERE id = @id;", new { id = data["Valid"][0] });
-
-                    switch(affected)
-                    {
-                        case 0: 
-                            comment = "Удалено 0 записей, записи не найдены!";
-                            return false;
-
-                        case 1: 
-                            comment = "Успешно удалено!";
-                            return true;
-
-                        case >1: 
-                            comment = "Удалено >1 записи, аномалия удаления!";
-                            return false;
-
-                        default: 
-                            comment = "Неизветсная ошибка";
-                            return false;
-                    }
-                }
-                catch (MySqlException error)
-                {
-                    comment = $"Неверные данные для удаления! {error.Message}";
-                    return false;
-                }
-            }
-        }
-        else
-        {
-            comment = $"Нету данных по которым можно понять, что именно удалять.";
-            return false;
-        }
+        catch (Exception error) { return (false, $"Ошибка удаления из БД: {error.Message}"); }
     }
 }

@@ -1,5 +1,6 @@
 using PcConfigurator.Shared;
 using PcConfigurator.Feature.Admin;
+using PcConfigurator.Feature.Auth;
 using PcConfigurator.Ui.Windows.Configurator;
 
 namespace PcConfigurator.Ui.Windows.Admin;
@@ -55,20 +56,38 @@ internal partial class AdminWindow : Window
         return data;
     }
 
-    private void DeleteButtonHandler(object sender, RoutedEventArgs e)
+    private async void DeleteButtonHandler(object sender, RoutedEventArgs e)
     {
-        var data = GetValues();
-
-        var result = RecordManager.DeleteRecord(data:data, selectTable:SelectTable, out var comment);
-        ChangeStatusBar(comment: comment, IsSuccess: result);
+        var button = (Button)sender;
+        button.IsEnabled = false;
+        try
+        {
+            var (result, comment) = await RecordManager.DeleteRecord(GetValues(), SelectTable);
+            ChangeStatusBar(comment, result);
+        }
+        finally { button.IsEnabled = true; }
     }
 
-    private void AddButtonHandler(object sender, RoutedEventArgs e)
+    private async void AddButtonHandler(object sender, RoutedEventArgs e)
     {
-        var data = GetValues();
-        var result = RecordManager.AddRecord(data:data, selectTable:SelectTable, out var comment);
-
-        ChangeStatusBar(comment: comment, IsSuccess: result);
+        var button = (Button)sender;
+        button.IsEnabled = false;
+        try
+        {
+            var data = GetValues();
+            var table = SelectTable;
+            if (table == "users")
+            {
+                var filled = GetTexboxes().Where(t => !string.IsNullOrEmpty(t.Text)).ToList();
+                var passwordIndex = filled.FindIndex(t => t.Tag?.ToString() == "password");
+                if (passwordIndex < 0) { ChangeStatusBar("Введите пароль.", false); return; }
+                data["Valid"][passwordIndex] = await Task.Run(() => PasswordHash.Create(data["Valid"][passwordIndex]));
+            }
+            var (result, comment) = await RecordManager.AddRecord(data, table);
+            ChangeStatusBar(comment, result);
+        }
+        catch (Exception error) { ChangeStatusBar($"Ошибка: {error.Message}", false); }
+        finally { button.IsEnabled = true; }
     }
 
     private void ChangeStatusBar(string comment, bool IsSuccess)

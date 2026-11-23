@@ -10,7 +10,7 @@ public class User
     public string Login { get; set; } = string.Empty;
     
     [Required]
-    [MaxLength(20)]
+    [MaxLength(255)]
     [Column("password")]
     public string Password { get; set; } = string.Empty;
 

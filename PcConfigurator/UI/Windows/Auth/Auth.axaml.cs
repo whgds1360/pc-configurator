@@ -26,8 +26,11 @@ internal partial class AuthWindow : Window
             return;
         }
 
+        var button = (Button)sender;
+        button.IsEnabled = false;
         var (IsError, Comment, Role) = await AuthResponse.CheckCorrectUserData(login: login, password: password);
 
+        button.IsEnabled = true;
         if (IsError)
         {
             PanicStatusBar(Comment);
