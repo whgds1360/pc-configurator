@@ -35,13 +35,13 @@ internal class CompatibilityManager
     public static Status status { get; set; } = Status.Empty;
     public static string? comment { get; set; } = null;
 
-    public static bool CheckChipset(Motherboard selectedMotherboard, Cpu selectedCpu)
+    public static async Task<bool> CheckChipset(Motherboard selectedMotherboard, Cpu selectedCpu)
     {
         using (var connect = DataBaseManager.GetConnection())
         {
             try
             {
-                if (connect.QueryFirstOrDefault(@"SELECT * FROM cpu_compatibility 
+                if (await connect.QueryFirstOrDefaultAsync(@"SELECT * FROM cpu_compatibility 
                     WHERE cpu_id = @SelectedCpuId 
                     AND chipset = @ChipsetSelectedMotherboard", 
                     new {SelectedCpuId = selectedCpu.Id, ChipsetSelectedMotherboard = selectedMotherboard.ChipSet}) is not null)
@@ -52,12 +52,7 @@ internal class CompatibilityManager
                 return false;
             }
 
-            catch (MySqlException error)
-            {
-                Debug.WriteLine($"Ошибка при проверке совместимости чипсетов: {error}");
-                
-                return false;
-            }
+            catch (MySqlException) { throw; }
         }
     }
 
@@ -89,13 +84,13 @@ internal class CompatibilityManager
         }
     }
 
-    public static bool CheckFormFactor(Motherboard selectedMotherboard, PcCase selectedPccase)
+    public static async Task<bool> CheckFormFactor(Motherboard selectedMotherboard, PcCase selectedPccase)
     {
         using (var connect = DataBaseManager.GetConnection())
         {
             try
             {
-               if (connect.QueryFirstOrDefault(@"SELECT * FROM pc_case_compatibility 
+               if (await connect.QueryFirstOrDefaultAsync(@"SELECT * FROM pc_case_compatibility 
                 WHERE case_id = @SelectedCaseId 
                 AND motherboard_form_factor = @ChipsetSelectedMotherboard", 
                 new {SelectedCaseId = selectedPccase.Id, ChipsetSelectedMotherboard = selectedMotherboard.FormFactor}) is not null)
@@ -106,16 +101,11 @@ internal class CompatibilityManager
             return false; 
             }
 
-            catch (MySqlException error)
-            {
-                Debug.WriteLine($"Ошибка при проверке Форм Фактора: {error}");
-                
-                return false;
-            }
+            catch (MySqlException) { throw; }
         }
     }
 
-    public static bool CheckGpuCables(PowerUnit selectedPowerUnit, Gpu selectedGpu)
+    public static async Task<bool> CheckGpuCables(PowerUnit selectedPowerUnit, Gpu selectedGpu)
     {
         Dictionary<string, int> gpurequiredata = new();
         Dictionary<string, int> powerunithasdata = new();
@@ -124,7 +114,7 @@ internal class CompatibilityManager
         {
             try
             {
-                var gpurequire = connect.Query<AnswerTemplate>(@"SELECT connector_type AS ConnectorType, connector_count AS ConnectorCount FROM gpu_power_requirement 
+                var gpurequire = await connect.QueryAsync<AnswerTemplate>(@"SELECT connector_type AS ConnectorType, connector_count AS ConnectorCount FROM gpu_power_requirement 
                     WHERE gpu_id = @SelectedGpuId",
                 new {SelectedGpuId = selectedGpu.Id});
 
@@ -134,7 +124,7 @@ internal class CompatibilityManager
                 }
 
 
-                var powerunithas = connect.Query<AnswerTemplate>(@"SELECT connector_type AS ConnectorType, connector_count AS ConnectorCount FROM psu_connector 
+                var powerunithas = await connect.QueryAsync<AnswerTemplate>(@"SELECT connector_type AS ConnectorType, connector_count AS ConnectorCount FROM psu_connector 
                         WHERE power_unit_id = @SelectedPowerUnitId",
                     new {SelectedPowerUnitId = selectedPowerUnit.Id});
 
@@ -143,7 +133,8 @@ internal class CompatibilityManager
                     powerunithasdata[$"{obj.ConnectorType}"] = obj.ConnectorCount;
                 }
 
-                bool result = gpurequiredata.Count > 0;
+                if (gpurequiredata.Count == 0) throw new InvalidDataException("Нет данных о разъёмах видеокарты.");
+                bool result = true;
 
                 foreach (var pair in gpurequiredata)
                 {
@@ -155,12 +146,7 @@ internal class CompatibilityManager
 
                 return result;
             }
-            catch (MySqlException error)
-            {
-                Debug.WriteLine($"Ошибка при проверки кабелей GPU и PowerUnit: {error}");
-
-                return false;
-            }
+            catch (MySqlException) { throw; }
         }
     }
 

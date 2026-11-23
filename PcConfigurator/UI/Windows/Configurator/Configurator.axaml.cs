@@ -41,8 +41,8 @@ internal partial class ConfiguratorWindow : Window
     public ConfiguratorWindow()
     {
         DataContext = this;
-        ListsOfHardwareInit();
         InitializeComponent();
+        Loaded += ListsOfHardwareInit;
     }
 
     private async void AiQuery(object sender, RoutedEventArgs e)
@@ -111,34 +111,57 @@ internal partial class ConfiguratorWindow : Window
         WindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
-    private void ListsOfHardwareInit()
+    private async void ListsOfHardwareInit(object? sender, RoutedEventArgs e)
     {
-        using (var connect = DataBaseManager.GetConnection())
+        try
         {
-            Cpus = connect.Query<Cpu>("SELECT * FROM cpus").ToList();
-            Gpus = connect.Query<Gpu>("SELECT * FROM gpus").ToList();
-            Rams = connect.Query<Ram>("SELECT * FROM rams").ToList();
-            Motherboards = connect.Query<Motherboard>("SELECT * FROM motherboards").ToList();
-            Powerunits = connect.Query<PowerUnit>("SELECT * FROM powerunits").ToList();
-            PcCases = connect.Query<PcCase>("SELECT * FROM pccases").ToList();
-            Coolers = connect.Query<Cooler>("SELECT * FROM coolers").ToList();
+            using var connect = DataBaseManager.GetConnection();
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
+            Cpus = (await connect.QueryAsync<Cpu>("SELECT * FROM cpus")).ToList();
+            Gpus = (await connect.QueryAsync<Gpu>("SELECT * FROM gpus")).ToList();
+            Rams = (await connect.QueryAsync<Ram>("SELECT * FROM rams")).ToList();
+            Motherboards = (await connect.QueryAsync<Motherboard>("SELECT * FROM motherboards")).ToList();
+            Powerunits = (await connect.QueryAsync<PowerUnit>("SELECT * FROM power_units")).ToList();
+            PcCases = (await connect.QueryAsync<PcCase>("SELECT * FROM pc_cases")).ToList();
+            Coolers = (await connect.QueryAsync<Cooler>("SELECT * FROM coolers")).ToList();
+            DataContext = null;
+            DataContext = this;
+        }
+        catch (Exception error)
+        {
+            StatusBar.Content = "Ошибка загрузки комплектующих из базы данных";
+            CommentStatusBar.Content = error.Message;
         }
     }
 
-    private void CheckCompatilibityHandler(object sender, RoutedEventArgs e)
+    private async void CheckCompatilibityHandler(object sender, RoutedEventArgs e)
     {
-        if (SelectedCpu is null ||  SelectedGpu is null || SelectedRam is null ||
-            SelectedMotherboard is null || SelectedPowerunit is null || SelectedPcCase is null ||
-            SelectedCooler is null)
+        if (SelectedCpu is null || SelectedGpu is null || SelectedRam is null || SelectedMotherboard is null ||
+            SelectedPowerunit is null || SelectedPcCase is null || SelectedCooler is null)
         {
             StatusBar.Content = "Сборка не завершена!";
-            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#540989"));
-            
             return;
         }
-
-        changeStatusBar(CompatibilityResult: CompatibilityCheck());
-
+        var button = (Button)sender;
+        button.IsEnabled = false;
+        var selection = (SelectedCpu, SelectedGpu, SelectedRam, SelectedMotherboard, SelectedPowerunit, SelectedPcCase, SelectedCooler);
+        StatusBar.Content = "Проверка совместимости...";
+        CommentStatusBar.Content = "";
+        try
+        {
+            var result = await CompatibilityCheck();
+            if (selection != (SelectedCpu, SelectedGpu, SelectedRam, SelectedMotherboard, SelectedPowerunit, SelectedPcCase, SelectedCooler))
+                StatusBar.Content = "Выбор изменился, повторите проверку.";
+            else changeStatusBar(result);
+        }
+        catch (Exception error)
+        {
+            StatusBar.Content = "Не удалось проверить совместимость";
+            StatusBar.Foreground = new SolidColorBrush(Color.Parse("#921111"));
+            CommentStatusBar.Content = error is InvalidDataException ? error.Message : "Ошибка доступа к базе данных.";
+            Debug.WriteLine(error);
+        }
+        finally { button.IsEnabled = true; }
     }
 
     private void ChangedHandler(object sender, RoutedEventArgs e)
@@ -250,37 +273,39 @@ internal partial class ConfiguratorWindow : Window
         }
     }
 
-    private object[] CompatibilityCheck()
+    private async Task<object[]> CompatibilityCheck()
     {
+        var cpu = SelectedCpu!; var gpu = SelectedGpu!; var ram = SelectedRam!;
+        var motherboard = SelectedMotherboard!; var psu = SelectedPowerunit!; var pcCase = SelectedPcCase!; var cooler = SelectedCooler!;
         string message = "";
         Status status = Status.incompatible;
         
-        if (!CompatibilityManager.CheckChipset(selectedMotherboard: SelectedMotherboard, selectedCpu: SelectedCpu))
+        if (!await CompatibilityManager.CheckChipset(selectedMotherboard: motherboard, selectedCpu: cpu))
         {
             message += "- Чипсет материнской платы и процессора НЕСОВМЕСТИМЫ\n";
         }
 
-        if (!CompatibilityManager.CheckPowerTDP(selectedGpu: SelectedGpu, selectedCpu: SelectedCpu, selectedPowerUnit: SelectedPowerunit))
+        if (!CompatibilityManager.CheckPowerTDP(selectedGpu: gpu, selectedCpu: cpu, selectedPowerUnit: psu))
         {
             message += "- Недостаточная мощность блока питания\n";
         }
 
-        if (!CompatibilityManager.CheckDdrType(selectedMotherboard: SelectedMotherboard, selectedRam: SelectedRam))
+        if (!CompatibilityManager.CheckDdrType(selectedMotherboard: motherboard, selectedRam: ram))
         {
             message += "- Тип DDR материнской платы и RAM НЕСОВМЕСТИМЫ\n";
         }
 
-        if (!CompatibilityManager.CheckFormFactor(selectedMotherboard: SelectedMotherboard, selectedPccase: SelectedPcCase))
+        if (!await CompatibilityManager.CheckFormFactor(selectedMotherboard: motherboard, selectedPccase: pcCase))
         {
             message += "- Форм-фактор материнской платы и корпуса НЕСОВМЕСТИМЫ\n";
         }
 
-        if (!CompatibilityManager.CheckGpuCables(selectedGpu: SelectedGpu, selectedPowerUnit: SelectedPowerunit))
+        if (!await CompatibilityManager.CheckGpuCables(selectedGpu: gpu, selectedPowerUnit: psu))
         {
             message += "- Блока питания недостаточно для питания видеокарты\n";
         }
 
-        if (!CompatibilityManager.CheckSoketCooling(selectedCooler: SelectedCooler, selectedMotherboard: SelectedMotherboard))
+        if (!CompatibilityManager.CheckSoketCooling(selectedCooler: cooler, selectedMotherboard: motherboard))
         {
             message += "- Сокет кулера не подходит к сокету процессора\n";
         }
