@@ -1,5 +1,4 @@
 using PcConfigurator.Shared;
-using PcConfigurator.Feature.Auth;
 
 namespace PcConfigurator.Feature.PreMain.Connect;
 
@@ -23,7 +22,6 @@ internal sealed class ConnectToDatabaseHandler
                 {
                     using var context = new ApplicationContext();
                     await context.Database.EnsureCreatedAsync();
-                    await PasswordHash.MigrateLegacyAsync();
                     return true;
                 }
                 catch (Exception error)

@@ -28,7 +28,7 @@ public class ApplicationContext : DbContext
         }
         else
         {
-            System.Diagnostics.Debug.WriteLine("Ошибка при создании структуры таблиц!");
+            Debug.WriteLine("Ошибка при создании структуры таблиц!");
         }
     }
 }

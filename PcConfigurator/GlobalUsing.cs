@@ -14,3 +14,4 @@ global using Avalonia.Media;
 global using System;
 global using Dapper;
 global using System.Diagnostics;
+global using Crypt = BCrypt.Net.BCrypt;

@@ -6,7 +6,7 @@ using PcConfigurator.Ui.Windows.Auth;
 
 namespace PcConfigurator.Ui.Windows.PreMain;
 
-internal partial class PreMainWindow : Window
+internal sealed partial class PreMainWindow : Window
 {
     private List<DbProperties> _dbProperties = new(); 
 
