@@ -1,6 +1,5 @@
 using PcConfigurator.Shared;
 using PcConfigurator.Feature.Admin;
-using PcConfigurator.Feature.Auth;
 
 namespace PcConfigurator.Ui.Windows.Admin;
 

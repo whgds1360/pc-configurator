@@ -1,5 +1,4 @@
 using PcConfigurator.Shared;
-using PcConfigurator.Feature.Auth;
 
 namespace PcConfigurator.Feature.Admin;
 
