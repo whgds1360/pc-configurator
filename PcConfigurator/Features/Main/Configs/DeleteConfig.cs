@@ -27,7 +27,7 @@ internal sealed class DeleteConfigs
             catch (Exception error)
             {
                 Debug.WriteLine($"Ошибка удаления: {error.Message}");
-                throw;
+                return false;
             }
         }
     }

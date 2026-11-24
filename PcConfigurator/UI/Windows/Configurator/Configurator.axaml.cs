@@ -35,7 +35,7 @@ internal partial class ConfiguratorWindow : Window
     public ConfiguratorWindow()
     {
         DataContext = this;
-        await ListsOfHardwareInit();
+        ListsOfHardwareInit().GetAwaiter().GetResult();
         InitializeComponent();
     }
 
@@ -112,7 +112,7 @@ internal partial class ConfiguratorWindow : Window
             using var connect = DataBaseManager.GetConnection();
 
             DefaultTypeMap.MatchNamesWithUnderscores = true;
-            
+
             Cpus = (await connect.QueryAsync<Cpu>("SELECT * FROM cpus")).ToList();
             Gpus = (await connect.QueryAsync<Gpu>("SELECT * FROM gpus")).ToList();
             Rams = (await connect.QueryAsync<Ram>("SELECT * FROM rams")).ToList();

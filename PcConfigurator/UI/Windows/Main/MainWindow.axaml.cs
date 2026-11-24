@@ -1,6 +1,7 @@
 using PcConfigurator.Ui.Windows.Configurator;
 using PcConfigurator.Ui.Helpers;
 using PcConfigurator.Feature.Main.Configs;
+using PcConfigurator.Shared.Models;
 
 namespace PcConfigurator.Ui.Windows.Main;
 
@@ -18,10 +19,11 @@ internal partial class MainWindow : Window
     {
         Configuration.Children.Clear();
 
-        List<PcConfigurator.Shared.Models.Config> configs;
+        List<Config> configs;
+
         try { configs = await GetConfigs.GetAllConfiguration(); }
         catch (Exception error) { ConfigStatus.Content = $"Ошибка загрузки конфигураций: {error.Message}"; return; }
-        ConfigStatus.Content = "";
+
 
         foreach (var config in configs)
         {
