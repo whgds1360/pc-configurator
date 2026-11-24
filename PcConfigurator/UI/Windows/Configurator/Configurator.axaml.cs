@@ -1,16 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Dapper;
 using PcConfigurator.Ui.Windows.SaveConfiguration;
 using PcConfigurator.Ui.Helpers;
 using PcConfigurator.Shared.Models;
 using PcConfigurator.Shared;
 using PcConfigurator.Windows.Configurator.Helpers;
-using Avalonia.Media;
 using PcConfigurator.Ui.Windows.Main;
-using System;
+
 
 namespace PcConfigurator.Ui.Windows.Configurator;
 
@@ -41,8 +35,8 @@ internal partial class ConfiguratorWindow : Window
     public ConfiguratorWindow()
     {
         DataContext = this;
+        await ListsOfHardwareInit();
         InitializeComponent();
-        Loaded += ListsOfHardwareInit;
     }
 
     private async void AiQuery(object sender, RoutedEventArgs e)
@@ -111,12 +105,14 @@ internal partial class ConfiguratorWindow : Window
         WindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
-    private async void ListsOfHardwareInit(object? sender, RoutedEventArgs e)
+    private async Task ListsOfHardwareInit()
     {
         try
         {
             using var connect = DataBaseManager.GetConnection();
+
             DefaultTypeMap.MatchNamesWithUnderscores = true;
+            
             Cpus = (await connect.QueryAsync<Cpu>("SELECT * FROM cpus")).ToList();
             Gpus = (await connect.QueryAsync<Gpu>("SELECT * FROM gpus")).ToList();
             Rams = (await connect.QueryAsync<Ram>("SELECT * FROM rams")).ToList();
@@ -124,8 +120,6 @@ internal partial class ConfiguratorWindow : Window
             Powerunits = (await connect.QueryAsync<PowerUnit>("SELECT * FROM power_units")).ToList();
             PcCases = (await connect.QueryAsync<PcCase>("SELECT * FROM pc_cases")).ToList();
             Coolers = (await connect.QueryAsync<Cooler>("SELECT * FROM coolers")).ToList();
-            DataContext = null;
-            DataContext = this;
         }
         catch (Exception error)
         {
@@ -142,11 +136,15 @@ internal partial class ConfiguratorWindow : Window
             StatusBar.Content = "Сборка не завершена!";
             return;
         }
+
         var button = (Button)sender;
         button.IsEnabled = false;
+
         var selection = (SelectedCpu, SelectedGpu, SelectedRam, SelectedMotherboard, SelectedPowerunit, SelectedPcCase, SelectedCooler);
+        
         StatusBar.Content = "Проверка совместимости...";
         CommentStatusBar.Content = "";
+
         try
         {
             var result = await CompatibilityCheck();
@@ -154,13 +152,16 @@ internal partial class ConfiguratorWindow : Window
                 StatusBar.Content = "Выбор изменился, повторите проверку.";
             else changeStatusBar(result);
         }
+
         catch (Exception error)
         {
             StatusBar.Content = "Не удалось проверить совместимость";
             StatusBar.Foreground = new SolidColorBrush(Color.Parse("#921111"));
+
             CommentStatusBar.Content = error is InvalidDataException ? error.Message : "Ошибка доступа к базе данных.";
-            Debug.WriteLine(error);
+            Debug.WriteLine(error.Message);
         }
+
         finally { button.IsEnabled = true; }
     }
 
@@ -277,6 +278,7 @@ internal partial class ConfiguratorWindow : Window
     {
         var cpu = SelectedCpu!; var gpu = SelectedGpu!; var ram = SelectedRam!;
         var motherboard = SelectedMotherboard!; var psu = SelectedPowerunit!; var pcCase = SelectedPcCase!; var cooler = SelectedCooler!;
+
         string message = "";
         Status status = Status.incompatible;
         

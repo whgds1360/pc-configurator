@@ -1,6 +1,3 @@
-using System.Diagnostics;
-using Dapper;
-using MySql.Data.MySqlClient;
 using PcConfigurator.Shared.Models;
 using PcConfigurator.Shared;
 
