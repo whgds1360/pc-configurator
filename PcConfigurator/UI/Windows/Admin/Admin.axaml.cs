@@ -74,13 +74,17 @@ internal partial class AdminWindow : Window
         {
             var data = GetValues();
             var table = SelectTable;
+            
             if (table == "users")
             {
                 var filled = GetTexboxes().Where(t => !string.IsNullOrEmpty(t.Text)).ToList();
                 var passwordIndex = filled.FindIndex(t => t.Tag?.ToString() == "password");
+
                 if (passwordIndex < 0) { ChangeStatusBar("Введите пароль.", false); return; }
-                data["Valid"][passwordIndex] = await Task.Run(() => PasswordHash.Create(data["Valid"][passwordIndex]));
+
+                data["Valid"][passwordIndex] = Crypt.HashPassword(data["Valid"][passwordIndex]);
             }
+
             var (result, comment) = await RecordManager.AddRecord(data, table);
             ChangeStatusBar(comment, result);
         }

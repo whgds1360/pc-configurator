@@ -10,8 +10,9 @@ internal static class RecordManager
         try
         {
             using var connect = DataBaseManager.GetConnection();
-            if (selectTable == "users") await PasswordHash.EnsureColumnAsync(connect);
+
             var parameters = RequestManager.CreateRequestParams(data["Valid"], out var placeholders);
+            
             await connect.ExecuteAsync($"INSERT INTO `{selectTable}` VALUES ({string.Join(", ", placeholders)})", parameters);
             return (true, "Запись добавлена!");
         }
