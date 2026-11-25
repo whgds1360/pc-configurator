@@ -42,7 +42,7 @@ internal partial class SaveConfigurationWindow : Window
 
     private string? GetConfigName()
     {
-        if (string.IsNullOrEmpty(ConfigNameTextBlock.Text))
+        if (string.IsNullOrEmpty(ConfigNameTextBlock?.Text?.Trim()))
         {
             ActivateErrorBorder();
 
