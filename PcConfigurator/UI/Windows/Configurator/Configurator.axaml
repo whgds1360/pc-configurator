@@ -14,9 +14,11 @@
         Height="784"
         CanResize="False">
 
+        <!--
         <Window.Styles>
                 <StyleInclude Source="avares://PcConfigurator/styles/ConfiguratorStyle.axaml"/>
         </Window.Styles>
+        -->
 
         <StackPanel Spacing="10" Margin="50">
 
