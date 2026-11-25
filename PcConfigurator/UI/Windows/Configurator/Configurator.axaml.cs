@@ -35,8 +35,8 @@ internal partial class ConfiguratorWindow : Window
     public ConfiguratorWindow()
     {
         DataContext = this;
-        ListsOfHardwareInit().GetAwaiter().GetResult();
         InitializeComponent();
+        Loaded += ListsOfHardwareInit;
     }
 
     private async void AiQuery(object sender, RoutedEventArgs e)
@@ -105,7 +105,7 @@ internal partial class ConfiguratorWindow : Window
         WindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
-    private async Task ListsOfHardwareInit()
+    private async void ListsOfHardwareInit(object? sender, RoutedEventArgs e)
     {
         try
         {
