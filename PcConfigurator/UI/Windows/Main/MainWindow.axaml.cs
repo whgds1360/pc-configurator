@@ -59,16 +59,14 @@ internal partial class MainWindow : Window
         
         var selected = _currentConfiguration;
         if (selected.Tag is not int id) return;
+
         var button = (Button)sender!;
         button.IsEnabled = false;
-        try
-        {
-            if (!await DeleteConfigs.DeleteOneConfiguration(id)) { ConfigStatus.Content = "Конфигурация не найдена."; return; }
-            Configuration.Children.Remove(selected);
-            if (_currentConfiguration == selected) _currentConfiguration = null;
-            ConfigStatus.Content = "";
-        }
-        catch (Exception error) { ConfigStatus.Content = $"Ошибка удаления: {error.Message}"; }
-        finally { button.IsEnabled = true; }
+        
+        var result = await DeleteConfigs.DeleteOneConfiguration(id: id);    
+
+         
+
+        button.IsEnabled = true;
     }
 }
