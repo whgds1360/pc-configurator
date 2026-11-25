@@ -11,14 +11,13 @@ internal sealed class AuthResponse()
         {
             using var connect = DataBaseManager.GetConnection();
 
-            var hashPasword = Crypt.HashPassword(password);
             var user = await connect.QuerySingleOrDefaultAsync<User>("SELECT login, password, role FROM users WHERE login = @login", new { login });
 
-            if (user == null || !Crypt.Verify(hashPasword, user.Password))
+            if (user == null || !Crypt.Verify(password, user.Password))
                 return (false, "Неверные данные для входа!", "");
             if (user.Role != "admin" && user.Role != "user") return (false, "Ошибка определения роли", "");
 
-            return (false, "Успешный вход", user.Role);
+            return (true, "Успешный вход", user.Role);
         }
         catch (Exception error)
         {
