@@ -35,8 +35,8 @@ internal partial class ConfiguratorWindow : Window
     public ConfiguratorWindow()
     {
         DataContext = this;
+        ListsOfHardwareInit();
         InitializeComponent();
-        Loaded += ListsOfHardwareInit;
     }
 
     private async void AiQuery(object sender, RoutedEventArgs e)
@@ -105,7 +105,7 @@ internal partial class ConfiguratorWindow : Window
         WindowsManager.changeWindow(closingWindow: this, newWindow: nextWindows);
     }
 
-    private async void ListsOfHardwareInit(object? sender, RoutedEventArgs e)
+    private void ListsOfHardwareInit()
     {
         try
         {
@@ -113,13 +113,13 @@ internal partial class ConfiguratorWindow : Window
 
             DefaultTypeMap.MatchNamesWithUnderscores = true;
 
-            Cpus = (await connect.QueryAsync<Cpu>("SELECT * FROM cpus")).ToList();
-            Gpus = (await connect.QueryAsync<Gpu>("SELECT * FROM gpus")).ToList();
-            Rams = (await connect.QueryAsync<Ram>("SELECT * FROM rams")).ToList();
-            Motherboards = (await connect.QueryAsync<Motherboard>("SELECT * FROM motherboards")).ToList();
-            Powerunits = (await connect.QueryAsync<PowerUnit>("SELECT * FROM power_units")).ToList();
-            PcCases = (await connect.QueryAsync<PcCase>("SELECT * FROM pc_cases")).ToList();
-            Coolers = (await connect.QueryAsync<Cooler>("SELECT * FROM coolers")).ToList();
+            Cpus = connect.Query<Cpu>("SELECT * FROM cpus").ToList();
+            Gpus = connect.Query<Gpu>("SELECT * FROM gpus").ToList();
+            Rams = connect.Query<Ram>("SELECT * FROM rams").ToList();
+            Motherboards = connect.Query<Motherboard>("SELECT * FROM motherboards").ToList();
+            Powerunits = connect.Query<PowerUnit>("SELECT * FROM power_units").ToList();
+            PcCases = connect.Query<PcCase>("SELECT * FROM pc_cases").ToList();
+            Coolers = connect.Query<Cooler>("SELECT * FROM coolers").ToList();
         }
         catch (Exception error)
         {
